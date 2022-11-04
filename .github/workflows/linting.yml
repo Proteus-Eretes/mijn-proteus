@@ -1,0 +1,88 @@
+---
+name: Linting
+on:
+  - pull_request
+  - push
+
+jobs:
+  build:
+    name: Smoke test building
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - run: yarn install
+      - run: yarn build
+  typecheck:
+    name: Typecheck TypeScript code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - run: yarn install
+      - run: yarn typecheck
+  superlinter:
+    name: Run superlinter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - run: yarn install
+      - run: yarn build
+      - uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: "/"
+          EDITORCONFIG_FILE_NAME: ".editorconfig"
+          YAML_ERROR_ON_WARNING: true
+          VALIDATE_JAVASCRIPT_ES: false
+          VALIDATE_TYPESCRIPT_ES: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          VALIDATE_TYPESCRIPT_STANDARD: false
+          VALIDATE_ENV: false
+          VALIDATE_SQL: false
+          VALIDATE_SQLFLUFF: false
+          VALIDATE_JAVA: false
+          VALIDATE_KOTLIN: false
+          VALIDATE_KOTLIN_ANDROID: false
+          VALIDATE_LATEX: false
+          VALIDATE_PHP: false
+          VALIDATE_POWERSHELL: false
+          VALIDATE_PROTOBUF: false
+          VALIDATE_PYTHON: false
+          VALIDATE_R: false
+          VALIDATE_XML: false
+  prettier:
+    name: Validate Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          persist-credentials: false
+      - uses: creyD/prettier_action@v4.2
+        with:
+          dry: True
+          prettier_options: "--check ."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  eslint:
+    name: Eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 18
+      - run: yarn install
+      - run: yarn build
+      - run: yarn lint
