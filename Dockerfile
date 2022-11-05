@@ -20,6 +20,7 @@ COPY server ./server
 COPY app.vue .
 COPY nuxt.config.ts .
 COPY tsconfig.json .
+COPY tailwind.config.js .
 COPY .env .
 
 # Build the application
