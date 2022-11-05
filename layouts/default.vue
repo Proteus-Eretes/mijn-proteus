@@ -1,7 +1,6 @@
 <template>
-  <div class="container mx-auto sm:mt-12">
+  <div class="container mx-auto mb-8 sm:mt-12">
     <NavBar />
-    <h1>Mijn Proteus</h1>
     <slot />
   </div>
 </template>
