@@ -9,14 +9,18 @@ COPY package.json .
 RUN yarn
 
 # Copy over the other files.
+COPY assets ./assets
 COPY components ./components
 COPY layouts ./layouts
+COPY logic ./logic
 COPY pages ./pages
-COPY assets ./assets
+COPY prisma ./prisma
 COPY public ./public
+COPY server ./server
 COPY app.vue .
 COPY nuxt.config.ts .
 COPY tsconfig.json .
+COPY .env .
 
 # Build the application
 RUN yarn build
