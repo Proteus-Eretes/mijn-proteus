@@ -12,6 +12,8 @@ RUN yarn
 COPY components ./components
 COPY layouts ./layouts
 COPY pages ./pages
+COPY assets ./assets
+COPY public ./public
 COPY app.vue .
 COPY nuxt.config.ts .
 COPY tsconfig.json .
