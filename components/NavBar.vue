@@ -1,10 +1,10 @@
 <template>
-  <div class="navbar bg-primary">
-    <div class="flex-1">
+  <div class="navbar bg-primary text-primary-content sm:rounded-lg">
+    <div class="navbar-start">
       <NuxtLink to="/" title="D.S.R. Proteus-Eretes" class="btn btn-ghost">
         <img
           class="h-10 max-lg:hidden"
-          src="~/assets/logo/internal-white.png"
+          src="~/assets/logo/internal-color.png"
           alt="D.S.R. 'Proteus-Eretes'"
         />
         <img
@@ -14,14 +14,7 @@
         />
       </NuxtLink>
     </div>
-    <div class="flex-none">
-      <div class="form-control">
-        <input
-          type="text"
-          placeholder="Zoeken"
-          class="input input-bordered input-ghost"
-        />
-      </div>
+    <div class="navbar-end">
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">

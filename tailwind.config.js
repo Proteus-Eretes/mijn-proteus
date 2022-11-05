@@ -1,9 +1,9 @@
 const baseTheme = {
-  primary: "#004a95",
+  primary: "#ffffff",
   secondary: "#f07f3c",
   accent: "#003d6a",
   neutral: "#262931",
-  "base-100": "#e5ecf4",
+  "base-100": "#004a95",
   info: "#207ee9",
   success: "#58e4d6",
   warning: "#d18c15",
@@ -25,16 +25,9 @@ module.exports = {
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
   daisyui: {
     styled: true,
-    darkTheme: "proteusdark",
     themes: [
       {
         proteus: baseTheme,
-      },
-      {
-        proteusdark: {
-          ...baseTheme,
-          "base-100": "#000e1d",
-        },
       },
     ],
   },
