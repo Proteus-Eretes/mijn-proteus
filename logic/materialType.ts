@@ -43,6 +43,23 @@ export const get = async (id: string): Promise<MaterialType | null> => {
 };
 
 /**
+ * Get a material type by it's name.
+ * @param name The name of the type to get.
+ * @returns The material type if found, or null otherwise.
+ */
+export const findByName = async (
+  name: string,
+): Promise<MaterialType | null> => {
+  const db = Database.get();
+
+  return await db.materialType.findUnique({
+    where: {
+      name,
+    },
+  });
+};
+
+/**
  * Get all material types.
  * @returns A list of all material types.
  */

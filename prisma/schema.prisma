@@ -19,10 +19,20 @@ model Quote {
 // If and when this is supported we can make these models a lot more type-safe, but this requires remodeling.
 // https://github.com/prisma/prisma/issues/2505
 
+model Material {
+  id         String       @id @default(uuid())
+  name       String       @unique @db.VarChar(40)
+  comment    String       @default("") @db.VarChar(200)
+  typeId     String
+  type       MaterialType @relation(fields: [typeId], references: [id])
+  lastUpdate DateTime     @default(now()) @updatedAt
+}
+
 model MaterialType {
-  id      String         @id @default(uuid())
-  name    String         @unique @db.VarChar(40)
-  superId String?
-  super   MaterialType?  @relation("MaterialTypeTree", fields: [superId], references: [id])
-  sub     MaterialType[] @relation("MaterialTypeTree")
+  id        String         @id @default(uuid())
+  name      String         @unique @db.VarChar(40)
+  superId   String?
+  super     MaterialType?  @relation("MaterialTypeTree", fields: [superId], references: [id])
+  sub       MaterialType[] @relation("MaterialTypeTree")
+  materials Material[]
 }
