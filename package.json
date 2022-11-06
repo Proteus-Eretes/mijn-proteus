@@ -27,6 +27,7 @@
     "@prisma/client": "^4.5.0",
     "@tailwindcss/typography": "^0.5.7",
     "@types/node": "^18.11.9",
+    "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "eslint": "^8.26.0",
@@ -43,6 +44,7 @@
   },
   "dependencies": {
     "daisyui": "^2.38.0",
-    "superstruct": "^0.16.7"
+    "superstruct": "^0.16.7",
+    "validator": "^13.7.0"
   }
 }

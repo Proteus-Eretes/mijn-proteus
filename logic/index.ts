@@ -1,5 +1,6 @@
 import { STATUS_CODES } from "http";
 
+export * as materialType from "./materialType";
 export * as quote from "./quote";
 
 /**
