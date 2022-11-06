@@ -12,9 +12,7 @@ RUN yarn
 COPY assets ./assets
 COPY components ./components
 COPY layouts ./layouts
-COPY logic ./logic
 COPY pages ./pages
-COPY prisma ./prisma
 COPY public ./public
 COPY server ./server
 COPY app.vue .
