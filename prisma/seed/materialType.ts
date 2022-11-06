@@ -1,39 +1,41 @@
+import {
+  array,
+  assert,
+  Describe,
+  lazy,
+  object,
+  optional,
+  size,
+  string,
+} from "superstruct";
+
 import { materialType } from "../../logic";
 
-type types = { [superName: string]: types };
+import materialTypes from "./testdata/materialType.json" assert { type: "json" };
 
-const MATERIAL_TYPES: types = {
-  Boot: {
-    "1x": {},
-    "2-": {},
-    "2x": {},
-    "C4+": {},
-    "4+": {},
-    "4*": {},
-    "8+": {},
-    "4-": {},
-    "C4*": {},
-    "C2+": {},
-    "C1x": {},
-  },
-  Ergometer: {
-    "Wedstro": {},
-    "Rowperfects wedstro": {},
-    "RowPerfect": {},
-    "Ouderejaars compo": {},
-    "Compo": {},
-  },
+type MaterialType = {
+  name: string;
+  subTypes?: MaterialType[];
 };
 
-const createType = async (types: types, superId?: string) => {
-  for (const name in types) {
-    const type = await materialType.create(name, superId);
-    console.info(`Created material type: ${type.name}.`);
+const MaterialTypeSeed: Describe<MaterialType> = object({
+  name: size(string(), 2, 40),
+  subTypes: lazy(() => optional(array(MaterialTypeSeed))),
+});
 
-    await createType(types[name], type.id);
+const createType = async (type: MaterialType, superId?: string) => {
+  const created = await materialType.create(type.name, superId);
+  console.info(`Created material type: ${created.name}.`);
+
+  for (const subType of type.subTypes || []) {
+    await createType(subType, created.id);
   }
 };
 
 export default async () => {
-  await createType(MATERIAL_TYPES);
+  assert(materialTypes, array(MaterialTypeSeed));
+
+  for (const type of materialTypes) {
+    await createType(type);
+  }
 };
