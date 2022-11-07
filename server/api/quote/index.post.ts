@@ -1,7 +1,8 @@
 import { Quote } from "@prisma/client";
-import { object, string, assert, size } from "superstruct";
+import { object, string, size } from "superstruct";
 
-import { quote, makeError } from "~~/logic";
+import { quote } from "~~/logic";
+import { readValidatedBody } from "~~/server/utils";
 
 const Body = object({
   content: size(string(), 4, 120),
@@ -9,13 +10,7 @@ const Body = object({
 });
 
 export default defineEventHandler<Quote>(async (e) => {
-  const body = await readBody(e);
-
-  try {
-    assert(body, Body);
-  } catch (e) {
-    throw makeError(400, e);
-  }
+  const body = await readValidatedBody(e, Body);
 
   return await quote.create(body);
 });

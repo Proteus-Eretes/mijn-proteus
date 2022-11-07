@@ -12,3 +12,27 @@ model Quote {
   content String @db.VarChar(120)
   by      String @db.VarChar(50)
 }
+
+// --=== MATERIALS ===--
+//
+// Polymorphic relationships are sadly not supported by Prisma.
+// If and when this is supported we can make these models a lot more type-safe, but this requires remodeling.
+// https://github.com/prisma/prisma/issues/2505
+
+model Material {
+  id         String       @id @default(uuid())
+  name       String       @unique @db.VarChar(40)
+  comment    String       @default("") @db.VarChar(200)
+  typeId     String
+  type       MaterialType @relation(fields: [typeId], references: [id])
+  lastUpdate DateTime     @default(now()) @updatedAt
+}
+
+model MaterialType {
+  id        String         @id @default(uuid())
+  name      String         @unique @db.VarChar(40)
+  parentId  String?
+  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id])
+  children  MaterialType[] @relation("MaterialTypeTree")
+  materials Material[]
+}
