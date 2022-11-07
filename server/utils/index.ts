@@ -2,7 +2,7 @@ import type { H3Event } from "h3";
 
 import { assert, Struct } from "superstruct";
 
-import { makeError } from "~~/logic";
+import { makeError } from "~~/server/logic";
 
 export async function readValidatedBody<T, S>(
   e: H3Event,

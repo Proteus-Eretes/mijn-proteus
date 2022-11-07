@@ -1,6 +1,6 @@
 import { Quote } from "@prisma/client";
 
-import { quote } from "~~/logic";
+import { quote } from "~~/server/logic";
 
 export default defineEventHandler<Quote[]>(async () => {
   return await quote.getAll();

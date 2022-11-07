@@ -1,7 +1,7 @@
 import { Material } from "@prisma/client";
 
 import { Database } from "./database";
-import { makeError, materialType } from "./";
+import { makeError, materialType } from ".";
 
 /**
  * Add new material to the database.
