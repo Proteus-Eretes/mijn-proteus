@@ -1,5 +1,5 @@
-import prisma from "~/server/prisma/client";
-import { makeError } from "~/server/helpers/error";
+import { makeError } from "../logic";
+import { prisma } from "~/server/prisma/client";
 
 export default defineEventHandler(async () => {
   try {

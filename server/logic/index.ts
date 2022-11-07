@@ -1,5 +1,9 @@
 import { STATUS_CODES } from "http";
 
+export * as material from "./material";
+export * as materialType from "./materialType";
+export * as quote from "./quote";
+
 /**
  * Helper to create a nuxt error object for error responses.
  * @param statusCode The HTTP status code to use.

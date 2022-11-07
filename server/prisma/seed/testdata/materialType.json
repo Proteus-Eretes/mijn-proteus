@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Boot",
+    "children": [
+      { "name": "1x" },
+      { "name": "2-" },
+      { "name": "2x" },
+      { "name": "C4+" },
+      { "name": "4+" },
+      { "name": "4*" },
+      { "name": "8+" },
+      { "name": "4-" },
+      { "name": "C4*" },
+      { "name": "C2+" },
+      { "name": "C1x" }
+    ]
+  },
+  {
+    "name": "Ergometer",
+    "children": [
+      { "name": "Wedstro" },
+      { "name": "Rowperfects wedstro" },
+      { "name": "RowPerfect" },
+      { "name": "Ouderejaars compo" },
+      { "name": "Compo" }
+    ]
+  }
+]
