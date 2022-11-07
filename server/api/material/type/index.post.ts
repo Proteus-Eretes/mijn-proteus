@@ -1,7 +1,7 @@
 import { MaterialType } from "@prisma/client";
 import { object, string, size, optional } from "superstruct";
 
-import { materialType } from "~~/logic";
+import { materialType } from "~~/server/logic";
 import { readValidatedBody } from "~~/server/utils";
 import { uuid } from "~~/server/validation";
 

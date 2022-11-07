@@ -1,7 +1,7 @@
 import { Quote } from "@prisma/client";
 import { object, string, size } from "superstruct";
 
-import { quote } from "~~/logic";
+import { quote } from "~~/server/logic";
 import { readValidatedBody } from "~~/server/utils";
 
 const Body = object({
