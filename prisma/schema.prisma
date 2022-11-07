@@ -31,8 +31,8 @@ model Material {
 model MaterialType {
   id        String         @id @default(uuid())
   name      String         @unique @db.VarChar(40)
-  superId   String?
-  super     MaterialType?  @relation("MaterialTypeTree", fields: [superId], references: [id])
-  sub       MaterialType[] @relation("MaterialTypeTree")
+  parentId  String?
+  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id])
+  children  MaterialType[] @relation("MaterialTypeTree")
   materials Material[]
 }

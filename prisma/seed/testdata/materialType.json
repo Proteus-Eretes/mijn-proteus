@@ -1,7 +1,7 @@
 [
   {
     "name": "Boot",
-    "subTypes": [
+    "children": [
       { "name": "1x" },
       { "name": "2-" },
       { "name": "2x" },
@@ -17,7 +17,7 @@
   },
   {
     "name": "Ergometer",
-    "subTypes": [
+    "children": [
       { "name": "Wedstro" },
       { "name": "Rowperfects wedstro" },
       { "name": "RowPerfect" },

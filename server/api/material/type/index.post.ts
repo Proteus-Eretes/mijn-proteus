@@ -7,11 +7,11 @@ import { uuid } from "~~/server/validation";
 
 const Body = object({
   name: size(string(), 2, 40),
-  superId: optional(uuid()),
+  parentId: optional(uuid()),
 });
 
 export default defineEventHandler<MaterialType>(async (e) => {
   const body = await readValidatedBody(e, Body);
 
-  return await materialType.create(body.name, body.superId);
+  return await materialType.create(body.name, body.parentId);
 });

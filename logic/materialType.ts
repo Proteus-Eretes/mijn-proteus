@@ -6,15 +6,15 @@ import { makeError } from "./";
 /**
  * Create a new material type.
  * @param name The name of the new material.
- * @param superId The ID of the super type, if it exists.
+ * @param parentId The ID of the parent type, if it exists.
  * @returns The created material type.
  */
 export const create = async (
   name: string,
-  superId?: string,
+  parentId?: string,
 ): Promise<MaterialType> => {
-  if (superId && !(await get(superId))) {
-    throw makeError(400, "The super type was not found!");
+  if (parentId && !(await get(parentId))) {
+    throw makeError(400, "The parent type was not found!");
   }
 
   const db = Database.get();
@@ -22,7 +22,7 @@ export const create = async (
   return await db.materialType.create({
     data: {
       name,
-      superId,
+      parentId,
     },
   });
 };

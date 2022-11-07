@@ -15,20 +15,20 @@ import materialTypes from "./testdata/materialType.json" assert { type: "json" }
 
 type MaterialType = {
   name: string;
-  subTypes?: MaterialType[];
+  children?: MaterialType[];
 };
 
 const MaterialTypeSeed: Describe<MaterialType> = object({
   name: size(string(), 2, 40),
-  subTypes: lazy(() => optional(array(MaterialTypeSeed))),
+  children: lazy(() => optional(array(MaterialTypeSeed))),
 });
 
-const createType = async (type: MaterialType, superId?: string) => {
-  const created = await materialType.create(type.name, superId);
+const createType = async (type: MaterialType, parentId?: string) => {
+  const created = await materialType.create(type.name, parentId);
   console.info(`Created material type: ${created.name}.`);
 
-  for (const subType of type.subTypes || []) {
-    await createType(subType, created.id);
+  for (const child of type.children || []) {
+    await createType(child, created.id);
   }
 };
 
