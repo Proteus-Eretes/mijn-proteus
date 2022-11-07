@@ -1,6 +1,6 @@
 import { defineEventHandler, getRouterParam, readBody } from "h3";
 import { Prisma } from "@prisma/client";
-import prisma from "~/server/database/client";
+import prisma from "~/server/prisma/client";
 
 export default defineEventHandler(async (event) => {
   const id = await getRouterParam(event, "id");

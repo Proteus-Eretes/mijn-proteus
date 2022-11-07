@@ -1,0 +1,168 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContactType {
+  EMAIL
+  INSTAGRAM
+  LINKEDIN
+  PARENT
+  PHONE
+  WHATSAPP
+}
+
+enum GroupType {
+  ASSOCIATION
+  COACHES
+  COMMITTEE
+  EDITION
+  FLEET
+  TEAM
+  YEARGROUP
+}
+
+enum MemberType {
+  COACH
+  ERELID
+  LID
+  NUL
+  RINGVAART
+  VERDIENSTE
+}
+
+enum Permission {
+  ADMIN
+  MANAGE_GROUPS
+  MANAGE_PERMISSIONS
+  MANAGE_MATERIALS
+}
+
+enum Sex {
+  MALE
+  FEMALE
+}
+
+enum StudyLevel {
+  ASSOCIATE_DEGREE
+  BACHELOR_OF_SCIENCE
+  MASTER_OF_SCIENCE
+  BACHELOR_OF_ARTS
+  MASTER_OF_ARTS
+  BACHELOR_OF_LAWS
+  MASTER_OF_LAWS
+  DOCTORATE
+}
+
+// Contactgegevens
+//
+model Contact {
+  id     String      @id @default(uuid()) @db.Uuid
+  value  String      @db.VarChar(120)
+  type   ContactType
+  member Member?     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  group  Group?      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  memberId String? @db.Uuid
+  groupId  String? @db.Uuid
+
+  @@map("contacts")
+}
+
+// Groep
+//
+model Group {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String       @db.VarChar(50)
+  description String       @default("") @db.VarChar(120)
+  isActive    Boolean      @default(true)
+  startDate   DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
+  lastActive  DateTime     @default(dbgenerated("CURRENT_DATE")) @updatedAt @db.Date
+  permissions Permission[]
+  members     Membership[]
+  contacts    Contact[]
+  children    Group[]      @relation("group_tree")
+  parent      Group        @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
+  visibleTo   Group[]      @relation("group_visibility")
+  canSee      Group[]      @relation("group_visibility")
+  invisibleTo Group[]      @relation("group_invisibility")
+  cannotSee   Group[]      @relation("group_invisibility")
+
+  parentId String @db.Uuid
+
+  @@map("groups")
+}
+
+// Lidmaatschap aan een groep
+//
+model Membership {
+  id        String    @id @default(uuid()) @db.Uuid
+  function  String    @default("") @db.VarChar(50)
+  startDate DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate  DateTime? @db.Date
+  isAdmin   Boolean   @default(false)
+  member    Member?   @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  memberId String? @db.Uuid
+  groupId  String  @db.Uuid
+
+  @@map("memberships")
+}
+
+// Lid
+//
+model Member {
+  id          String        @id @default(uuid()) @db.Uuid
+  title       String        @default("") @db.VarChar(10)
+  initials    String        @db.VarChar(10)
+  firstName   String        @db.VarChar(40)
+  insertion   String        @default("") @db.VarChar(10)
+  lastName    String        @db.VarChar(40)
+  address     String        @db.VarChar(40)
+  number      String        @db.VarChar(40)
+  city        String        @db.VarChar(40)
+  zipcode     String        @db.VarChar(20)
+  country     String        @db.VarChar(40)
+  birthday    DateTime      @db.Date
+  gender      Sex
+  permissions Permission[]
+  contacts    Contact[]
+  memberships Membership[]
+  studies     MemberStudy[]
+
+  @@map("members")
+}
+
+// Studiegevens van een lid
+//
+model MemberStudy {
+  id          String    @id @default(uuid()) @db.Uuid
+  studyNumber String    @default("") @db.VarChar(40)
+  startDate   DateTime  @db.Date
+  stopDate    DateTime? @db.Date
+  member      Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  study       Study     @relation(fields: [studyId], references: [id], onDelete: Restrict)
+
+  memberId String @db.Uuid
+  studyId  String @db.Uuid
+
+  @@map("member_studies")
+}
+
+// Studie
+//
+model Study {
+  id          String     @id @default(uuid()) @db.Uuid
+  name        String     @db.VarChar(40)
+  level       StudyLevel
+  institution String     @db.VarChar(40)
+
+  memberStudies MemberStudy[]
+
+  @@map("studies")
+}

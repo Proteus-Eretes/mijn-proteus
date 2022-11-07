@@ -1,4 +1,4 @@
-import prisma from "~/server/database/client";
+import prisma from "~/server/prisma/client";
 import { makeError } from "~/server/helpers/error";
 
 export default defineEventHandler(async () => {
