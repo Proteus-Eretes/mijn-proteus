@@ -23,6 +23,9 @@ COPY tsconfig.json .
 COPY tailwind.config.js .
 COPY .env .
 
+# Generate the Prisma client
+RUN npx prisma generate
+
 # Build the application
 RUN yarn build
 
