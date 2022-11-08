@@ -1,7 +1,7 @@
 import { defineEventHandler, getRouterParam } from "h3";
-import { membership } from "~/server/logic";
+import { member } from "~/server/logic";
 
 export default defineEventHandler(async (event) => {
   const id = await getRouterParam(event, "id");
-  return await membership.remove(id);
+  return await member.get(id);
 });

@@ -56,7 +56,7 @@ CREATE TABLE "Group" (
     "lastActive" DATE NOT NULL DEFAULT CURRENT_DATE,
     "type" "GroupType" NOT NULL,
     "permissions" "Permission"[],
-    "parentId" UUID NOT NULL,
+    "parentId" UUID,
 
     CONSTRAINT "Group_pkey" PRIMARY KEY ("id"),
     CHECK ( "lastActive" >= "startDate" )
@@ -88,7 +88,6 @@ CREATE TABLE "Member" (
     "dateOfBirth" DATE NOT NULL,
     "sex" "Sex" NOT NULL,
     "permissions" "Permission"[],
-    "addressId" UUID NOT NULL,
 
     CONSTRAINT "Member_pkey" PRIMARY KEY ("id")
 );
@@ -155,9 +154,6 @@ CREATE TABLE "_group_visibility" (
 CREATE UNIQUE INDEX "Address_memberId_key" ON "Address"("memberId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Member_addressId_key" ON "Member"("addressId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Material_name_key" ON "Material"("name");
 
 -- CreateIndex
@@ -168,6 +164,9 @@ CREATE UNIQUE INDEX "_group_visibility_AB_unique" ON "_group_visibility"("A", "B
 
 -- CreateIndex
 CREATE INDEX "_group_visibility_B_index" ON "_group_visibility"("B");
+
+-- AddForeignKey
+ALTER TABLE "Address" ADD CONSTRAINT "Address_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "Member"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Contact" ADD CONSTRAINT "Contact_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "Member"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -185,9 +184,6 @@ ALTER TABLE "Membership" ADD CONSTRAINT "Membership_memberId_fkey" FOREIGN KEY (
 ALTER TABLE "Membership" ADD CONSTRAINT "Membership_groupId_fkey" FOREIGN KEY ("groupId") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Member" ADD CONSTRAINT "Member_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "Address"("id") ON DELETE NO ACTION ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "MemberStudy" ADD CONSTRAINT "MemberStudy_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "Member"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -197,7 +193,7 @@ ALTER TABLE "MemberStudy" ADD CONSTRAINT "MemberStudy_studyId_fkey" FOREIGN KEY 
 ALTER TABLE "Material" ADD CONSTRAINT "Material_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "MaterialType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "MaterialType" ADD CONSTRAINT "MaterialType_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "MaterialType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "MaterialType" ADD CONSTRAINT "MaterialType_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "MaterialType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_group_visibility" ADD CONSTRAINT "_group_visibility_A_fkey" FOREIGN KEY ("A") REFERENCES "Group"("id") ON DELETE CASCADE ON UPDATE CASCADE;

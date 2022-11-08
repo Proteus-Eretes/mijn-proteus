@@ -1,6 +1,6 @@
 import { defineEventHandler } from "h3";
-import { prisma } from "~/server/prisma/client";
+import { study } from "~/server/logic";
 
 export default defineEventHandler(async () => {
-  return await prisma.contact.findMany();
+  return await study.getAllOptions();
 });

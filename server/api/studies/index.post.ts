@@ -1,10 +1,18 @@
-import { defineEventHandler, readBody } from "h3";
-import { Prisma } from "@prisma/client";
-import { prisma } from "~/server/prisma/client";
+import { defineEventHandler } from "h3";
+import { date, object, optional, size, string } from "superstruct";
+import { readValidatedBody } from "~/server/utils";
+import { study } from "~/server/logic";
+import { uuid } from "~/server/validation";
+
+const body = object({
+  studyNumber: optional(size(string(), 1, 40)),
+  startDate: date(),
+  stopDate: date(),
+  memberId: uuid(),
+  studyId: uuid(),
+});
 
 export default defineEventHandler(async (event) => {
-  const data = await readBody<Prisma.ContactCreateInput>(event);
-  return await prisma.contact.create({
-    data,
-  });
+  const data = await readValidatedBody(event, body);
+  return await study.create(data);
 });

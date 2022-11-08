@@ -91,13 +91,13 @@ enum StudyLevel {
 }
 
 model Address {
-  id      String  @id @default(uuid()) @db.Uuid
-  street  String  @db.VarChar(40)
-  number  String  @db.VarChar(40)
-  city    String  @db.VarChar(40)
-  zipcode String  @db.VarChar(20)
-  country String  @db.VarChar(40)
-  member  Member?
+  id      String @id @default(uuid()) @db.Uuid
+  street  String @db.VarChar(40)
+  number  String @db.VarChar(40)
+  city    String @db.VarChar(40)
+  zipcode String @db.VarChar(20)
+  country String @db.VarChar(40)
+  member  Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   memberId String @unique @db.Uuid
 }
@@ -129,11 +129,11 @@ model Group {
   members     Membership[]
   contacts    Contact[]
   children    Group[]      @relation("group_tree")
-  parent      Group        @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
+  parent      Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
   hiddenTo    Group[]      @relation("group_visibility")
   hiddenFrom  Group[]      @relation("group_visibility")
 
-  parentId String @db.Uuid
+  parentId String? @db.Uuid
 }
 
 // Lidmaatschap aan een groep
@@ -163,13 +163,11 @@ model Member {
   lastName    String        @db.VarChar(40)
   dateOfBirth DateTime      @db.Date
   sex         Sex
-  address     Address       @relation(fields: [addressId], references: [id], onDelete: NoAction)
+  address     Address?
   permissions Permission[]
   contacts    Contact[]
   memberships Membership[]
   studies     MemberStudy[]
-
-  addressId String @unique @db.Uuid
 }
 
 // Studiegevens van een lid
@@ -214,7 +212,7 @@ model Material {
   name       String       @unique @db.VarChar(40)
   comment    String       @default("") @db.VarChar(200)
   typeId     String       @db.Uuid
-  type       MaterialType @relation(fields: [typeId], references: [id])
+  type       MaterialType @relation(fields: [typeId], references: [id], onDelete: Restrict)
   lastUpdate DateTime     @default(now()) @updatedAt
 }
 
@@ -222,7 +220,7 @@ model MaterialType {
   id        String         @id @default(uuid()) @db.Uuid
   name      String         @unique @db.VarChar(40)
   parentId  String?        @db.Uuid
-  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id])
+  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id], onDelete: Restrict)
   children  MaterialType[] @relation("MaterialTypeTree")
   materials Material[]
 }

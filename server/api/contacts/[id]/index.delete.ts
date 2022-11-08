@@ -1,9 +1,7 @@
 import { defineEventHandler, getRouterParam } from "h3";
-import { prisma } from "~/server/prisma/client";
+import { contact } from "~/server/logic";
 
 export default defineEventHandler(async (event) => {
   const id = await getRouterParam(event, "id");
-  return await prisma.contact.delete({
-    where: { id },
-  });
+  return await contact.remove(id);
 });
