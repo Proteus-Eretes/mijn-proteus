@@ -46,7 +46,7 @@ Fortunally it's also very simple, to create the structure you can run the follow
 yarn migrate-dev
 ```
 
-Now to seed the database with some sample data found in `server/database/seeders`, you can run the following command.
+Now to seed the database with some sample data found in `server/prisma/seed`, you can run the following command.
 
 ```bash
 yarn seed
