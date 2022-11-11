@@ -1,15 +1,13 @@
 import { defineEventHandler, getRouterParam } from "h3";
-import { boolean, date, enums, object, size, string } from "superstruct";
-import { MemberType } from "@prisma/client";
+import { boolean, date, object, optional, size, string } from "superstruct";
 import { membership } from "~/server/logic";
 import { readValidatedBody } from "~/server/utils";
 
 const body = object({
-  function: size(string(), 2, 50),
-  startDate: date(),
-  stopDate: date(),
-  isAdmin: boolean(),
-  type: enums(Object.values(MemberType)),
+  function: optional(size(string(), 2, 50)),
+  startDate: optional(date()),
+  stopDate: optional(date()),
+  isAdmin: optional(boolean()),
 });
 
 export default defineEventHandler(async (event) => {

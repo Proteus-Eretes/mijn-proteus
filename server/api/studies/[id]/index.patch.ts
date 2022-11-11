@@ -5,8 +5,8 @@ import { study } from "~/server/logic";
 
 const body = object({
   studyNumber: optional(size(string(), 1, 40)),
-  startDate: date(),
-  stopDate: date(),
+  startDate: optional(date()),
+  stopDate: optional(date()),
 });
 
 export default defineEventHandler(async (event) => {

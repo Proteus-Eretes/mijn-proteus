@@ -5,13 +5,13 @@ import { readValidatedBody } from "~/server/utils";
 import { member } from "~/server/logic";
 
 const body = object({
-  title: enums(Object.values(NameTitle)),
-  initials: size(string(), 1, 10),
-  firstName: size(string(), 1, 40),
+  title: optional(enums(Object.values(NameTitle))),
+  initials: optional(size(string(), 1, 10)),
+  firstName: optional(size(string(), 1, 40)),
   insertion: optional(size(string(), 1, 10)),
-  lastName: size(string(), 1, 40),
-  dateOfBirth: date(),
-  sex: enums(Object.values(Sex)),
+  lastName: optional(size(string(), 1, 40)),
+  dateOfBirth: optional(date()),
+  sex: optional(enums(Object.values(Sex))),
 });
 
 export default defineEventHandler(async (event) => {
