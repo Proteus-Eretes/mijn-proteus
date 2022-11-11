@@ -1,0 +1,258 @@
+[
+  {
+    "name": "DSR Eretes",
+    "description": "Delftse Studenten Roeivereniging Eretes",
+    "startDate": "1966-01-01",
+    "stopDate": "1972-01-01"
+  },
+  {
+    "name": "VRV Proteus",
+    "description": "Virgiel Roei Vereniging Proteus",
+    "startDate": "1947-01-01",
+    "stopDate": "1972-01-01"
+  },
+  {
+    "name": "Oud Proteus-Eretes",
+    "description": "Oud-leden Vereniging Proteus-Eretes",
+    "startDate": "1964-01-01"
+  },
+  {
+    "name": "DSR Proteus-Eretes",
+    "description": "Delftse Studenten Roeivereniging Proteus-Eretes",
+    "startDate": "1947-01-01",
+    "children": [
+      {
+        "name": "Leden",
+        "description": "Leden der DSR Proteus-Eretes",
+        "children": [
+          {
+            "name": "Leden",
+            "description": "Leden der DSR Proteus-Eretes"
+          },
+          {
+            "name": "Ereleden",
+            "description": "Ereleden der DSR Proteus-Eretes"
+          },
+          {
+            "name": "Leden van Verdienste",
+            "description": "Leden van Verdienste der DSR Proteus-Eretes"
+          },
+          {
+            "name": "Nullen",
+            "description": "Aankomende leden der DSR Proteus-Eretes"
+          },
+          {
+            "name": "Coaches",
+            "description": "Mensen die (prof) coachen en niet (meer) lid zijn"
+          },
+          {
+            "name": "Ringvaart",
+            "description": "Mensen die op de vereniging trainen voor de ringvaart"
+          }
+        ]
+      },
+      {
+        "name": "Jaargroepen",
+        "description": "Jaargroepen der DSR Proteus-Eretes",
+        "children": [
+          {
+            "name": "Sapjes",
+            "description": "Sapjes overal",
+            "startDate": "2018-01-01"
+          },
+          {
+            "name": "Worstjes",
+            "description": "Of je worst lust",
+            "startDate": "2019-01-01"
+          },
+          {
+            "name": "Hondjes",
+            "description": "Who let the dogs out",
+            "startDate": "2020-01-01"
+          },
+          {
+            "name": "Dopjes",
+            "description": "Tja...",
+            "startDate": "2021-01-01"
+          },
+          {
+            "name": "Fluitjes",
+            "description": "Wie?",
+            "startDate": "2021-01-01"
+          }
+        ]
+      },
+      {
+        "name": "Commissies",
+        "description": "Commissies der DSR Proteus-Eretes",
+        "children": [
+          {
+            "name": "Bestuur",
+            "description": "Bestuur der DSR Proteus-Eretes",
+            "children": [
+              {
+                "name": "73",
+                "description": "Drieënzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2019-09-01",
+                "stopDate": "2020-09-01"
+              },
+              {
+                "name": "74",
+                "description": "Vierenzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2020-09-01",
+                "stopDate": "2021-09-01"
+              },
+              {
+                "name": "75",
+                "description": "Vijfenzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2021-09-01",
+                "stopDate": "2022-09-01"
+              },
+              {
+                "name": "76",
+                "description": "Zesenzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2022-09-01"
+              }
+            ]
+          },
+          {
+            "name": "Webcie",
+            "description": "Website commissie der DSR Proteus-Eretes",
+            "startDate": "2016-01-01"
+          }
+        ]
+      },
+      {
+        "name": "Vloten",
+        "description": "Vloten der DSR Proteus-Eretes",
+        "children": [
+          {
+            "name": "D.H.B.G. Delirium",
+            "description": "Delftsch Heeren Borrel Genootschap Delerium",
+            "startDate": "2000-01-01"
+          },
+          {
+            "name": "D.S.D.V. Magnum",
+            "description": "Delftse Studenten Damesch Vloot Magnum",
+            "startDate": "2000-01-01"
+          },
+          {
+            "name": "Team Tank",
+            "description": "Team Tank",
+            "startDate": "2000-01-01"
+          },
+          {
+            "name": "Trek",
+            "description": "Trek",
+            "startDate": "2000-01-01"
+          },
+          {
+            "name": "Lef!",
+            "description": "Lef!",
+            "startDate": "2000-01-01"
+          }
+        ]
+      },
+      {
+        "name": "Ploegen",
+        "description": "Ploegen der DSR Proteus-Eretes",
+        "children": [
+          {
+            "name": "Competitie",
+            "description": "Competitie ploegen",
+            "children": [
+              {
+                "name": "Heerenclubacht",
+                "description": "Heerenclubacht",
+                "children": [
+                  {
+                    "name": "CRUCIAAL",
+                    "description": "Cruciaal",
+                    "startDate": "2019-09-01"
+                  },
+                  {
+                    "name": "Prestige",
+                    "description": "Cruciaal",
+                    "startDate": "2020-09-01"
+                  },
+                  {
+                    "name": "Rigoreus",
+                    "description": "Cruciaal",
+                    "startDate": "2021-09-01"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Wedstrijd",
+            "description": "Wedstrijd ploegen",
+            "children": [
+              {
+                "name": "EJZ",
+                "description": "Eerstejaars Zwaar",
+                "children": [
+                  {
+                    "name": "2020",
+                    "description": "EJZ 2020"
+                  },
+                  {
+                    "name": "2021",
+                    "description": "EJZ 2021"
+                  },
+                  {
+                    "name": "2022",
+                    "description": "EJZ 2022"
+                  }
+                ]
+              },
+              {
+                "name": "EJL",
+                "description": "Eerstejaars Licht",
+                "children": [
+                  {
+                    "name": "2020",
+                    "description": "EJL 2020"
+                  },
+                  {
+                    "name": "2021",
+                    "description": "EJL 2021"
+                  },
+                  {
+                    "name": "2022",
+                    "description": "EJL 2022"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Coachkaders",
+        "description": "Coachkaders",
+        "children": [
+          {
+            "name": "EJZ Coaches",
+            "description": "EJZ Coaches",
+            "children": [
+              {
+                "name": "2020",
+                "description": "2020 Coaches"
+              },
+              {
+                "name": "2021",
+                "description": "2021 Coaches"
+              },
+              {
+                "name": "2022",
+                "description": "2022 Coaches"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+

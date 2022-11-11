@@ -1,6 +1,8 @@
 import materialType from "./materialType";
 import material from "./material";
 import quote from "./quote";
+import group from "./group";
+import study from "./study";
 
 (async () => {
   console.info("--=== Start Seeding ===--");
@@ -13,6 +15,12 @@ import quote from "./quote";
 
   console.info("-- Seeding Quotes --");
   await quote();
+
+  console.info("-- Seeding Groups --");
+  await group();
+
+  console.info("-- Seeding Studies --");
+  await study();
 
   console.info("--=== Seeding Finished ===--");
 })();
