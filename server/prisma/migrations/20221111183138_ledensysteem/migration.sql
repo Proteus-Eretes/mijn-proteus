@@ -1,14 +1,19 @@
+/*
+  Warnings:
+
+  - The primary key for the `Material` table will be changed. If it partially fails, the table could be left without primary key constraint.
+  - The primary key for the `MaterialType` table will be changed. If it partially fails, the table could be left without primary key constraint.
+  - The `parentId` column on the `MaterialType` table would be dropped and recreated. This will lead to data loss if there is data in the column.
+  - Changed the type of `id` on the `Material` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
+  - Changed the type of `typeId` on the `Material` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
+  - Changed the type of `id` on the `MaterialType` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
+
+*/
 -- CreateEnum
 CREATE TYPE "ContactType" AS ENUM ('EMAIL', 'INSTAGRAM', 'LINKEDIN', 'EMERGENCY', 'PHONE', 'WHATSAPP');
 
 -- CreateEnum
-CREATE TYPE "GroupType" AS ENUM ('ASSOCIATION', 'COACHES', 'COMMITTEE', 'EDITION', 'FLEET', 'TEAM', 'YEARGROUP');
-
--- CreateEnum
 CREATE TYPE "Institution" AS ENUM ('ERASMUS_UNIVERSITY_ROTTERDAM', 'FREE_UNIVERSITY_OF_AMSTERDAM', 'HAGUE_UNIVERSITY_OF_APPLIED_SCIENCES', 'INHOLLAND_UNIVERSITY_OF_APPLIED_SCIENCES', 'LEIDEN_UNIVERSITY', 'OPEN_UNIVERSITY', 'RADBOUD_UNIVERSITY', 'RIJKSUNIVERSITEIT_GRONINGEN', 'TILBURG_UNIVERSITY', 'UNIVERSITY_OF_AMSTERDAM', 'UNIVERSITY_OF_MAASTRICHT', 'UNIVERSITY_OF_TECHNOLOGY_DELFT', 'UNIVERSITY_OF_TECHNOLOGY_EINDHOVEN', 'UNIVERSITY_OF_TECHNOLOGY_TWENTE', 'UTRECHT_UNIVERSITY', 'WAGENINGEN_UNIVERSITY');
-
--- CreateEnum
-CREATE TYPE "MemberType" AS ENUM ('COACH', 'ERELID', 'LID', 'NUL', 'RINGVAART', 'VERDIENSTE');
 
 -- CreateEnum
 CREATE TYPE "NameTitle" AS ENUM ('BACC', 'BC', 'DRS', 'DR', 'DRHC', 'ING', 'IR', 'KAND', 'MR', 'PROF');
@@ -21,6 +26,28 @@ CREATE TYPE "Sex" AS ENUM ('MALE', 'FEMALE');
 
 -- CreateEnum
 CREATE TYPE "StudyLevel" AS ENUM ('ASSOCIATE_DEGREE', 'BACHELOR_OF_SCIENCE', 'MASTER_OF_SCIENCE', 'BACHELOR_OF_ARTS', 'MASTER_OF_ARTS', 'BACHELOR_OF_LAWS', 'MASTER_OF_LAWS', 'DOCTORATE');
+
+-- DropForeignKey
+ALTER TABLE "Material" DROP CONSTRAINT "Material_typeId_fkey";
+
+-- DropForeignKey
+ALTER TABLE "MaterialType" DROP CONSTRAINT "MaterialType_parentId_fkey";
+
+-- AlterTable
+ALTER TABLE "Material" DROP CONSTRAINT "Material_pkey",
+DROP COLUMN "id",
+ADD COLUMN     "id" UUID NOT NULL,
+DROP COLUMN "typeId",
+ADD COLUMN     "typeId" UUID NOT NULL,
+ADD CONSTRAINT "Material_pkey" PRIMARY KEY ("id");
+
+-- AlterTable
+ALTER TABLE "MaterialType" DROP CONSTRAINT "MaterialType_pkey",
+DROP COLUMN "id",
+ADD COLUMN     "id" UUID NOT NULL,
+DROP COLUMN "parentId",
+ADD COLUMN     "parentId" UUID,
+ADD CONSTRAINT "MaterialType_pkey" PRIMARY KEY ("id");
 
 -- CreateTable
 CREATE TABLE "Address" (
@@ -51,15 +78,12 @@ CREATE TABLE "Group" (
     "id" UUID NOT NULL,
     "name" VARCHAR(50) NOT NULL,
     "description" VARCHAR(120) NOT NULL DEFAULT '',
-    "isActive" BOOLEAN NOT NULL DEFAULT true,
     "startDate" DATE NOT NULL DEFAULT CURRENT_DATE,
-    "lastActive" DATE NOT NULL DEFAULT CURRENT_DATE,
-    "type" "GroupType" NOT NULL,
+    "stopDate" DATE NOT NULL DEFAULT CURRENT_DATE,
     "permissions" "Permission"[],
     "parentId" UUID,
 
-    CONSTRAINT "Group_pkey" PRIMARY KEY ("id"),
-    CHECK ( "lastActive" >= "startDate" )
+    CONSTRAINT "Group_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -69,12 +93,10 @@ CREATE TABLE "Membership" (
     "startDate" DATE NOT NULL DEFAULT CURRENT_DATE,
     "stopDate" DATE,
     "isAdmin" BOOLEAN NOT NULL DEFAULT false,
-    "type" "MemberType" NOT NULL,
     "memberId" UUID,
     "groupId" UUID NOT NULL,
 
-    CONSTRAINT "Membership_pkey" PRIMARY KEY ("id"),
-    CHECK ( "stopDate" >= "startDate" )
+    CONSTRAINT "Membership_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -95,14 +117,13 @@ CREATE TABLE "Member" (
 -- CreateTable
 CREATE TABLE "MemberStudy" (
     "id" UUID NOT NULL,
-    "studyNumber" VARCHAR(40) NOT NULL DEFAULT '',
+    "studentNumber" VARCHAR(40) NOT NULL DEFAULT '',
     "startDate" DATE NOT NULL,
     "stopDate" DATE,
     "memberId" UUID NOT NULL,
     "studyId" UUID NOT NULL,
 
-    CONSTRAINT "MemberStudy_pkey" PRIMARY KEY ("id"),
-    CHECK ( "stopDate" >= "startDate" )
+    CONSTRAINT "MemberStudy_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -116,35 +137,6 @@ CREATE TABLE "Study" (
 );
 
 -- CreateTable
-CREATE TABLE "Quote" (
-    "id" TEXT NOT NULL,
-    "content" VARCHAR(120) NOT NULL,
-    "by" VARCHAR(50) NOT NULL,
-
-    CONSTRAINT "Quote_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Material" (
-    "id" UUID NOT NULL,
-    "name" VARCHAR(40) NOT NULL,
-    "comment" VARCHAR(200) NOT NULL DEFAULT '',
-    "typeId" UUID NOT NULL,
-    "lastUpdate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Material_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "MaterialType" (
-    "id" UUID NOT NULL,
-    "name" VARCHAR(40) NOT NULL,
-    "parentId" UUID,
-
-    CONSTRAINT "MaterialType_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "_group_visibility" (
     "A" UUID NOT NULL,
     "B" UUID NOT NULL
@@ -152,12 +144,6 @@ CREATE TABLE "_group_visibility" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Address_memberId_key" ON "Address"("memberId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Material_name_key" ON "Material"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "MaterialType_name_key" ON "MaterialType"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_group_visibility_AB_unique" ON "_group_visibility"("A", "B");

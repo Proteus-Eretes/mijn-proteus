@@ -7,6 +7,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//
+// --=== LEDENSYSTEEM ===--
+//
+
 enum ContactType {
   EMAIL
   INSTAGRAM
@@ -14,16 +18,6 @@ enum ContactType {
   EMERGENCY
   PHONE
   WHATSAPP
-}
-
-enum GroupType {
-  ASSOCIATION
-  COACHES
-  COMMITTEE
-  EDITION
-  FLEET
-  TEAM
-  YEARGROUP
 }
 
 enum Institution {
@@ -43,15 +37,6 @@ enum Institution {
   UNIVERSITY_OF_TECHNOLOGY_TWENTE
   UTRECHT_UNIVERSITY
   WAGENINGEN_UNIVERSITY
-}
-
-enum MemberType {
-  COACH
-  ERELID
-  LID
-  NUL
-  RINGVAART
-  VERDIENSTE
 }
 
 enum NameTitle {
@@ -102,8 +87,6 @@ model Address {
   memberId String @unique @db.Uuid
 }
 
-// Contactgegevens
-//
 model Contact {
   id     String      @id @default(uuid()) @db.Uuid
   value  String      @db.VarChar(120)
@@ -115,16 +98,12 @@ model Contact {
   groupId  String? @db.Uuid
 }
 
-// Groep
-//
 model Group {
   id          String       @id @default(uuid()) @db.Uuid
   name        String       @db.VarChar(50)
   description String       @default("") @db.VarChar(120)
-  isActive    Boolean      @default(true)
   startDate   DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
-  lastActive  DateTime     @default(dbgenerated("CURRENT_DATE")) @updatedAt @db.Date
-  type        GroupType
+  stopDate    DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
   permissions Permission[]
   members     Membership[]
   contacts    Contact[]
@@ -136,15 +115,12 @@ model Group {
   parentId String? @db.Uuid
 }
 
-// Lidmaatschap aan een groep
-//
 model Membership {
   id        String     @id @default(uuid()) @db.Uuid
   function  String     @default("") @db.VarChar(50)
   startDate DateTime   @default(dbgenerated("CURRENT_DATE")) @db.Date
   stopDate  DateTime?  @db.Date
   isAdmin   Boolean    @default(false)
-  type      MemberType
   member    Member?    @relation(fields: [memberId], references: [id], onDelete: SetNull)
   group     Group      @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
@@ -152,8 +128,6 @@ model Membership {
   groupId  String  @db.Uuid
 }
 
-// Lid
-//
 model Member {
   id          String        @id @default(uuid()) @db.Uuid
   title       NameTitle
@@ -170,22 +144,18 @@ model Member {
   studies     MemberStudy[]
 }
 
-// Studiegevens van een lid
-//
 model MemberStudy {
-  id          String    @id @default(uuid()) @db.Uuid
-  studyNumber String    @default("") @db.VarChar(40)
-  startDate   DateTime  @db.Date
-  stopDate    DateTime? @db.Date
-  member      Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
-  study       Study     @relation(fields: [studyId], references: [id], onDelete: Restrict)
+  id            String    @id @default(uuid()) @db.Uuid
+  studentNumber String    @default("") @db.VarChar(40)
+  startDate     DateTime  @db.Date
+  stopDate      DateTime? @db.Date
+  member        Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  study         Study     @relation(fields: [studyId], references: [id], onDelete: Restrict)
 
   memberId String @db.Uuid
   studyId  String @db.Uuid
 }
 
-// Studie
-//
 model Study {
   id          String      @id @default(uuid()) @db.Uuid
   name        String      @db.VarChar(40)
@@ -194,6 +164,10 @@ model Study {
 
   memberStudies MemberStudy[]
 }
+
+//
+// --=== QUOTES ===--
+//
 
 model Quote {
   id      String @id @default(uuid())
