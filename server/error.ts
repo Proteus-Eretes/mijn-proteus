@@ -13,9 +13,9 @@ export interface ApiError<T extends ErrorCode> {
  * Don't forget to declare the context type and status code below.
  */
 export enum ErrorCode {
-  ValidationFailed,
-  NotFound,
-  InternalError,
+  ValidationFailed = "ValidationFailed",
+  NotFound = "NotFound",
+  InternalError = "InternalError",
 }
 
 /**

@@ -67,10 +67,7 @@ const h3Error = (err: ApiError<ErrorCode>) =>
   createError({
     statusCode: errorStatus[err.code],
     statusMessage: STATUS_CODES[errorStatus[err.code]],
-    data: {
-      code: ErrorCode[err.code],
-      context: err.context,
-    },
+    data: err,
     fatal: false,
     stack: undefined,
   });
