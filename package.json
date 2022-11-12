@@ -22,6 +22,9 @@
     "seed": "ts-node --files --experimental-specifier-resolution=node --esm server/prisma/seed/index.ts",
     "schema": "server/prisma/schema.prisma"
   },
+  "resolutions": {
+    "@vueuse/head": "v1.0.0-rc.14"
+  },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "@nuxtjs/tailwindcss": "^6.1.3",

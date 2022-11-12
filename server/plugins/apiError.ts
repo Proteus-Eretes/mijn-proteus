@@ -1,6 +1,6 @@
 import { STATUS_CODES } from "http";
 
-import { PrismaClientInitializationError } from "@prisma/client/runtime";
+import { PrismaClientInitializationError } from "@prisma/client/runtime/index.js";
 import { StructError } from "superstruct";
 
 import { ApiError, ErrorCode, errorStatus } from "../error";
