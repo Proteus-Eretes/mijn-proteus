@@ -1,7 +1,7 @@
 <template>
-  <div class="navbar p-0 mb-4">
+  <div class="navbar fixed bg-base-100/80 backdrop-blur max-lg:bottom-0">
     <div class="flex-1">
-      <div class="dropdown">
+      <div class="dropdown dropdown-top">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
           <Icon name="material-symbols:menu" size="24px" />
         </label>
@@ -33,6 +33,7 @@
       </NuxtLink>
     </div>
   </div>
+  <span class="w-full min-h-16 mb-2 max-lg:hidden"></span>
 </template>
 
 <script lang="ts" setup>
