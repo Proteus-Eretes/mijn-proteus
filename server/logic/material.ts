@@ -1,7 +1,9 @@
 import { Material } from "@prisma/client";
 
+import { ErrorCode } from "../error";
+import { apiError } from "../utils";
 import { Database } from "./database";
-import { makeError, materialType } from ".";
+import { materialType } from "./";
 
 /**
  * Add new material to the database.
@@ -15,7 +17,10 @@ export const create = async (
   comment?: string,
 ): Promise<Material> => {
   if (!(await materialType.get(type))) {
-    throw makeError(400, "The type for the material was not found!");
+    throw apiError(
+      ErrorCode.NotFound,
+      "The type for the material was not found!",
+    );
   }
 
   const db = Database.get();
