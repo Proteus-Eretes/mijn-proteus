@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto mb-8 sm:mt-12">
+  <div class="container h-screen flex flex-col items-center mx-auto">
     <NavBar />
     <slot />
   </div>

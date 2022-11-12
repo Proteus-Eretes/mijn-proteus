@@ -1,16 +1,19 @@
 const baseTheme = {
-  "primary": "#ffffff",
+  "primary": "#0056aa",
+  "primary-focus": "#000f75",
   "secondary": "#f07f3c",
-  "accent": "#003d6a",
-  "neutral": "#262931",
-  "base-100": "#004a95",
-  "info": "#207ee9",
-  "success": "#58e4d6",
-  "warning": "#d18c15",
-  "error": "#f77064",
+  "secondary-focus": "#fa4f29",
+  "accent": "#7c3aed",
+  "neutral": "#3d4451",
+  "base-100": "#fff",
+  "base-200": "#f5faff",
+  "info": "#3abff8",
+  "success": "#36d399",
+  "warning": "#fbbd23",
+  "error": "#f87272",
 
-  "--rounded-box": "1rem",
-  "--rounded-btn": "0.5rem",
+  "--rounded-box": "0.5rem",
+  "--rounded-btn": "0.25rem",
   "--rounded-badge": "1.9rem",
   "--animation-btn": "0.25s",
   "--animation-input": "0.2s",
@@ -22,9 +25,10 @@ const baseTheme = {
 };
 
 module.exports = {
-  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  plugins: [require("daisyui")],
   daisyui: {
     styled: true,
+    logs: false,
     themes: [
       {
         proteus: baseTheme,
