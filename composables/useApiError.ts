@@ -10,7 +10,7 @@ import { apiError } from "~~/server/utils";
  * @param err A reference to a possible fetch error.
  * @returns A reference to the API error.
  */
-export const useApiArror = (
+export const useApiError = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   err: Ref<FetchError<any> | null>,
 ): Ref<ApiError<ErrorCode> | null> =>

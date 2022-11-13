@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="divider divider-horizontal max-lg:hidden"></div>
-    <div class="flex-1 max-lg:pt-2">
+    <div class="flex-1 w-full max-lg:pt-2">
       <slot />
     </div>
   </div>
