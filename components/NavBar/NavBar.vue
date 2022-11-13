@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar fixed bg-base-100/80 backdrop-blur max-lg:bottom-0">
+  <div class="navbar fixed bg-base-100/80 backdrop-blur max-lg:bottom-0 z-30">
     <div class="flex-1">
       <div class="dropdown dropdown-top">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -45,7 +45,18 @@ export interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { name: "Roeien", icon: "material-symbols:rowing", target: "/roei" },
+  {
+    name: "Roeien",
+    icon: "material-symbols:rowing",
+    target: "/roei",
+    children: [
+      {
+        name: "Materiaal",
+        icon: "material-symbols:inventory",
+        target: "/material",
+      },
+    ],
+  },
   { name: "Foto's", icon: "material-symbols:camera", target: "/foto" },
   {
     name: "Leden",
