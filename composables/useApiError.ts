@@ -1,5 +1,5 @@
-import { Ref } from "vue";
-import { FetchError } from "ohmyfetch";
+import type { Ref } from "vue";
+import type { FetchError } from "ohmyfetch";
 
 import { ApiError, ErrorCode } from "~~/server/error";
 import { apiError } from "~~/server/utils";
