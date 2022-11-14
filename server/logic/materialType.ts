@@ -1,7 +1,8 @@
 import { MaterialType } from "@prisma/client";
 
 import { prisma } from "../prisma/client";
-import { makeError } from ".";
+import { ErrorCode } from "../error";
+import { apiError } from "../utils";
 
 /**
  * Create a new material type.
@@ -14,7 +15,7 @@ export const create = async (
   parentId?: string,
 ): Promise<MaterialType> => {
   if (parentId && !(await get(parentId))) {
-    throw makeError(400, "The parent type was not found!");
+    throw apiError(ErrorCode.NotFound, "The parent type was not found!");
   }
 
   return await prisma.materialType.create({
@@ -26,7 +27,7 @@ export const create = async (
 };
 
 /**
- * Get an unique material type by it's id.
+ * Get an unique material type by its id.
  * @param id The id to get the type by.
  * @returns The material type if found, or null otherwise.
  */
