@@ -1,5 +1,6 @@
-import { makeError } from "../logic";
 import { prisma } from "~/server/prisma/client";
+import { apiError } from "~/server/utils";
+import { ErrorCode } from "~/server/error";
 
 export default defineEventHandler(async () => {
   try {
@@ -8,6 +9,6 @@ export default defineEventHandler(async () => {
       status: "up",
     };
   } catch (e) {
-    throw makeError(503, e);
+    throw apiError(ErrorCode.InternalError, "Error trying to access database");
   }
 });
