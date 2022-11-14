@@ -1,0 +1,34 @@
+[
+  {
+    "title": "NONE",
+    "initials": "G.W.",
+    "firstName": "Gerben",
+    "insertion": "",
+    "lastName": "Mulder",
+    "dateOfBirth": "2000-08-25",
+    "sex": "MALE",
+    "address": {
+      "street": "Jeweetwelwaar",
+      "number": "123",
+      "city": "Delft",
+      "zipcode": "1234AB",
+      "country": "Nederland"
+    }
+  },
+  {
+    "title": "NONE",
+    "initials": "D.",
+    "firstName": "Dany",
+    "insertion": "",
+    "lastName": "Sluijk",
+    "dateOfBirth": "1998-08-06",
+    "sex": "MALE",
+    "address": {
+      "street": "Daarergens",
+      "number": "456",
+      "city": "Delft",
+      "zipcode": "5678CD",
+      "country": "Nederland"
+    }
+  }
+]
