@@ -49,6 +49,7 @@ enum NameTitle {
   IR
   KAND
   MR
+  NONE
   PROF
 }
 
@@ -103,8 +104,8 @@ model Group {
   name        String       @db.VarChar(50)
   description String       @default("") @db.VarChar(120)
   startDate   DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
-  stopDate    DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
-  permissions Permission[]
+  stopDate    DateTime?    @db.Date
+  permissions Permission[] @default(dbgenerated("'{}'"))
   members     Membership[]
   contacts    Contact[]
   children    Group[]      @relation("group_tree")
@@ -138,7 +139,7 @@ model Member {
   dateOfBirth DateTime      @db.Date
   sex         Sex
   address     Address?
-  permissions Permission[]
+  permissions Permission[]  @default(dbgenerated("'{}'"))
   contacts    Contact[]
   memberships Membership[]
   studies     MemberStudy[]
