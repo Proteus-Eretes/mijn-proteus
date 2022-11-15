@@ -27,9 +27,9 @@ export const createOption = async (data: {
 export const updateOption = async (
   id: string,
   data: {
-    name: string;
-    level: StudyLevel;
-    institution: Institution;
+    name?: string;
+    level?: StudyLevel;
+    institution?: Institution;
   },
 ): Promise<Study> => {
   return await prisma.study.update({
