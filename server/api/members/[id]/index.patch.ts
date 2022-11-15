@@ -1,17 +1,15 @@
-import { defineEventHandler, getRouterParam } from "h3";
-import { date, enums, object, optional, size, string } from "superstruct";
-import { NameTitle, Sex } from "@prisma/client";
+import { enums, object, optional, size, string } from "superstruct";
+import { NameTitle } from "@prisma/client";
 import { readValidatedBody } from "~/server/utils";
 import { member } from "~/server/logic";
 
 const body = object({
   title: optional(enums(Object.values(NameTitle))),
-  initials: optional(size(string(), 1, 10)),
-  firstName: optional(size(string(), 1, 40)),
-  insertion: optional(size(string(), 1, 10)),
-  lastName: optional(size(string(), 1, 40)),
-  dateOfBirth: optional(date()),
-  sex: optional(enums(Object.values(Sex))),
+  street: optional(size(string(), 1, 40)),
+  number: optional(size(string(), 1, 40)),
+  city: optional(size(string(), 1, 40)),
+  zipcode: optional(size(string(), 1, 20)),
+  country: optional(size(string(), 1, 40)),
 });
 
 export default defineEventHandler(async (event) => {

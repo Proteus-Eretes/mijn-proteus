@@ -12,24 +12,21 @@ const MemberSeed = object({
   lastName: string(),
   dateOfBirth: dateString(),
   sex: enums(Object.values(Sex)),
-  address: object({
-    street: string(),
-    number: string(),
-    city: string(),
-    zipcode: string(),
-    country: string(),
-  }),
+  street: string(),
+  number: string(),
+  city: string(),
+  zipcode: string(),
+  country: string(),
 });
 
 export default async () => {
   assert(members, array(MemberSeed));
 
   for (const m of members) {
-    const { address, dateOfBirth, ...memberData } = m;
+    const { dateOfBirth, ...memberData } = m;
     const newMember = await member.create({
       ...memberData,
       dateOfBirth: new Date(dateOfBirth),
-      address: { create: address },
     });
     console.info(
       `Created member: ${newMember.firstName} ${newMember.lastName}`,

@@ -1,15 +1,35 @@
-import { Contact, Prisma } from "@prisma/client";
-
+import { Contact, ContactType } from "@prisma/client";
 import { prisma } from "../prisma/client";
+import { apiError } from "../utils";
+import { ErrorCode } from "../error";
+import { group, member } from "../logic";
 
 /**
  * Add new contact information to the database.
  * @param data The data the new contact information.
  * @returns The created contact information.
  */
-export const create = async (
-  data: Prisma.ContactCreateInput,
-): Promise<Contact> => {
+export const create = async (data: {
+  value: string;
+  type: ContactType;
+  memberId?: string;
+  groupId?: string;
+}): Promise<Contact> => {
+  if (!data.memberId && !data.memberId) {
+    throw apiError(ErrorCode.ValidationFailed, {
+      message: "No memberId or groupId provided",
+      key: "memberId or groupId",
+      got: "undefined",
+      expected: "Either memberId or groupId to be defined",
+    });
+  }
+  if (data.memberId && !(await member.get(data.memberId))) {
+    throw apiError(ErrorCode.NotFound, "Member not found!");
+  }
+  if (data.groupId && !(await group.get(data.groupId))) {
+    throw apiError(ErrorCode.NotFound, "Group not found!");
+  }
+
   return await prisma.contact.create({
     data,
   });
@@ -23,7 +43,9 @@ export const create = async (
  */
 export const update = async (
   id: string,
-  data: Prisma.ContactUpdateInput,
+  data: {
+    value?: string;
+  },
 ): Promise<Contact> => {
   return await prisma.contact.update({
     where: { id },

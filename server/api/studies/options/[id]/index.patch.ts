@@ -1,4 +1,3 @@
-import { defineEventHandler, getRouterParam } from "h3";
 import { enums, object, optional, size, string } from "superstruct";
 import { Institution, StudyLevel } from "@prisma/client";
 import { readValidatedBody } from "~/server/utils";

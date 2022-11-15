@@ -1,4 +1,3 @@
-import { defineEventHandler, getRouterParam } from "h3";
 import { contact } from "~/server/logic";
 
 export default defineEventHandler(async (event) => {

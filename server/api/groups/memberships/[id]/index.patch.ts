@@ -1,4 +1,3 @@
-import { defineEventHandler, getRouterParam } from "h3";
 import { boolean, date, object, optional, size, string } from "superstruct";
 import { membership } from "~/server/logic";
 import { readValidatedBody } from "~/server/utils";

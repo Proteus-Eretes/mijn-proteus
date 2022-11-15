@@ -1,13 +1,37 @@
-import { Group, Prisma } from "@prisma/client";
-
+import { Group } from "@prisma/client";
 import { prisma } from "../prisma/client";
+import { apiError } from "../utils";
+import { ErrorCode } from "../error";
 
 /**
  * Add new group to the database.
  * @param data The data of the new group.
  * @returns The created group.
  */
-export const create = async (data: Prisma.GroupCreateInput): Promise<Group> => {
+export const create = async (data: {
+  name: string;
+  description: string;
+  startDate?: string;
+  stopDate?: string;
+  allowMembers?: boolean;
+  allowSubgroups?: boolean;
+  parentId?: string;
+}): Promise<Group> => {
+  if (data.parentId) {
+    const parent = await get(data.parentId);
+    if (!parent) {
+      throw apiError(ErrorCode.NotFound, "The parent group was not found!");
+    }
+    if (!parent.allowSubgroups) {
+      throw apiError(ErrorCode.ValidationFailed, {
+        message: "The parent group does not allow subgroups!",
+        key: "parent group -> allowSubgroups",
+        got: "false",
+        expected: "true",
+      });
+    }
+  }
+
   return await prisma.group.create({
     data,
   });
@@ -21,13 +45,21 @@ export const create = async (data: Prisma.GroupCreateInput): Promise<Group> => {
  */
 export const update = async (
   id: string,
-  data: Prisma.GroupUpdateInput,
+  data: {
+    name?: string;
+    description?: string;
+    startDate?: string;
+    stopDate?: string;
+    allowMembers?: boolean;
+    allowSubgroups?: boolean;
+  },
 ): Promise<Group> => {
   return await prisma.group.update({
     where: { id },
     data,
   });
 };
+
 /**
  * Get a group from the database.
  * @param id The id of the group

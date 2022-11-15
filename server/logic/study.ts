@@ -1,15 +1,18 @@
-import { MemberStudy, Study, Prisma } from "@prisma/client";
-
+import { MemberStudy, Study, StudyLevel, Institution } from "@prisma/client";
 import { prisma } from "../prisma/client";
+import { apiError } from "~/server/utils";
+import { ErrorCode } from "~/server/error";
 
 /**
  * Add new study to the database.
  * @param data The data of the new study.
  * @returns The created study.
  */
-export const createOption = async (
-  data: Prisma.StudyCreateInput,
-): Promise<Study> => {
+export const createOption = async (data: {
+  name: string;
+  level: StudyLevel;
+  institution: Institution;
+}): Promise<Study> => {
   return await prisma.study.create({
     data,
   });
@@ -23,12 +26,25 @@ export const createOption = async (
  */
 export const updateOption = async (
   id: string,
-  data: Prisma.StudyUpdateInput,
+  data: {
+    name: string;
+    level: StudyLevel;
+    institution: Institution;
+  },
 ): Promise<Study> => {
   return await prisma.study.update({
     where: { id },
     data,
   });
+};
+
+/**
+ * Get a study from the database.
+ * @param id The id of the study.
+ * @returns A study if found, otherwise null.
+ */
+export const getOption = async (id: string): Promise<Study | null> => {
+  return await prisma.study.findUnique({ where: { id } });
 };
 
 /**
@@ -52,9 +68,17 @@ export const removeOption = async (id: string): Promise<Study> => {
  * @param data The data of the new memberStudy.
  * @returns The created memberStudy.
  */
-export const create = async (
-  data: Prisma.MemberStudyUncheckedCreateInput,
-): Promise<MemberStudy> => {
+export const create = async (data: {
+  studentNumber?: string;
+  startDate: Date;
+  stopDate?: Date;
+  memberId: string;
+  studyId: string;
+}): Promise<MemberStudy> => {
+  if (!(await getOption(data.studyId))) {
+    throw apiError(ErrorCode.NotFound, "The study was not found!");
+  }
+
   return await prisma.memberStudy.create({
     data,
   });
@@ -68,7 +92,11 @@ export const create = async (
  */
 export const update = async (
   id: string,
-  data: Prisma.MemberStudyUpdateInput,
+  data: {
+    studentNumber?: string;
+    startDate?: Date;
+    stopDate?: Date;
+  },
 ): Promise<MemberStudy> => {
   return await prisma.memberStudy.update({
     where: { id },

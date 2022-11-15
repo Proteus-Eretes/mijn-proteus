@@ -1,4 +1,3 @@
-import { defineEventHandler } from "h3";
 import { boolean, date, object, optional, size, string } from "superstruct";
 import { readValidatedBody } from "~/server/utils";
 import { uuid } from "~/server/validation";

@@ -1,10 +1,9 @@
-import { defineEventHandler, getRouterParam } from "h3";
 import { date, object, optional, size, string } from "superstruct";
 import { readValidatedBody } from "~/server/utils";
 import { study } from "~/server/logic";
 
 const body = object({
-  studyNumber: optional(size(string(), 1, 40)),
+  studentNumber: optional(size(string(), 1, 40)),
   startDate: optional(date()),
   stopDate: optional(date()),
 });

@@ -1,4 +1,3 @@
-import { defineEventHandler } from "h3";
 import { NameTitle, Sex } from "@prisma/client";
 import { date, enums, object, size, string } from "superstruct";
 import { member } from "~/server/logic";
@@ -12,22 +11,14 @@ const body = object({
   lastName: size(string(), 1, 40),
   dateOfBirth: date(),
   sex: enums(Object.values(Sex)),
-  address: object({
-    street: size(string(), 1, 40),
-    number: size(string(), 1, 40),
-    city: size(string(), 1, 40),
-    zipcode: size(string(), 1, 20),
-    country: size(string(), 1, 40),
-  }),
+  street: size(string(), 1, 40),
+  number: size(string(), 1, 40),
+  city: size(string(), 1, 40),
+  zipcode: size(string(), 1, 20),
+  country: size(string(), 1, 40),
 });
 
 export default defineEventHandler(async (event) => {
   const data = await readValidatedBody(event, body);
-  const { address, ...memberData } = data;
-  return await member.create({
-    ...memberData,
-    address: {
-      create: address,
-    },
-  });
+  return await member.create(data);
 });

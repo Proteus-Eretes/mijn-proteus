@@ -1,5 +1,4 @@
-import { Member, Prisma } from "@prisma/client";
-
+import { Member, NameTitle, Sex } from "@prisma/client";
 import { prisma } from "../prisma/client";
 
 /**
@@ -7,9 +6,20 @@ import { prisma } from "../prisma/client";
  * @param data The data of the new member.
  * @returns The created member.
  */
-export const create = async (
-  data: Prisma.MemberCreateInput,
-): Promise<Member> => {
+export const create = async (data: {
+  title: NameTitle;
+  initials: string;
+  firstName: string;
+  insertion: string;
+  lastName: string;
+  dateOfBirth: Date;
+  sex: Sex;
+  street: string;
+  number: string;
+  city: string;
+  zipcode: string;
+  country: string;
+}): Promise<Member> => {
   return await prisma.member.create({
     data,
   });
@@ -23,7 +33,14 @@ export const create = async (
  */
 export const update = async (
   id: string,
-  data: Prisma.MemberUpdateInput,
+  data: {
+    title?: NameTitle;
+    street?: string;
+    number?: string;
+    city?: string;
+    zipcode?: string;
+    country?: string;
+  },
 ): Promise<Member> => {
   return await prisma.member.update({
     where: { id },
@@ -43,7 +60,6 @@ export const get = async (id: string): Promise<Member | null> => {
       contacts: true,
       studies: true,
       memberships: true,
-      address: true,
     },
   });
 };

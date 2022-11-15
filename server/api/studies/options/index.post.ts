@@ -1,4 +1,3 @@
-import { defineEventHandler } from "h3";
 import { enums, object, size, string } from "superstruct";
 import { Institution, StudyLevel } from "@prisma/client";
 import { study } from "~/server/logic";

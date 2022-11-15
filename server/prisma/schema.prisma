@@ -76,18 +76,6 @@ enum StudyLevel {
   DOCTORATE
 }
 
-model Address {
-  id      String @id @default(uuid()) @db.Uuid
-  street  String @db.VarChar(40)
-  number  String @db.VarChar(40)
-  city    String @db.VarChar(40)
-  zipcode String @db.VarChar(20)
-  country String @db.VarChar(40)
-  member  Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
-
-  memberId String @unique @db.Uuid
-}
-
 model Contact {
   id     String      @id @default(uuid()) @db.Uuid
   value  String      @db.VarChar(120)
@@ -100,18 +88,20 @@ model Contact {
 }
 
 model Group {
-  id          String       @id @default(uuid()) @db.Uuid
-  name        String       @db.VarChar(50)
-  description String       @default("") @db.VarChar(120)
-  startDate   DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
-  stopDate    DateTime?    @db.Date
-  permissions Permission[] @default(dbgenerated("'{}'"))
-  members     Membership[]
-  contacts    Contact[]
-  children    Group[]      @relation("group_tree")
-  parent      Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
-  hiddenTo    Group[]      @relation("group_visibility")
-  hiddenFrom  Group[]      @relation("group_visibility")
+  id             String       @id @default(uuid()) @db.Uuid
+  name           String       @db.VarChar(50)
+  description    String       @default("") @db.VarChar(120)
+  startDate      DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate       DateTime?    @db.Date
+  allowMembers   Boolean      @default(true)
+  allowSubgroups Boolean      @default(false)
+  permissions    Permission[] @default(dbgenerated("'{}'"))
+  members        Membership[]
+  contacts       Contact[]
+  children       Group[]      @relation("group_tree")
+  parent         Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
+  hiddenTo       Group[]      @relation("group_visibility")
+  hiddenFrom     Group[]      @relation("group_visibility")
 
   parentId String? @db.Uuid
 }
@@ -131,15 +121,18 @@ model Membership {
 
 model Member {
   id          String        @id @default(uuid()) @db.Uuid
-  title       NameTitle
+  title       NameTitle     @default(dbgenerated("'NONE'"))
   initials    String        @db.VarChar(10)
   firstName   String        @db.VarChar(40)
   insertion   String        @default("") @db.VarChar(10)
   lastName    String        @db.VarChar(40)
   dateOfBirth DateTime      @db.Date
   sex         Sex
-  address     Address?
-  permissions Permission[]  @default(dbgenerated("'{}'"))
+  street      String        @db.VarChar(40)
+  number      String        @db.VarChar(40)
+  city        String        @db.VarChar(40)
+  zipcode     String        @db.VarChar(20)
+  country     String        @db.VarChar(40)
   contacts    Contact[]
   memberships Membership[]
   studies     MemberStudy[]

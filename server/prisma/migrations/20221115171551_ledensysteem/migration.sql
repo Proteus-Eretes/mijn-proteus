@@ -50,19 +50,6 @@ ADD COLUMN     "parentId" UUID,
 ADD CONSTRAINT "MaterialType_pkey" PRIMARY KEY ("id");
 
 -- CreateTable
-CREATE TABLE "Address" (
-    "id" UUID NOT NULL,
-    "street" VARCHAR(40) NOT NULL,
-    "number" VARCHAR(40) NOT NULL,
-    "city" VARCHAR(40) NOT NULL,
-    "zipcode" VARCHAR(20) NOT NULL,
-    "country" VARCHAR(40) NOT NULL,
-    "memberId" UUID NOT NULL,
-
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Contact" (
     "id" UUID NOT NULL,
     "value" VARCHAR(120) NOT NULL,
@@ -80,7 +67,9 @@ CREATE TABLE "Group" (
     "description" VARCHAR(120) NOT NULL DEFAULT '',
     "startDate" DATE NOT NULL DEFAULT CURRENT_DATE,
     "stopDate" DATE,
-    "permissions" "Permission"[] NOT NULL DEFAULT '{}',
+    "allowMembers" BOOLEAN NOT NULL DEFAULT true,
+    "allowSubgroups" BOOLEAN NOT NULL DEFAULT false,
+    "permissions" "Permission"[] DEFAULT '{}',
     "parentId" UUID,
 
     CONSTRAINT "Group_pkey" PRIMARY KEY ("id")
@@ -102,14 +91,18 @@ CREATE TABLE "Membership" (
 -- CreateTable
 CREATE TABLE "Member" (
     "id" UUID NOT NULL,
-    "title" "NameTitle" NOT NULL,
+    "title" "NameTitle" NOT NULL DEFAULT 'NONE',
     "initials" VARCHAR(10) NOT NULL,
     "firstName" VARCHAR(40) NOT NULL,
     "insertion" VARCHAR(10) NOT NULL DEFAULT '',
     "lastName" VARCHAR(40) NOT NULL,
     "dateOfBirth" DATE NOT NULL,
     "sex" "Sex" NOT NULL,
-    "permissions" "Permission"[] NOT NULL DEFAULT '{}',
+    "street" VARCHAR(40) NOT NULL,
+    "number" VARCHAR(40) NOT NULL,
+    "city" VARCHAR(40) NOT NULL,
+    "zipcode" VARCHAR(20) NOT NULL,
+    "country" VARCHAR(40) NOT NULL,
 
     CONSTRAINT "Member_pkey" PRIMARY KEY ("id")
 );
@@ -143,16 +136,10 @@ CREATE TABLE "_group_visibility" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Address_memberId_key" ON "Address"("memberId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "_group_visibility_AB_unique" ON "_group_visibility"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_group_visibility_B_index" ON "_group_visibility"("B");
-
--- AddForeignKey
-ALTER TABLE "Address" ADD CONSTRAINT "Address_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "Member"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Contact" ADD CONSTRAINT "Contact_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "Member"("id") ON DELETE CASCADE ON UPDATE CASCADE;

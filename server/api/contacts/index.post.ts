@@ -1,4 +1,3 @@
-import { defineEventHandler } from "h3";
 import { enums, object, optional, size, string } from "superstruct";
 import { ContactType } from "@prisma/client";
 import { contact } from "~/server/logic";

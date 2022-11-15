@@ -1,15 +1,29 @@
-import { Membership, Prisma } from "@prisma/client";
-
+import { Membership } from "@prisma/client";
 import { prisma } from "../prisma/client";
+import { apiError } from "../utils";
+import { ErrorCode } from "../error";
+import { member, group } from "../logic";
 
 /**
  * Add new membership to the database.
  * @param data The data of the membership.
  * @returns The created membership.
  */
-export const create = async (
-  data: Prisma.MembershipUncheckedCreateInput,
-): Promise<Membership> => {
+export const create = async (data: {
+  function?: string;
+  startDate?: Date;
+  stopDate?: Date;
+  isAdmin?: boolean;
+  memberId: string;
+  groupId: string;
+}): Promise<Membership> => {
+  if (data.memberId && !(await member.get(data.memberId))) {
+    throw apiError(ErrorCode.NotFound, "Member not found!");
+  }
+  if (data.groupId && !(await group.get(data.groupId))) {
+    throw apiError(ErrorCode.NotFound, "Group not found!");
+  }
+
   return await prisma.membership.create({
     data,
   });
@@ -23,7 +37,12 @@ export const create = async (
  */
 export const update = async (
   id: string,
-  data: Prisma.MembershipUpdateInput,
+  data: {
+    function?: string;
+    startDate?: Date;
+    stopDate?: Date;
+    isAdmin?: boolean;
+  },
 ): Promise<Membership> => {
   return await prisma.membership.update({
     where: { id },
