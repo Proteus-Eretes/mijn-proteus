@@ -1,0 +1,295 @@
+[
+  {
+    "name": "DSR Eretes",
+    "description": "Delftse Studenten Roeivereniging Eretes",
+    "startDate": "1966-01-01",
+    "stopDate": "1972-01-01"
+  },
+  {
+    "name": "VRV Proteus",
+    "description": "Virgiel Roei Vereniging Proteus",
+    "startDate": "1947-01-01",
+    "stopDate": "1972-01-01"
+  },
+  {
+    "name": "Oud Proteus-Eretes",
+    "description": "Oud-leden Vereniging Proteus-Eretes",
+    "startDate": "1964-01-01"
+  },
+  {
+    "name": "DSR Proteus-Eretes",
+    "description": "Delftse Studenten Roeivereniging Proteus-Eretes",
+    "startDate": "1947-01-01",
+    "allowMembers": false,
+    "allowSubgroups": true,
+    "children": [
+      {
+        "name": "Leden",
+        "description": "Leden der DSR Proteus-Eretes",
+        "allowMembers": true,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "Leden",
+            "description": "Leden der DSR Proteus-Eretes",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Ereleden",
+            "description": "Ereleden der DSR Proteus-Eretes",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Leden van Verdienste",
+            "description": "Leden van Verdienste der DSR Proteus-Eretes",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Nullen",
+            "description": "Aankomende leden der DSR Proteus-Eretes",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Coaches",
+            "description": "Mensen die (prof) coachen en niet (meer) lid zijn",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Ringvaart",
+            "description": "Mensen die op de vereniging trainen voor de ringvaart",
+            "allowMembers": true,
+            "allowSubgroups": false
+          }
+        ]
+      },
+      {
+        "name": "Jaargroepen",
+        "description": "Jaargroepen der DSR Proteus-Eretes",
+        "allowMembers": false,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "Sapjes",
+            "description": "Sapjes overal",
+            "startDate": "2018-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Worstjes",
+            "description": "Of je worst lust",
+            "startDate": "2019-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          }
+        ]
+      },
+      {
+        "name": "Commissies",
+        "description": "Commissies der DSR Proteus-Eretes",
+        "allowMembers": false,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "Bestuur",
+            "description": "Bestuur der DSR Proteus-Eretes",
+            "allowMembers": false,
+            "allowSubgroups": true,
+            "children": [
+              {
+                "name": "75",
+                "description": "Vijfenzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2021-09-01",
+                "stopDate": "2022-09-01",
+                "allowMembers": false,
+                "allowSubgroups": true
+              },
+              {
+                "name": "76",
+                "description": "Zesenzeventigste bestuur der DSR Proteus-Eretes",
+                "startDate": "2022-09-01",
+                "allowMembers": false,
+                "allowSubgroups": true
+              }
+            ]
+          },
+          {
+            "name": "Webcie",
+            "description": "Website commissie der DSR Proteus-Eretes",
+            "startDate": "2016-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          }
+        ]
+      },
+      {
+        "name": "Vloten",
+        "description": "Vloten der DSR Proteus-Eretes",
+        "allowMembers": false,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "D.H.B.G. Delirium",
+            "description": "Delftsch Heeren Borrel Genootschap Delerium",
+            "startDate": "2000-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "D.S.D.V. Magnum",
+            "description": "Delftse Studenten Damesch Vloot Magnum",
+            "startDate": "2000-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Team Tank",
+            "description": "Team Tank",
+            "startDate": "2000-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Trek",
+            "description": "Trek",
+            "startDate": "2000-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          },
+          {
+            "name": "Lef!",
+            "description": "Lef!",
+            "startDate": "2000-01-01",
+            "allowMembers": true,
+            "allowSubgroups": false
+          }
+        ]
+      },
+      {
+        "name": "Ploegen",
+        "description": "Ploegen der DSR Proteus-Eretes",
+        "allowMembers": false,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "Competitie",
+            "description": "Competitie ploegen",
+            "allowMembers": false,
+            "allowSubgroups": true,
+            "children": [
+              {
+                "name": "Heerenclubacht",
+                "description": "Heerenclubacht",
+                "allowMembers": false,
+                "allowSubgroups": true,
+                "children": [
+                  {
+                    "name": "CRUCIAAL",
+                    "description": "Cruciaal",
+                    "startDate": "2019-09-01",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  },
+                  {
+                    "name": "Prestige",
+                    "description": "Cruciaal",
+                    "startDate": "2020-09-01",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Wedstrijd",
+            "description": "Wedstrijd ploegen",
+            "allowMembers": false,
+            "allowSubgroups": true,
+            "children": [
+              {
+                "name": "EJZ",
+                "description": "Eerstejaars Zwaar",
+                "allowMembers": false,
+                "allowSubgroups": true,
+                "children": [
+                  {
+                    "name": "2021",
+                    "description": "EJZ 2021",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  },
+                  {
+                    "name": "2022",
+                    "description": "EJZ 2022",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  }
+                ]
+              },
+              {
+                "name": "EJL",
+                "description": "Eerstejaars Licht",
+                "allowMembers": false,
+                "allowSubgroups": true,
+                "children": [
+                  {
+                    "name": "2021",
+                    "description": "EJL 2021",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  },
+                  {
+                    "name": "2022",
+                    "description": "EJL 2022",
+                    "allowMembers": true,
+                    "allowSubgroups": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Coachkaders",
+        "description": "Coachkaders",
+        "allowMembers": false,
+        "allowSubgroups": true,
+        "children": [
+          {
+            "name": "EJZ Coaches",
+            "description": "EJZ Coaches",
+            "allowMembers": false,
+            "allowSubgroups": true,
+            "children": [
+              {
+                "name": "2020",
+                "description": "2020 Coaches",
+                "allowMembers": true,
+                "allowSubgroups": false
+              },
+              {
+                "name": "2021",
+                "description": "2021 Coaches",
+                "allowMembers": true,
+                "allowSubgroups": false
+              },
+              {
+                "name": "2022",
+                "description": "2022 Coaches",
+                "allowMembers": true,
+                "allowSubgroups": false
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

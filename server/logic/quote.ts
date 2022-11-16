@@ -1,6 +1,6 @@
 import { Prisma, Quote } from "@prisma/client";
 
-import { Database } from "./database";
+import { prisma } from "../prisma/client";
 
 /**
  * Create a new quote.
@@ -10,9 +10,7 @@ import { Database } from "./database";
 export const create = async (
   quote: Prisma.QuoteCreateInput,
 ): Promise<Quote> => {
-  const db = Database.get();
-
-  return await db.quote.create({
+  return await prisma.quote.create({
     data: quote,
   });
 };
@@ -22,7 +20,5 @@ export const create = async (
  * @returns A list of all quotes.
  */
 export const getAll = async (): Promise<Quote[]> => {
-  const db = Database.get();
-
-  return await db.quote.findMany();
+  return await prisma.quote.findMany();
 };

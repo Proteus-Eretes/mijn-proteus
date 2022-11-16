@@ -2,13 +2,14 @@ import { Material } from "@prisma/client";
 
 import { ErrorCode } from "../error";
 import { apiError } from "../utils";
-import { Database } from "./database";
+import { prisma } from "../prisma/client";
 import { materialType } from "./";
 
 /**
  * Add new material to the database.
  * @param name The name of the new material.
  * @param type The ID of the type.
+ * @param comment Additional information about this material
  * @returns The created material.
  */
 export const create = async (
@@ -23,9 +24,7 @@ export const create = async (
     );
   }
 
-  const db = Database.get();
-
-  return await db.material.create({
+  return await prisma.material.create({
     data: {
       typeId: type,
       name,
@@ -39,6 +38,5 @@ export const create = async (
  * @returns A list of all materials.
  */
 export const getAll = async (): Promise<Material[]> => {
-  const db = Database.get();
-  return await db.material.findMany();
+  return await prisma.material.findMany();
 };

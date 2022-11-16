@@ -1,8 +1,8 @@
 import { MaterialType } from "@prisma/client";
 
+import { prisma } from "../prisma/client";
 import { ErrorCode } from "../error";
 import { apiError } from "../utils";
-import { Database } from "./database";
 
 /**
  * Create a new material type.
@@ -18,9 +18,7 @@ export const create = async (
     throw apiError(ErrorCode.NotFound, "The parent type was not found!");
   }
 
-  const db = Database.get();
-
-  return await db.materialType.create({
+  return await prisma.materialType.create({
     data: {
       name,
       parentId,
@@ -29,14 +27,12 @@ export const create = async (
 };
 
 /**
- * Get an unique material type by it's id.
+ * Get an unique material type by its id.
  * @param id The id to get the type by.
  * @returns The material type if found, or null otherwise.
  */
 export const get = async (id: string): Promise<MaterialType | null> => {
-  const db = Database.get();
-
-  return await db.materialType.findUnique({
+  return await prisma.materialType.findUnique({
     where: {
       id,
     },
@@ -51,9 +47,7 @@ export const get = async (id: string): Promise<MaterialType | null> => {
 export const findByName = async (
   name: string,
 ): Promise<MaterialType | null> => {
-  const db = Database.get();
-
-  return await db.materialType.findUnique({
+  return await prisma.materialType.findUnique({
     where: {
       name,
     },
@@ -65,6 +59,5 @@ export const findByName = async (
  * @returns A list of all material types.
  */
 export const getAll = async (): Promise<MaterialType[]> => {
-  const db = Database.get();
-  return await db.materialType.findMany();
+  return await prisma.materialType.findMany();
 };
