@@ -7,6 +7,162 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//
+// --=== LEDENSYSTEEM ===--
+//
+
+enum ContactType {
+  EMAIL
+  INSTAGRAM
+  LINKEDIN
+  EMERGENCY
+  PHONE
+  WHATSAPP
+}
+
+enum Institution {
+  ERASMUS_UNIVERSITY_ROTTERDAM
+  FREE_UNIVERSITY_OF_AMSTERDAM
+  HAGUE_UNIVERSITY_OF_APPLIED_SCIENCES
+  INHOLLAND_UNIVERSITY_OF_APPLIED_SCIENCES
+  LEIDEN_UNIVERSITY
+  OPEN_UNIVERSITY
+  RADBOUD_UNIVERSITY
+  RIJKSUNIVERSITEIT_GRONINGEN
+  TILBURG_UNIVERSITY
+  UNIVERSITY_OF_AMSTERDAM
+  UNIVERSITY_OF_MAASTRICHT
+  UNIVERSITY_OF_TECHNOLOGY_DELFT
+  UNIVERSITY_OF_TECHNOLOGY_EINDHOVEN
+  UNIVERSITY_OF_TECHNOLOGY_TWENTE
+  UTRECHT_UNIVERSITY
+  WAGENINGEN_UNIVERSITY
+}
+
+enum NameTitle {
+  BACC
+  BC
+  DRS
+  DR
+  DRHC
+  ING
+  IR
+  KAND
+  MR
+  NONE
+  PROF
+}
+
+enum Permission {
+  ADMIN
+  MANAGE_GROUPS
+  MANAGE_PERMISSIONS
+  MANAGE_MATERIALS
+}
+
+enum Sex {
+  MALE
+  FEMALE
+}
+
+enum StudyLevel {
+  ASSOCIATE_DEGREE
+  BACHELOR_OF_SCIENCE
+  MASTER_OF_SCIENCE
+  BACHELOR_OF_ARTS
+  MASTER_OF_ARTS
+  BACHELOR_OF_LAWS
+  MASTER_OF_LAWS
+  DOCTORATE
+}
+
+model Contact {
+  id     String      @id @default(uuid()) @db.Uuid
+  value  String      @db.VarChar(120)
+  type   ContactType
+  member Member?     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  group  Group?      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  memberId String? @db.Uuid
+  groupId  String? @db.Uuid
+}
+
+model Group {
+  id             String       @id @default(uuid()) @db.Uuid
+  name           String       @db.VarChar(50)
+  description    String       @default("") @db.VarChar(120)
+  startDate      DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate       DateTime?    @db.Date
+  allowMembers   Boolean      @default(true)
+  allowSubgroups Boolean      @default(false)
+  permissions    Permission[] @default(dbgenerated("'{}'"))
+  members        Membership[]
+  contacts       Contact[]
+  children       Group[]      @relation("group_tree")
+  parent         Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
+  hiddenTo       Group[]      @relation("group_visibility")
+  hiddenFrom     Group[]      @relation("group_visibility")
+
+  parentId String? @db.Uuid
+}
+
+model Membership {
+  id        String     @id @default(uuid()) @db.Uuid
+  function  String     @default("") @db.VarChar(50)
+  startDate DateTime   @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate  DateTime?  @db.Date
+  isAdmin   Boolean    @default(false)
+  member    Member?    @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  group     Group      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  memberId String? @db.Uuid
+  groupId  String  @db.Uuid
+}
+
+model Member {
+  id          String        @id @default(uuid()) @db.Uuid
+  title       NameTitle     @default(dbgenerated("'NONE'"))
+  initials    String        @db.VarChar(10)
+  firstName   String        @db.VarChar(40)
+  insertion   String        @default("") @db.VarChar(10)
+  lastName    String        @db.VarChar(40)
+  dateOfBirth DateTime      @db.Date
+  sex         Sex
+  street      String        @db.VarChar(40)
+  number      String        @db.VarChar(40)
+  city        String        @db.VarChar(40)
+  zipcode     String        @db.VarChar(20)
+  country     String        @db.VarChar(40)
+  contacts    Contact[]
+  memberships Membership[]
+  studies     MemberStudy[]
+}
+
+model MemberStudy {
+  id            String    @id @default(uuid()) @db.Uuid
+  studentNumber String    @default("") @db.VarChar(40)
+  startDate     DateTime  @db.Date
+  stopDate      DateTime? @db.Date
+  member        Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  study         Study     @relation(fields: [studyId], references: [id], onDelete: Restrict)
+
+  memberId String @db.Uuid
+  studyId  String @db.Uuid
+}
+
+model Study {
+  id          String      @id @default(uuid()) @db.Uuid
+  name        String      @db.VarChar(40)
+  level       StudyLevel
+  institution Institution
+
+  memberStudies MemberStudy[]
+}
+
+//
+// --=== QUOTES ===--
+//
+
 model Quote {
   id      String @id @default(uuid())
   content String @db.VarChar(120)
@@ -20,19 +176,19 @@ model Quote {
 // https://github.com/prisma/prisma/issues/2505
 
 model Material {
-  id         String       @id @default(uuid())
+  id         String       @id @default(uuid()) @db.Uuid
   name       String       @unique @db.VarChar(40)
   comment    String       @default("") @db.VarChar(200)
-  typeId     String
-  type       MaterialType @relation(fields: [typeId], references: [id])
+  typeId     String       @db.Uuid
+  type       MaterialType @relation(fields: [typeId], references: [id], onDelete: Restrict)
   lastUpdate DateTime     @default(now()) @updatedAt
 }
 
 model MaterialType {
-  id        String         @id @default(uuid())
+  id        String         @id @default(uuid()) @db.Uuid
   name      String         @unique @db.VarChar(40)
-  parentId  String?
-  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id])
+  parentId  String?        @db.Uuid
+  parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id], onDelete: Restrict)
   children  MaterialType[] @relation("MaterialTypeTree")
   materials Material[]
 }
