@@ -1,6 +1,12 @@
 import { STATUS_CODES } from "http";
 
-import { PrismaClientInitializationError } from "@prisma/client/runtime/index.js";
+import {
+  PrismaClientInitializationError,
+  PrismaClientKnownRequestError,
+  PrismaClientRustPanicError,
+  PrismaClientUnknownRequestError,
+  PrismaClientValidationError,
+} from "@prisma/client/runtime/index.js";
 import { StructError } from "superstruct";
 
 import { ApiError, ErrorCode, errorStatus } from "../error";
@@ -30,7 +36,7 @@ export default defineNitroPlugin((nitroApp) => {
  */
 const transformErrors = (err: unknown): ApiError<ErrorCode> => {
   // Basic check if the error received is already an API error.
-  if (err && typeof err === "object" && "code" in err) {
+  if (err && typeof err === "object" && "_apierr" in err) {
     return err as ApiError<ErrorCode>;
   }
 
@@ -45,9 +51,32 @@ const transformErrors = (err: unknown): ApiError<ErrorCode> => {
     });
   }
 
-  // Prisma is not conected, so return a server error.
-  if (err instanceof PrismaClientInitializationError) {
-    return apiError(ErrorCode.InternalError, "Database connection failed.");
+  // A documented Prisma error occured.
+  if (err instanceof PrismaClientKnownRequestError) {
+    const target = err.meta?.target as unknown as Record<string, unknown>;
+    const targetName = target?.name as unknown as string | undefined;
+
+    switch (err.code) {
+      case "P2002":
+        // Unique constraint validation.
+        return apiError(ErrorCode.Exists, {
+          message: `Instance with "${targetName}" already exists with the same name.`,
+          field: targetName,
+        });
+      default:
+        // Error is not covered.
+        return apiError(ErrorCode.InternalError, "Database Error");
+    }
+  }
+
+  // Other Prisma errors we don't really care about.
+  if (
+    err instanceof PrismaClientUnknownRequestError ||
+    err instanceof PrismaClientRustPanicError ||
+    err instanceof PrismaClientInitializationError ||
+    err instanceof PrismaClientValidationError
+  ) {
+    return apiError(ErrorCode.InternalError, "Database Error");
   }
 
   // None of the errors matched, so we return a generic internal error.

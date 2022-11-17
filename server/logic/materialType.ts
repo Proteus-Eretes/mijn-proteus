@@ -18,6 +18,13 @@ export const create = async (
     throw apiError(ErrorCode.NotFound, "The parent type was not found!");
   }
 
+  if (await findByName(name)) {
+    throw apiError(ErrorCode.Exists, {
+      message: `Material type "${name}" already exists.`,
+      field: "name",
+    });
+  }
+
   return await prisma.materialType.create({
     data: {
       name,

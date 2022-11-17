@@ -24,6 +24,13 @@ export const create = async (
     );
   }
 
+  if (await findByName(name)) {
+    throw apiError(ErrorCode.Exists, {
+      message: `Material "${name}" already exists.`,
+      field: "name",
+    });
+  }
+
   return await prisma.material.create({
     data: {
       typeId: type,
@@ -39,4 +46,17 @@ export const create = async (
  */
 export const getAll = async (): Promise<Material[]> => {
   return await prisma.material.findMany();
+};
+
+/**
+ * Get a material by it's name.
+ * @param name The name of the material to find.
+ * @returns The material if found, or null otherwise.
+ */
+export const findByName = async (name: string): Promise<Material | null> => {
+  return await prisma.material.findUnique({
+    where: {
+      name,
+    },
+  });
 };
