@@ -43,6 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: "/"
           EDITORCONFIG_FILE_NAME: ".editorconfig"
+          FILTER_REGEX_EXCLUDE: .*.github/.*.md
           YAML_ERROR_ON_WARNING: true
           VALIDATE_JAVASCRIPT_ES: false
           VALIDATE_TYPESCRIPT_ES: false
@@ -61,7 +62,6 @@ jobs:
           VALIDATE_PYTHON: false
           VALIDATE_R: false
           VALIDATE_XML: false
-          FILTER_REGEX_EXCLUDE: .github/**/*.md
   prettier:
     name: Validate Prettier
     runs-on: ubuntu-latest
