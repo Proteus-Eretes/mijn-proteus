@@ -12,7 +12,7 @@
 - [ ] 📖 Documentatie (updates aan JSDoc of README)
 - [ ] 🐞 Bugfix (een non-breaking change dat een probleem oplost)
 - [ ] 👌 Enhancement (verbeterd een bestaande functionaliteit: oa. performance)
-- [ ] ✨ New feature (een non-breaking change dat functionaliteit toevoegt)
+- [ ] ✨ Nieuwe feature (een non-breaking change dat functionaliteit toevoegt)
 - [ ] ⚠️ Breaking change (fix of feature dat bestaande functionaliteiten verandert)
 
 ### 📚 Beschrijving
