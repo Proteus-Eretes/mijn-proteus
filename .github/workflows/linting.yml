@@ -61,6 +61,7 @@ jobs:
           VALIDATE_PYTHON: false
           VALIDATE_R: false
           VALIDATE_XML: false
+          FILTER_REGEX_EXCLUDE: .github/**/*.md
   prettier:
     name: Validate Prettier
     runs-on: ubuntu-latest

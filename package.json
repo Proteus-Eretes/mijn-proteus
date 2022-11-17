@@ -16,7 +16,8 @@
     "migrate-dev": "prisma migrate dev",
     "migrate-reset": "prisma migrate reset",
     "seed": "prisma db seed",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "prettier": "prettier --write ."
   },
   "prisma": {
     "seed": "ts-node --files --experimental-specifier-resolution=node --esm server/prisma/seed/index.ts",
