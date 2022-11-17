@@ -8,8 +8,8 @@
 
 <!-- Wat voor soort aanpassing brengt jouw code? Vink aan alle relevante opties. -->
 
-- [ ] 📖 Documentatie (updates aan JSDocs of README)
-- [ ] 🐞 Bug fix (een non-breaking change dat een probleem oplost)
+- [ ] 📖 Documentatie (updates aan JSDoc of README)
+- [ ] 🐞 Bugfix (een non-breaking change dat een probleem oplost)
 - [ ] 👌 Enhancement (verbeterd een bestaande functionaliteit: oa. performance)
 - [ ] ✨ New feature (een non-breaking change dat functionaliteit toevoegt)
 - [ ] ⚠️ Breaking change (fix of feature dat bestaande functionaliteiten verandert)
