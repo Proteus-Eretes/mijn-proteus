@@ -63,7 +63,7 @@ const transformErrors = (err: unknown): ApiError<ErrorCode> => {
  * @param err The API error which should be returned.
  * @returns An H3 error with the api error embedded correctly.
  */
-const h3Error = (err: ApiError<ErrorCode>) =>
+export const h3Error = (err: ApiError<ErrorCode>) =>
   createError({
     statusCode: errorStatus[err.code],
     statusMessage: STATUS_CODES[errorStatus[err.code]],
