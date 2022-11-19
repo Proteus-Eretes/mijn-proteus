@@ -19,8 +19,6 @@ type GroupTree = {
   description: string;
   startDate?: string;
   stopDate?: string;
-  allowMembers?: boolean;
-  allowSubgroups?: boolean;
   children?: GroupTree[];
 };
 
@@ -29,8 +27,6 @@ const GroupSeed: Describe<GroupTree> = object({
   description: size(string(), 2, 120),
   startDate: optional(dateString()),
   stopDate: optional(dateString()),
-  allowMembers: optional(boolean()),
-  allowSubgroups: optional(boolean()),
   children: lazy(() => optional(array(GroupSeed))),
 });
 
@@ -41,8 +37,6 @@ const makeGroup = async (child: GroupTree, parent?: Group, level = 0) => {
       description: child.description,
       startDate: new Date(child.startDate ?? parent?.startDate ?? "2000-01-01"),
       stopDate: child.stopDate ? new Date(child.stopDate) : undefined,
-      allowMembers: child.allowMembers,
-      allowSubgroups: child.allowSubgroups,
       parentId: parent?.id,
     },
   });

@@ -14,22 +14,13 @@ export const create = async (data: {
   description: string;
   startDate?: string;
   stopDate?: string;
-  allowMembers?: boolean;
-  allowSubgroups?: boolean;
   parentId?: string;
 }): Promise<Group> => {
   if (data.parentId) {
     const parent = await get(data.parentId);
+
     if (!parent) {
       throw apiError(ErrorCode.NotFound, "The parent group was not found!");
-    }
-    if (!parent.allowSubgroups) {
-      throw apiError(ErrorCode.ValidationFailed, {
-        message: "The parent group does not allow subgroups!",
-        key: "parent group -> allowSubgroups",
-        got: "false",
-        expected: "true",
-      });
     }
   }
 
