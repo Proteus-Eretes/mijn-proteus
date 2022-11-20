@@ -11,7 +11,7 @@ ALTER TABLE "Membership" DROP CONSTRAINT "Membership_memberId_fkey";
 
 -- AlterTable
 ALTER TABLE "Group" DROP COLUMN "allowMembers",
-DROP COLUMN "allowSubgroups",
+DROP COLUMN "allowSubgroups";
 
 -- AlterTable
 ALTER TABLE "Membership" ALTER COLUMN "memberId" SET NOT NULL;
