@@ -12,20 +12,20 @@ export const addConstraints = async () => {
     // --- Functions
     // Define some helper functions used with constraints
     prisma.$executeRawUnsafe(`
-    CREATE OR REPLACE FUNCTION validate_group_members(type uuid) RETURNS boolean AS $valid$
-    BEGIN
-      IF NOT EXISTS (SELECT 1 FROM "Group" where type = "parentId") THEN
-        RETURN TRUE;
-      END IF;
+      CREATE OR REPLACE FUNCTION validate_group_members(type uuid) RETURNS boolean AS $valid$
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM "Group" where type = "parentId") THEN
+          RETURN TRUE;
+        END IF;
 
-      IF NOT EXISTS (SELECT 1 FROM "Membership" where type = "groupId") THEN
-        RETURN TRUE;
-      END IF;
+        IF NOT EXISTS (SELECT 1 FROM "Membership" where type = "groupId") THEN
+          RETURN TRUE;
+        END IF;
 
-      RAISE EXCEPTION 'Groups cannot have subgroups AND members associated.';
-    END;
-    $valid$ LANGUAGE plpgsql;
-  `),
+        RAISE EXCEPTION 'Groups cannot have subgroups AND members associated.';
+      END;
+      $valid$ LANGUAGE plpgsql;
+    `),
     prisma.$executeRawUnsafe(`
       CREATE OR REPLACE FUNCTION validate_material_type(type uuid) RETURNS boolean AS $valid$
       BEGIN
@@ -38,6 +38,25 @@ export const addConstraints = async () => {
         END IF;
 
         RAISE EXCEPTION 'Material type cannot have children AND materials associated.';
+      END;
+      $valid$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION validate_group_tree(curr uuid, target uuid) RETURNS boolean AS $valid$
+      DECLARE
+        parent uuid;
+      BEGIN
+        IF curr = target THEN
+          RAISE EXCEPTION 'Groups are required to be a tree.';
+        END IF;
+
+        SELECT "parentId" INTO parent FROM "Group" WHERE "id" = curr;
+
+        IF parent IS NULL THEN
+          RETURN TRUE;
+        END IF;
+
+        RETURN validate_group_tree(parent, target);
       END;
       $valid$ LANGUAGE plpgsql;
     `),
@@ -84,6 +103,26 @@ export const addConstraints = async () => {
       INITIALLY DEFERRED
       FOR EACH ROW
       EXECUTE FUNCTION group_subgroupusers_validate()
+    `),
+
+    // Groups cannot have a circulair reference (groups should be a tree).
+    prisma.$executeRawUnsafe(`DROP TRIGGER IF EXISTS group_tree on "Group"`),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION group_tree() RETURNS trigger AS $group$
+      BEGIN
+        PERFORM validate_group_tree(NEW."parentId", NEW."id");
+
+        RETURN NEW;
+      END;
+      $group$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE CONSTRAINT TRIGGER group_tree
+      AFTER INSERT OR UPDATE OF "id", "parentId"
+      ON "Group"
+      INITIALLY DEFERRED
+      FOR EACH ROW
+      EXECUTE FUNCTION group_tree()
     `),
 
     // --- MemberStudy
