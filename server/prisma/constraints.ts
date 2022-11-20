@@ -9,6 +9,10 @@ import { prisma } from "./client";
  */
 export const addConstraints = async () => {
   return await prisma.$transaction([
+    // --- Extensions
+    // Are needed by some constraints.
+    prisma.$executeRawUnsafe(`CREATE EXTENSION IF NOT EXISTS btree_gist`),
+
     // --- Functions
     // Define some helper functions used with constraints
     prisma.$executeRawUnsafe(`
@@ -206,6 +210,18 @@ export const addConstraints = async () => {
       FOR EACH ROW
       EXECUTE FUNCTION membership_subgroupusers_validate()
     `),
+
+    // Requires multiple memberships of members in a group to not overlap.
+    prisma.$executeRawUnsafe(
+      `ALTER TABLE "Membership" DROP CONSTRAINT IF EXISTS membership_overlap`,
+    ),
+    prisma.$executeRawUnsafe(
+      `ALTER TABLE "Membership" ADD CONSTRAINT membership_overlap EXCLUDE USING gist (
+        "memberId" WITH =,
+        "groupId" WITH =,
+        daterange("startDate", COALESCE("stopDate", 'infinity'::date)) WITH &&
+      )`,
+    ),
 
     // --- Member
     // A member should at least have an email and phone number associated.
