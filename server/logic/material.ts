@@ -1,9 +1,6 @@
 import { Material } from "@prisma/client";
 
-import { ErrorCode } from "../error";
-import { apiError } from "../utils";
 import { prisma } from "../prisma/client";
-import { materialType } from "./";
 
 /**
  * Add new material to the database.
