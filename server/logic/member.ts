@@ -1,4 +1,4 @@
-import { Member, NameTitle, Sex } from "@prisma/client";
+import type { Member, NameTitle, Sex, Prisma } from "@prisma/client";
 
 import { prisma } from "../prisma/client";
 
@@ -20,9 +20,10 @@ export const create = async (data: {
   city: string;
   zipcode: string;
   country: string;
+  contacts?: Prisma.ContactCreateWithoutMemberInput[];
 }): Promise<Member> => {
   return await prisma.member.create({
-    data,
+    data: { ...data, contacts: { create: data.contacts } },
   });
 };
 

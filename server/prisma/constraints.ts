@@ -60,6 +60,21 @@ export const addConstraints = async () => {
       END;
       $valid$ LANGUAGE plpgsql;
     `),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION validate_member_contacts(member uuid) RETURNS boolean AS $valid$
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM "Contact" where member = "memberId" AND "type" = 'EMAIL') THEN
+          RAISE EXCEPTION 'A member needs at least an email address.';
+        END IF;
+
+        IF NOT EXISTS (SELECT 1 FROM "Contact" where member = "memberId" AND "type" = 'PHONE') THEN
+          RAISE EXCEPTION 'A member needs at least an phone number.';
+        END IF;
+
+        RETURN true;
+      END;
+      $valid$ LANGUAGE plpgsql;
+    `),
 
     // --- Contact
     // Ensures that a contact has either a group or a member associated.
@@ -69,6 +84,34 @@ export const addConstraints = async () => {
     prisma.$executeRawUnsafe(
       `ALTER TABLE "Contact" ADD CONSTRAINT contact_exclusive_connection CHECK (("memberId" IS NULL ) != ("groupId" IS NULL))`,
     ),
+
+    // A member should at least have an email and phone number associated.
+    prisma.$executeRawUnsafe(
+      `DROP TRIGGER IF EXISTS contact_memberemail on "Contact"`,
+    ),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION contact_memberemail() RETURNS trigger AS $contact$
+      BEGIN
+        IF OLD."memberId" IS NOT NULL THEN
+          PERFORM validate_member_contacts(OLD."memberId");
+        END IF;
+
+        IF NEW."memberId" IS NOT NULL THEN
+          PERFORM validate_member_contacts(NEW."memberId");
+        END IF;
+
+        RETURN NEW;
+      END;
+      $contact$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE CONSTRAINT TRIGGER contact_memberemail
+      AFTER INSERT OR UPDATE OR DELETE
+      ON "Contact"
+      INITIALLY DEFERRED
+      FOR EACH ROW
+      EXECUTE FUNCTION contact_memberemail()
+    `),
 
     // --- Group
     // Start date is before end date, if the end date exists.
@@ -135,6 +178,7 @@ export const addConstraints = async () => {
     ),
 
     // --- Membership
+    // Makes sure that a group doesn't both have subgroups and users.
     prisma.$executeRawUnsafe(
       `DROP TRIGGER IF EXISTS membership_subgroupusers on "Membership"`,
     ),
@@ -153,6 +197,28 @@ export const addConstraints = async () => {
       INITIALLY DEFERRED
       FOR EACH ROW
       EXECUTE FUNCTION membership_subgroupusers_validate()
+    `),
+
+    // --- Member
+    // A member should at least have an email and phone number associated.
+    prisma.$executeRawUnsafe(
+      `DROP TRIGGER IF EXISTS member_emailcontact on "Member"`,
+    ),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION member_emailcontact() RETURNS trigger AS $member$
+      BEGIN
+        PERFORM validate_member_contacts(NEW."id");
+        RETURN NEW;
+      END;
+      $member$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE CONSTRAINT TRIGGER member_emailcontact
+      AFTER INSERT OR UPDATE OF "id"
+      ON "Member"
+      INITIALLY DEFERRED
+      FOR EACH ROW
+      EXECUTE FUNCTION member_emailcontact()
     `),
 
     // --- MaterialType
