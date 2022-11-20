@@ -1,7 +1,6 @@
 import {
   array,
   assert,
-  boolean,
   Describe,
   lazy,
   object,
