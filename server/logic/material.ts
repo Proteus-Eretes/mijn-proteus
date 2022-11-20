@@ -17,20 +17,6 @@ export const create = async (
   type: string,
   comment?: string,
 ): Promise<Material> => {
-  if (!(await materialType.get(type))) {
-    throw apiError(
-      ErrorCode.NotFound,
-      "The type for the material was not found!",
-    );
-  }
-
-  if (await findByName(name)) {
-    throw apiError(ErrorCode.Exists, {
-      message: `Material "${name}" already exists.`,
-      field: "name",
-    });
-  }
-
   return await prisma.material.create({
     data: {
       typeId: type,

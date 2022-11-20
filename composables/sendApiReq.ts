@@ -1,8 +1,7 @@
-import { FetchError } from "ohmyfetch";
+import type { FetchError } from "ohmyfetch";
 
 import { toApiError } from "./toApiError";
 import { ApiError, ErrorCode } from "~~/server/error";
-import { apiError } from "~~/server/utils";
 
 export async function sendApiReq<T>(
   url: string,
@@ -17,15 +16,7 @@ export async function sendApiReq<T>(
       data,
     };
   } catch (e) {
-    let error;
-
-    if (e instanceof FetchError) {
-      error = toApiError(e) || undefined;
-    } else {
-      error = apiError(ErrorCode.InternalError, undefined);
-    }
-
-    return { error };
+    return { error: toApiError(e as FetchError) || undefined };
   }
 }
 
