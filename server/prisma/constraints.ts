@@ -178,6 +178,14 @@ export const addConstraints = async () => {
     ),
 
     // --- Membership
+    // Start date is before end date, if the end date exists.
+    prisma.$executeRawUnsafe(
+      `ALTER TABLE "Membership" DROP CONSTRAINT IF EXISTS membership_start_before_end`,
+    ),
+    prisma.$executeRawUnsafe(
+      `ALTER TABLE "Membership" ADD CONSTRAINT membership_start_before_end CHECK ("startDate" < "stopDate" OR "stopDate" IS NULL)`,
+    ),
+
     // Makes sure that a group doesn't both have subgroups and users.
     prisma.$executeRawUnsafe(
       `DROP TRIGGER IF EXISTS membership_subgroupusers on "Membership"`,
