@@ -46,25 +46,6 @@ export const addConstraints = async () => {
       $valid$ LANGUAGE plpgsql;
     `),
     prisma.$executeRawUnsafe(`
-      CREATE OR REPLACE FUNCTION validate_group_tree(curr uuid, target uuid) RETURNS boolean AS $valid$
-      DECLARE
-        parent uuid;
-      BEGIN
-        IF curr = target THEN
-          RAISE EXCEPTION 'Groups are required to be a tree.';
-        END IF;
-
-        SELECT "parentId" INTO parent FROM "Group" WHERE "id" = curr;
-
-        IF parent IS NULL THEN
-          RETURN TRUE;
-        END IF;
-
-        RETURN validate_group_tree(parent, target);
-      END;
-      $valid$ LANGUAGE plpgsql;
-    `),
-    prisma.$executeRawUnsafe(`
       CREATE OR REPLACE FUNCTION validate_member_contacts(member uuid) RETURNS boolean AS $valid$
       BEGIN
         IF NOT EXISTS (SELECT 1 FROM "Contact" where member = "memberId" AND "type" = 'EMAIL') THEN
@@ -154,6 +135,25 @@ export const addConstraints = async () => {
 
     // Groups cannot have a circulair reference (groups should be a tree).
     prisma.$executeRawUnsafe(`DROP TRIGGER IF EXISTS group_tree on "Group"`),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION validate_group_tree(curr uuid, target uuid) RETURNS boolean AS $valid$
+      DECLARE
+        parent uuid;
+      BEGIN
+        IF curr = target THEN
+          RAISE EXCEPTION 'Groups are required to be a tree.';
+        END IF;
+
+        SELECT "parentId" INTO parent FROM "Group" WHERE "id" = curr;
+
+        IF parent IS NULL THEN
+          RETURN TRUE;
+        END IF;
+
+        RETURN validate_group_tree(parent, target);
+      END;
+      $valid$ LANGUAGE plpgsql;
+    `),
     prisma.$executeRawUnsafe(`
       CREATE OR REPLACE FUNCTION group_tree() RETURNS trigger AS $group$
       BEGIN
@@ -271,6 +271,47 @@ export const addConstraints = async () => {
       INITIALLY DEFERRED
       FOR EACH ROW
       EXECUTE FUNCTION materialtype_instance_validate()
+    `),
+
+    // Material types cannot have a circulair reference (material types should be a tree).
+    prisma.$executeRawUnsafe(
+      `DROP TRIGGER IF EXISTS materialtype_tree on "MaterialType"`,
+    ),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION validate_materialtype_tree(curr uuid, target uuid) RETURNS boolean AS $valid$
+      DECLARE
+        parent uuid;
+      BEGIN
+        IF curr = target THEN
+          RAISE EXCEPTION 'Material types are required to be a tree.';
+        END IF;
+
+        SELECT "parentId" INTO parent FROM "MaterialType" WHERE "id" = curr;
+
+        IF parent IS NULL THEN
+          RETURN TRUE;
+        END IF;
+
+        RETURN validate_materialtype_tree(parent, target);
+      END;
+      $valid$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION materialtype_tree() RETURNS trigger AS $materialtype$
+      BEGIN
+        PERFORM validate_materialtype_tree(NEW."parentId", NEW."id");
+
+        RETURN NEW;
+      END;
+      $materialtype$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE CONSTRAINT TRIGGER materialtype_tree
+      AFTER INSERT OR UPDATE OF "id", "parentId"
+      ON "MaterialType"
+      INITIALLY DEFERRED
+      FOR EACH ROW
+      EXECUTE FUNCTION materialtype_tree()
     `),
 
     // --- Material
