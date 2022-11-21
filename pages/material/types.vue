@@ -12,9 +12,7 @@
         <tr v-for="materialType in types" :key="materialType.id">
           <td>{{ materialType.name }}</td>
           <td>
-            {{
-              materialType.parentId ? parentNames[materialType.parentId] : ""
-            }}
+            {{ materialType.parent?.name || "-" }}
           </td>
         </tr>
         <tr v-if="!types || !('length' in types) || types.length === 0">
@@ -31,16 +29,13 @@
 </template>
 
 <script lang="ts" setup>
-import { MaterialType } from ".prisma/client";
-
 const {
   data: types,
   error,
   refresh,
-} = await useFetch<MaterialType[]>("/api/material/type");
-
-const parentNames = computed(() => {
-  const kv = types.value?.map((type) => [type.id, type.name]) || [];
-  return Object.fromEntries(kv);
-});
+} = await useFetch<
+  Awaited<
+    ReturnType<typeof import("~~/server/api/material/type/index.get").default>
+  >
+>("/api/material/type");
 </script>

@@ -1,4 +1,3 @@
-import { MaterialType } from "@prisma/client";
 import { object, string, size, optional } from "superstruct";
 
 import { materialType } from "~~/server/logic";
@@ -10,7 +9,7 @@ const Body = object({
   parentId: optional(uuid()),
 });
 
-export default defineEventHandler<MaterialType>(async (e) => {
+export default defineEventHandler(async (e) => {
   const body = await readValidatedBody(e, Body);
 
   return await materialType.create(body.name, body.parentId);

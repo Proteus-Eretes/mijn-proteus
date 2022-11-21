@@ -1,5 +1,3 @@
-import { MaterialType } from "@prisma/client";
-
 import { prisma } from "../prisma/client";
 import { ErrorCode } from "../error";
 import { apiError } from "../utils";
@@ -10,10 +8,7 @@ import { apiError } from "../utils";
  * @param parentId The ID of the parent type, if it exists.
  * @returns The created material type.
  */
-export const create = async (
-  name: string,
-  parentId?: string,
-): Promise<MaterialType> => {
+export const create = async (name: string, parentId?: string) => {
   if (parentId && !(await get(parentId))) {
     throw apiError(ErrorCode.NotFound, "The parent type was not found!");
   }
@@ -38,7 +33,7 @@ export const create = async (
  * @param id The id to get the type by.
  * @returns The material type if found, or null otherwise.
  */
-export const get = async (id: string): Promise<MaterialType | null> => {
+export const get = async (id: string) => {
   return await prisma.materialType.findUnique({
     where: {
       id,
@@ -51,9 +46,7 @@ export const get = async (id: string): Promise<MaterialType | null> => {
  * @param name The name of the type to get.
  * @returns The material type if found, or null otherwise.
  */
-export const findByName = async (
-  name: string,
-): Promise<MaterialType | null> => {
+export const findByName = async (name: string) => {
   return await prisma.materialType.findUnique({
     where: {
       name,
@@ -65,6 +58,23 @@ export const findByName = async (
  * Get all material types.
  * @returns A list of all material types.
  */
-export const getAll = async (): Promise<MaterialType[]> => {
+export const getAll = async () => {
   return await prisma.materialType.findMany();
+};
+
+/**
+ * Get all material types with their parents information.
+ * @returns A list of all material types with the parents name.
+ */
+export const getAllWithParent = async () => {
+  return await prisma.materialType.findMany({
+    include: {
+      parent: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
 };
