@@ -1,0 +1,35 @@
+name: "\U0001F680 Feature request"
+description: Maak een suggestie om Mijn Proteus-Eretes te verbeteren
+labels: ["\U000023F3 Pending triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Wat fijn dat je een suggestie wilt maken om Mijn Proteus-Eretes te verbeteren!
+        Afhankelijk van de complexiteit en jouw eigen input, zullen we proberen de beste ideeën zo snel mogelijk te implementeren!
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Beschrijf de feature
+      description: Een korte maar duidelijke beschrijving van de feature die volgens jou Mijn Proteus-Eretes zou verbeteren.
+      placeholder: Beschrijving
+    validations:
+      required: true
+  - type: checkboxes
+    id: additional-info
+    attributes:
+      label: Extra informatie
+      description: Extra informatie voor ons om vervolgstappen te bedenken
+      options:
+        - label: Ben je bereid om te helpen deze feature te realiseren?
+        - label: Ben je geïnteresseerd om bij de Webcie te werken aan Mijn Proteus-Eretes?
+  - type: checkboxes
+    id: required-info
+    attributes:
+      label: Laatste checks
+      description: Als je het volgende hebt gedaan, is de kans groter dat je suggestie in behandeling wordt genomen
+      options:
+        - label: Lees [contributie handleiding](https://github.com/Proteus-Eretes/mijn-proteus/issues).
+          required: true
+        - label: Check bestaande [issues](https://github.com/Proteus-Eretes/mijn-proteus/issues).
+          required: true
