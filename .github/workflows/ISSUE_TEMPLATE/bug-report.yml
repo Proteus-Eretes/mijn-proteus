@@ -1,0 +1,37 @@
+name: "\U0001F41E Bug report"
+description: Maak een report aan om Mijn Proteus-Eretes te verbeteren.
+labels: ["\U000023F3 Pending triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Wat fijn dat je de tijd neemt om problemen met Mijn Proteus-Eretes te melden!
+        Afhankelijk van de noodzaak en complexiteit van de bug, zullen we proberen het zo snel mogelijk op te lossen!
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproductie
+      description: Beschrijf in groot detail hoe deze bug te reproduceren is. Zonder reproductie kan er niet aan gewerkt worden.
+      placeholder: Reproductie
+    validations:
+      required: true
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: Beschrijf de bug
+      description: Een duidelijke beschrijving van de bug.
+      placeholder: Beschrijving
+    validations:
+      required: true
+  - type: textarea
+    id: additonal
+    attributes:
+      label: Extra context
+      description: Benoem hier extra context dat niet onder 'Reproductie' en 'Beschrijf de bug' valt.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Als je de bug niet kan beschrijven, copy-paste hier de error logs.
+      render: shell
