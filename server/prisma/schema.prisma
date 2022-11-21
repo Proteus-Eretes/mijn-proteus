@@ -110,11 +110,11 @@ model Membership {
   startDate DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
   stopDate  DateTime? @db.Date
   isAdmin   Boolean   @default(false)
-  member    Member    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member    Member?   @relation(fields: [memberId], references: [id], onDelete: SetNull)
   group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
-  memberId String @db.Uuid
-  groupId  String @db.Uuid
+  memberId String? @db.Uuid
+  groupId  String  @db.Uuid
 }
 
 model Member {

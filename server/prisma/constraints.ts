@@ -220,6 +220,8 @@ export const addConstraints = async () => {
         "memberId" WITH =,
         "groupId" WITH =,
         daterange("startDate", COALESCE("stopDate", 'infinity'::date)) WITH &&
+      ) WHERE (
+        "memberId" IS NOT NULL
       )`,
     ),
 
