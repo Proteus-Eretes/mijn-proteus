@@ -24,7 +24,7 @@ body:
       options:
         - label: Ben je bereid om te helpen deze feature te realiseren?
         - label: "Ben je geïnteresseerd om bij de Webcie te werken aan Mijn\
-          Proteus-Eretes?"
+            Proteus-Eretes?"
   - type: checkboxes
     id: required-info
     attributes:
@@ -33,8 +33,8 @@ body:
         suggestie in behandeling wordt genomen"
       options:
         - label: "Lees [contributie handleiding](https://github.com/Proteus-Er\
-          etes/mijn-proteus/issues)."
+            etes/mijn-proteus/issues)."
           required: true
         - label: "Check bestaande [issues](https://github.com/Proteus-Eretes/m\
-          ijn-proteus/issues)."
+            ijn-proteus/issues)."
           required: true
