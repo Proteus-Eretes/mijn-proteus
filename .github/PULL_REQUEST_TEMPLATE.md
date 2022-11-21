@@ -1,10 +1,12 @@
+# Titel
+
 <!--- ☝️ PR titel moet in de stijl van conventional commits (https://conventionalcommits.org) -->
 
-### 🔗 Linked issue
+## 🔗 Linked issue
 
-<!-- Zorg dat er een open issue is en plaats het nummber hier (bijv. #123) -->
+<!-- Zorg dat er een open issue is en plaats het nummer hier (bijv. #123) -->
 
-### ❓ Wat voor soort aanpassing?
+## ❓ Wat voor soort aanpassing?
 
 <!-- Wat voor soort aanpassing brengt jouw code? Vink aan alle relevante opties. -->
 
@@ -14,13 +16,13 @@
 - [ ] ✨ Nieuwe feature (een non-breaking change dat functionaliteit toevoegt)
 - [ ] ⚠️ Breaking change (fix of feature dat bestaande functionaliteiten verandert)
 
-### 📚 Beschrijving
+## 📚 Beschrijving
 
 <!-- Beschrijf je aanpassing in detail -->
 <!-- Waarom is deze aanpassing nodig? Wat probleem lost dit op? -->
-<!-- Als het een open issue oplost, link de issue hier. Bijvoorbeeld "Resolves #1337" -->
+<!-- Als het een open issue oplost, link het issue hier. Bijvoorbeeld "Resolves #1337" -->
 
-### 📝 Checklist
+## 📝 Checklist
 
 <!-- Vink aan wanneer je het hebt gedaan. -->
 
