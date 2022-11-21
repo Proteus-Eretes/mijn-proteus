@@ -53,7 +53,7 @@ export const addConstraints = async () => {
         END IF;
 
         IF NOT EXISTS (SELECT 1 FROM "Contact" where member = "memberId" AND "type" = 'PHONE') THEN
-          RAISE EXCEPTION 'A member needs at least an phone number.';
+          RAISE EXCEPTION 'A member needs at least a phone number.';
         END IF;
 
         RETURN true;
