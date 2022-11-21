@@ -1,3 +1,5 @@
+import { addConstraints } from "../constraints";
+
 import materialType from "./materialType";
 import material from "./material";
 import quote from "./quote";
@@ -6,6 +8,10 @@ import group from "./group";
 import member from "./member";
 
 (async () => {
+  console.info("--=== Adding Constraints ===--");
+  await addConstraints();
+  console.info("--=== Constraints Finished ===--");
+
   console.info("--=== Start Seeding ===--");
 
   console.info("-- Seeding Material types --");
