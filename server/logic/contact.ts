@@ -1,4 +1,5 @@
 import { Contact, ContactType } from "@prisma/client";
+
 import { prisma } from "../prisma/client";
 import { apiError } from "../utils";
 import { ErrorCode } from "../error";

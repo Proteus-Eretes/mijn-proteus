@@ -11,7 +11,11 @@
     "number": "123",
     "city": "Delft",
     "zipcode": "1234AB",
-    "country": "Nederland"
+    "country": "Nederland",
+    "contacts": [
+      { "type": "PHONE", "value": "+31612345678" },
+      { "type": "EMAIL", "value": "gerben@example.com" }
+    ]
   },
   {
     "title": "NONE",
@@ -25,6 +29,10 @@
     "number": "456",
     "city": "Delft",
     "zipcode": "5678CD",
-    "country": "Nederland"
+    "country": "Nederland",
+    "contacts": [
+      { "type": "PHONE", "value": "+31687654321" },
+      { "type": "EMAIL", "value": "dany@example.com" }
+    ]
   }
 ]
