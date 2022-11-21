@@ -4,14 +4,15 @@ labels: ["\U000023F3 Pending triage"]
 body:
   - type: markdown
     attributes:
-      value: |
-        Wat fijn dat je de tijd neemt om problemen met Mijn Proteus-Eretes te melden!
-        Afhankelijk van de noodzaak en complexiteit van de bug, zullen we proberen het zo snel mogelijk op te lossen!
+      value: "Wat fijn dat je de tijd neemt om problemen met Mijn Proteus-\
+        Eretes te melden!\nAfhankelijk van de noodzaak en complexiteit van de \
+        bug, zullen we proberen het zo snel mogelijk op te lossen!"
   - type: textarea
     id: reproduction
     attributes:
       label: Reproductie
-      description: Beschrijf in groot detail hoe deze bug te reproduceren is. Zonder reproductie kan er niet aan gewerkt worden.
+      description: "Beschrijf in groot detail hoe deze bug te reproduceren is.\
+        Zonder reproductie kan er niet aan gewerkt worden."
       placeholder: Reproductie
     validations:
       required: true
@@ -27,7 +28,8 @@ body:
     id: additonal
     attributes:
       label: Extra context
-      description: Benoem hier extra context dat niet onder 'Reproductie' en 'Beschrijf de bug' valt.
+      description: "Benoem hier extra context dat niet onder 'Reproductie' \
+        en 'Beschrijf de bug' valt."
   - type: textarea
     id: logs
     attributes:
