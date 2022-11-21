@@ -1,12 +1,8 @@
 <template>
   <div class="form-control max-lg:hidden mx-4">
-    <input
-      type="text"
-      placeholder="Proteus Zoek!"
-      class="input input-bordered"
-    />
+    <InputText placeholder="Proteus Zoek!" bordered />
   </div>
-  <button class="btn btn-ghost btn-circle lg:hidden">
+  <Button title="Seearch" ghost shape="circle" class="lg:hidden">
     <Icon name="material-symbols:search" size="28px" />
-  </button>
+  </Button>
 </template>

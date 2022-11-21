@@ -32,6 +32,7 @@ export function apiError<T extends ErrorCode>(
   context: ErrorContext[T],
 ): ApiError<T> {
   return {
+    _apierr: true,
     code,
     context,
   };

@@ -1,7 +1,5 @@
-import { Material } from "@prisma/client";
-
 import { material } from "~~/server/logic";
 
-export default defineEventHandler<Material[]>(async () => {
+export default defineEventHandler(async () => {
   return await material.getAll();
 });
