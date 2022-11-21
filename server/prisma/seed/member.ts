@@ -1,8 +1,13 @@
 import { array, assert, enums, object, string } from "superstruct";
-import { NameTitle, Sex } from "@prisma/client";
+import { ContactType, NameTitle, Sex } from "@prisma/client";
 import { member } from "../../logic";
 import { dateString } from "../../validation";
 import members from "./testdata/member.json" assert { type: "json" };
+
+const ContactSeed = object({
+  type: enums(Object.values(ContactType)),
+  value: string(),
+});
 
 const MemberSeed = object({
   title: enums(Object.values(NameTitle)),
@@ -17,6 +22,7 @@ const MemberSeed = object({
   city: string(),
   zipcode: string(),
   country: string(),
+  contacts: array(ContactSeed),
 });
 
 export default async () => {

@@ -88,32 +88,30 @@ model Contact {
 }
 
 model Group {
-  id             String       @id @default(uuid()) @db.Uuid
-  name           String       @db.VarChar(50)
-  description    String       @default("") @db.VarChar(120)
-  startDate      DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
-  stopDate       DateTime?    @db.Date
-  allowMembers   Boolean      @default(true)
-  allowSubgroups Boolean      @default(false)
-  permissions    Permission[] @default(dbgenerated("'{}'"))
-  members        Membership[]
-  contacts       Contact[]
-  children       Group[]      @relation("group_tree")
-  parent         Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
-  hiddenTo       Group[]      @relation("group_visibility")
-  hiddenFrom     Group[]      @relation("group_visibility")
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String       @db.VarChar(50)
+  description String       @default("") @db.VarChar(120)
+  startDate   DateTime     @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate    DateTime?    @db.Date
+  permissions Permission[] @default([])
+  members     Membership[]
+  contacts    Contact[]
+  children    Group[]      @relation("group_tree")
+  parent      Group?       @relation("group_tree", fields: [parentId], references: [id], onDelete: Restrict)
+  hiddenTo    Group[]      @relation("group_visibility")
+  hiddenFrom  Group[]      @relation("group_visibility")
 
   parentId String? @db.Uuid
 }
 
 model Membership {
-  id        String     @id @default(uuid()) @db.Uuid
-  function  String     @default("") @db.VarChar(50)
-  startDate DateTime   @default(dbgenerated("CURRENT_DATE")) @db.Date
-  stopDate  DateTime?  @db.Date
-  isAdmin   Boolean    @default(false)
-  member    Member?    @relation(fields: [memberId], references: [id], onDelete: SetNull)
-  group     Group      @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid()) @db.Uuid
+  function  String    @default("") @db.VarChar(50)
+  startDate DateTime  @default(dbgenerated("CURRENT_DATE")) @db.Date
+  stopDate  DateTime? @db.Date
+  isAdmin   Boolean   @default(false)
+  member    Member?   @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  group     Group     @relation(fields: [groupId], references: [id], onDelete: Cascade)
 
   memberId String? @db.Uuid
   groupId  String  @db.Uuid
@@ -121,7 +119,7 @@ model Membership {
 
 model Member {
   id          String        @id @default(uuid()) @db.Uuid
-  title       NameTitle     @default(dbgenerated("'NONE'"))
+  title       NameTitle     @default(NONE)
   initials    String        @db.VarChar(10)
   firstName   String        @db.VarChar(40)
   insertion   String        @default("") @db.VarChar(10)
@@ -151,12 +149,13 @@ model MemberStudy {
 }
 
 model Study {
-  id          String      @id @default(uuid()) @db.Uuid
-  name        String      @db.VarChar(40)
-  level       StudyLevel
-  institution Institution
-
+  id            String        @id @default(uuid()) @db.Uuid
+  name          String        @db.VarChar(40)
+  level         StudyLevel
+  institution   Institution
   memberStudies MemberStudy[]
+
+  @@unique([name, level, institution])
 }
 
 //
@@ -180,7 +179,7 @@ model Material {
   name       String       @unique @db.VarChar(40)
   comment    String       @default("") @db.VarChar(200)
   typeId     String       @db.Uuid
-  type       MaterialType @relation(fields: [typeId], references: [id], onDelete: Restrict)
+  type       MaterialType @relation(fields: [typeId], references: [id])
   lastUpdate DateTime     @default(now()) @updatedAt
 }
 
