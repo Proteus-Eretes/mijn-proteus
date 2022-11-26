@@ -11,15 +11,15 @@ RUN yarn
 # Copy over the other files.
 COPY assets ./assets
 COPY components ./components
+COPY composables ./composables
 COPY layouts ./layouts
 COPY pages ./pages
 COPY public ./public
 COPY server ./server
 COPY app.vue .
 COPY nuxt.config.ts .
-COPY tsconfig.json .
 COPY tailwind.config.js .
-COPY .env .
+COPY tsconfig.json .
 
 # Generate the Prisma client
 RUN npx prisma generate
