@@ -67,6 +67,18 @@ export const get = async (id: string): Promise<Group | null> => {
 };
 
 /**
+ * Get all groups from the database.
+ * @returns The requested group if found, otherwise null.
+ */
+export const getAll = async (): Promise<Group[]> => {
+  return await prisma.group.findMany({
+    include: {
+      contacts: true,
+    },
+  });
+};
+
+/**
  * Delete group from the database.
  * @param id The id of the group
  * @returns The deleted group.

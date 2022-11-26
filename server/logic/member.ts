@@ -67,6 +67,20 @@ export const get = async (id: string): Promise<Member | null> => {
 };
 
 /**
+ * Get all members from the database.
+ * @returns The requested member if found, otherwise null.
+ */
+export const getAll = async (): Promise<Member[]> => {
+  return await prisma.member.findMany({
+    include: {
+      contacts: true,
+      studies: true,
+      memberships: true,
+    },
+  });
+};
+
+/**
  * Delete member from the database.
  * @param id The id of the member.
  * @returns The deleted member.
