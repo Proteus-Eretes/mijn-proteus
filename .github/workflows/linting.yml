@@ -51,6 +51,7 @@ jobs:
           VALIDATE_SQL: false
           VALIDATE_SQLFLUFF: false
           VALIDATE_JAVA: false
+          VALIDATE_JSCPD: false
           VALIDATE_KOTLIN: false
           VALIDATE_KOTLIN_ANDROID: false
           VALIDATE_LATEX: false
