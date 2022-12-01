@@ -2,7 +2,7 @@ import type { H3Event } from "h3";
 
 import { assert, Struct } from "superstruct";
 
-import { ApiError, ErrorCode, ErrorContext } from "../error";
+import { ApiError, ErrorCode, ErrorContext } from "~/server/error";
 
 /**
  * Reads the body from a request, and validates it with the provided struct.

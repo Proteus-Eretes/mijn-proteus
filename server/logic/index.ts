@@ -1,3 +1,4 @@
+export * as authentik from "./authentik";
 export * as contact from "./contact";
 export * as group from "./group";
 export * as material from "./material";

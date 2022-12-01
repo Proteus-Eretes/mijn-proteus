@@ -1,6 +1,6 @@
-import { member, sync } from "../logic";
-
 import * as authentik from "./authentik";
+
+import { sync } from "~/server/logic";
 
 /**
  * Run a sync of all pending tasks.
@@ -30,11 +30,17 @@ export const runSync = async () => {
 };
 
 /**
+ * Reset all synced services to a (mostly) clean state.
+ * This mostly makes all services workable after a full database reset.
+ */
+export const reset = async () => {
+  return await authentik.reset();
+};
+
+/**
  * Sync a member with external systems.
  * @param id the ID of the memer to sync.
  */
 const syncMember = async (id: string) => {
-  const target = await member.get(id);
-
-  await authentik.syncMember(target);
+  await authentik.syncMember(id);
 };

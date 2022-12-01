@@ -1,7 +1,7 @@
-import { runSync } from "../sync";
+import { runSync } from "~/server/sync";
 
 /**
- * Run a sync ten seconds.
+ * Run a sync every ten seconds.
  */
 export default defineNitroPlugin(async () => {
   await runSync();

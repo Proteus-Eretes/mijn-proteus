@@ -1,4 +1,4 @@
-import { prisma } from "./client";
+import { prisma } from "./";
 
 /**
  * This file adds database constrainst which are not natively supported by Prisma.
@@ -118,7 +118,7 @@ export const addConstraints = async () => {
     `),
     prisma.$executeRawUnsafe(`
       CREATE CONSTRAINT TRIGGER contact_memberemail
-      AFTER INSERT OR UPDATE OR DELETE
+      AFTER INSERT OR UPDATE
       ON "Contact"
       INITIALLY DEFERRED
       FOR EACH ROW

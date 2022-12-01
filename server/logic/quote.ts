@@ -1,6 +1,6 @@
 import { Prisma, Quote } from "@prisma/client";
 
-import { prisma } from "../prisma/client";
+import { prisma } from "~/server/prisma";
 
 /**
  * Create a new quote.

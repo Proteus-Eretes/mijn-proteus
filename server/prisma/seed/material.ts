@@ -1,8 +1,8 @@
 import { array, assert, object, optional, size, string } from "superstruct";
 
-import { material, materialType } from "../../logic";
-
 import materials from "./testdata/material.json" assert { type: "json" };
+
+import { material, materialType } from "~/server/logic";
 
 const MaterialSeed = object({
   name: size(string(), 2, 40),
@@ -21,6 +21,5 @@ export default async () => {
     }
 
     await material.create(mat.name, type.id, mat.comment);
-    console.info(`Created material: ${mat.name}.`);
   }
 };

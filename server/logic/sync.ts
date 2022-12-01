@@ -1,6 +1,6 @@
 import { Sync } from "@prisma/client";
 
-import { prisma } from "../prisma/client";
+import { prisma } from "~/server/prisma";
 
 /**
  * Get a single task, updating it's next attempt.
