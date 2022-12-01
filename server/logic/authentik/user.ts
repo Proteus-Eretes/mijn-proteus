@@ -63,8 +63,10 @@ export const upsert = async (proteusId: string) => {
   const akuser = await findByProteusId(proteusId);
 
   if (akuser) {
+    // The member is also found in Authentik, so we will update the user.
     return await update(akuser.pk, proteusId);
   } else {
+    // The member was not found in Authentik, so creating a new user.
     return await create(proteusId);
   }
 };
