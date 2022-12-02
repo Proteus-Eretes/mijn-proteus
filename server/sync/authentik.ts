@@ -5,7 +5,7 @@ import { authentik, member } from "~/server/logic";
  * @param id The ID of the member to sync.
  */
 export const syncMember = async (id: string) => {
-  if (await member.exists(id)) {
+  if (!(await member.exists(id))) {
     // The member does no longer exist in the database, so remove it from Authentik too.
     return await authentik.user.remove(id);
   }
