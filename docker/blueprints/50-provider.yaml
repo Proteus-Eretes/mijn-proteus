@@ -20,7 +20,7 @@ entries:
     attrs:
       # These are development values, no leaks can be found here.
       client_id: 9af43c14369bd3b53e6cb98508ada2abca8d0ee3 # gitleaks:allow
-      client_secret: 0978004e2bacb7ac44db477a6e2f7a16689543a63123 # gitleaks:allow
+      client_secret: 0978004e2bacb7ac44db477a6e2f7a16689543 # gitleaks:allow
       include_claims_in_id_token: true
       issuer_mode: per_provider
       client_type: confidential
