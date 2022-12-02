@@ -5,21 +5,19 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     seed: false,
-    auth: {
-      secret: "",
-      clientId: "",
-      clientSecret: "",
-      issuer: "https://authentik/application/o/mijnpe",
-    },
     authentik: {
       host: "https://authentik",
       apiKey: "",
+      auth: {
+        secret: "",
+        clientId: "",
+        clientSecret: "",
+        issuer: "https://authentik/application/o/mijnpe",
+      },
     },
   },
   auth: {
     origin: "http://localhost:3000",
-    enableSessionRefreshPeriodically: 10_000,
-    enableGlobalAppMiddleware: true,
   },
   app: {
     head: {

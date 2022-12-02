@@ -5,6 +5,7 @@
     :disabled="disabled"
     :type="type"
     :title="title"
+    @click="$emit('click')"
   >
     <slot />
   </button>
@@ -37,6 +38,9 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+defineEmits<{
+  (eventName: "click", value: void): void;
+}>();
 
 const classes = computed(() => {
   return {

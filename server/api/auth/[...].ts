@@ -1,7 +1,5 @@
 import { EventHandler } from "h3";
 
-import AuthentikProvider from "next-auth/providers/authentik";
-
 import { NuxtAuthHandler } from "#auth";
 
 let handler: EventHandler;
@@ -11,15 +9,26 @@ export default defineEventHandler((e) => {
     const config = useRuntimeConfig();
 
     handler = NuxtAuthHandler({
-      secret: config.auth.secret,
+      secret: config.authentik.auth.secret,
       providers: [
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore Import is exported on .default during SSR, so we need to call it this way. May be fixed via Vite at some point
-        AuthentikProvider.default({
-          clientId: config.auth.clientId,
-          clientSecret: config.auth.clientSecret,
-          issuer: config.auth.issuer,
-        }),
+        {
+          id: "proteus",
+          name: "Proteus Login",
+          type: "oauth",
+          wellKnown: `${config.authentik.auth.issuer}/.well-known/openid-configuration`,
+          clientId: config.authentik.auth.clientId,
+          clientSecret: config.authentik.auth.clientSecret,
+          authorization: { params: { scope: "openid email profile proteus" } },
+          checks: ["pkce", "state"],
+          profile(profile) {
+            return {
+              id: profile.sub,
+              name: profile.name ?? profile.preferred_username,
+              email: profile.email,
+              image: profile.picture,
+            };
+          },
+        },
       ],
     });
   }
