@@ -26,6 +26,7 @@ export default defineEventHandler((e) => {
               name: profile.name ?? profile.preferred_username,
               email: profile.email,
               image: profile.picture,
+              proteusId: profile.proteusId,
             };
           },
         },
