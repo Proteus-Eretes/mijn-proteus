@@ -18,7 +18,7 @@
         <tr v-if="pending">
           <td colspan="2" class="text-center italic">Types laden..</td>
         </tr>
-        <tr v-else-if="!types || !('length' in types) || types.length === 0">
+        <tr v-else-if="!types || types.length === 0">
           <td colspan="2" class="text-center italic">Geen types gevonden</td>
         </tr>
       </tbody>
