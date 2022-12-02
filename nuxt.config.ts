@@ -1,14 +1,25 @@
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@sidebase/nuxt-auth"],
   typescript: {
     strict: true,
   },
   runtimeConfig: {
     seed: false,
+    auth: {
+      secret: "",
+      clientId: "",
+      clientSecret: "",
+      issuer: "https://authentik/application/o/mijnpe",
+    },
     authentik: {
       host: "https://authentik",
-      api_key: "",
+      apiKey: "",
     },
+  },
+  auth: {
+    origin: "http://localhost:3000",
+    enableSessionRefreshPeriodically: 10_000,
+    enableGlobalAppMiddleware: true,
   },
   app: {
     head: {

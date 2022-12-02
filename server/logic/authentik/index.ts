@@ -11,7 +11,7 @@ export const authentikFetch = (path: string, init?: RequestInit) => {
 
   return fetch(`${config.authentik.host}/api/v3${path}`, {
     headers: {
-      "Authorization": `Bearer ${config.authentik.api_key}`,
+      "Authorization": `Bearer ${config.authentik.apiKey}`,
       "Accept": "application/json",
       "Content-Type": "application/json",
       ...init?.headers,
