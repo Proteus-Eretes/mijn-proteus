@@ -5,19 +5,13 @@ import { authentik, member } from "~/server/logic";
  * @param id The ID of the member to sync.
  */
 export const syncMember = async (id: string) => {
-  if (await member.exists(id)) {
+  if (!(await member.exists(id))) {
     // The member does no longer exist in the database, so remove it from Authentik too.
-    await authentik.user.remove(id);
+    return await authentik.user.remove(id);
   }
 
-  const akuser = await authentik.user.findByProteusId(id);
-  if (akuser) {
-    // The member is also found in Authentik, so we will update the user.
-    await authentik.user.update(akuser.pk, id);
-  } else {
-    // The member was not found in Authentik, so creating a new user.
-    await authentik.user.create(id);
-  }
+  // The user should still exist, so we will upsert.
+  return await authentik.user.upsert(id);
 };
 
 /**
