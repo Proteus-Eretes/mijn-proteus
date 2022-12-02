@@ -7,16 +7,34 @@ entries:
       identifiers:
         name: Proteus Develop - Mijn PE Provider
       required: true
-  - model: authentik_core.application
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Proteus - Policies - Proteus Account
+      required: true
+  - id: application-mijn-proteus
+    model: authentik_core.application
     identifiers:
       name: Mijn Proteus
-    attrs:
-      name: Mijn Proteus
       slug: mijnpe
-      open_in_new_tab: true
-      policy_engine_mode: any
       provider:
         !Find [authentik_providers_oauth2.oauth2provider, [name, Mijn Proteus]]
+    attrs:
+      open_in_new_tab: true
+      policy_engine_mode: any
       meta_description: Voor al uw verenigingsbenodigdheden
       meta_launch_url: http://localhost:3000/
       meta_publisher: D.S.R. Proteus-Eretes
+  - id: policybinding-mijn-proteus-proteus-account
+    model: authentik_policies.policybinding
+    identifiers:
+      target: !KeyOf application-mijn-proteus
+      policy:
+        !Find [
+          authentik_policies_expression.expressionpolicy,
+          [name, Proteus Account Required Policy],
+        ]
+    attrs:
+      enabled: true
+      order: 0
+      timeout: 30
