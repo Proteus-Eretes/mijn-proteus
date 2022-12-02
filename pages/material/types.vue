@@ -24,7 +24,7 @@
   <Alert v-else type="error" content="Materiaal types ophalen mislukt" />
   <LazyPageMaterialTypesCreate
     :parents="types || []"
-    @refresh-types="refresh"
+    @refresh-types="() => refresh()"
   />
 </template>
 

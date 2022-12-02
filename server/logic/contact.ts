@@ -1,9 +1,9 @@
 import { Contact, ContactType } from "@prisma/client";
 
-import { prisma } from "../prisma/client";
-import { apiError } from "../utils";
-import { ErrorCode } from "../error";
-import { group, member } from "../logic";
+import { prisma } from "~/server/prisma";
+import { apiError } from "~/server/utils";
+import { ErrorCode } from "~/server/error";
+import { group, member } from "~/server/logic";
 
 /**
  * Add new contact information to the database.

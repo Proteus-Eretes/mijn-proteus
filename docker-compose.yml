@@ -3,7 +3,6 @@ version: "3"
 
 services:
   database:
-    container_name: mijnpe-database
     image: "postgres:latest"
     restart: unless-stopped
     ports:
@@ -11,7 +10,6 @@ services:
     env_file:
       - .env
   mailcatcher:
-    container_name: mijnpe-mailcatcher
     image: schickling/mailcatcher
     restart: unless-stopped
     ports:
@@ -20,7 +18,6 @@ services:
     env_file:
       - .env
   adminer:
-    container_name: mijnpe-adminer
     image: adminer
     restart: unless-stopped
     depends_on:
@@ -31,3 +28,73 @@ services:
       ADMINER_DEFAULT_SERVER: database
     env_file:
       - .env
+  authentik:
+    image: ghcr.io/proteus-eretes/authentik:1669585997-ca3bbee
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_BOOTSTRAP_TOKEN: ${NUXT_AUTHENTIK_API_KEY}
+      AUTHENTIK_BOOTSTRAP_PASSWORD: "password"
+      AUTHENTIK_SECRET_KEY: "!!!SECRET!!!"
+      AUTHENTIK_AVATARS: none
+      AUTHENTIK_REDIS__HOST: authentik-redis
+      AUTHENTIK_REDIS__DB: 1
+      AUTHENTIK_POSTGRESQL__HOST: authentik-database
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_EMAIL__HOST: mailcatcher
+      AUTHENTIK_EMAIL__PORT: 1025
+      AUTHENTIK_EMAIL__USE_TLS: false
+      AUTHENTIK_EMAIL__USE_SSL: false
+      AUTHENTIK_EMAIL__TIMEOUT: 10
+      AUTHENTIK_EMAIL__FROM: authentik@localhost
+    depends_on:
+      - authentik-database
+      - authentik-redis
+    ports:
+      - "9000:9000"
+  authentik-worker:
+    image: ghcr.io/proteus-eretes/authentik:1669585997-ca3bbee
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_BOOTSTRAP_TOKEN: ${NUXT_AUTHENTIK_API_KEY}
+      AUTHENTIK_BOOTSTRAP_PASSWORD: "password"
+      AUTHENTIK_SECRET_KEY: "!!!SECRET!!!"
+      AUTHENTIK_AVATARS: none
+      AUTHENTIK_REDIS__HOST: authentik-redis
+      AUTHENTIK_REDIS__DB: 1
+      AUTHENTIK_POSTGRESQL__HOST: authentik-database
+      AUTHENTIK_POSTGRESQL__USER: ${POSTGRES_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${POSTGRES_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${POSTGRES_PASSWORD}
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_EMAIL__HOST: mailcatcher
+      AUTHENTIK_EMAIL__PORT: 1025
+      AUTHENTIK_EMAIL__USE_TLS: false
+      AUTHENTIK_EMAIL__USE_SSL: false
+      AUTHENTIK_EMAIL__TIMEOUT: 10
+      AUTHENTIK_EMAIL__FROM: authentik@localhost
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - authentik-database
+      - authentik-redis
+    env_file:
+      - .env
+  authentik-database:
+    image: postgres:latest
+    restart: unless-stopped
+    expose:
+      - 5432
+    env_file:
+      - .env
+  authentik-redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    expose:
+      - 6379

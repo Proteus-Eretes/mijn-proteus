@@ -1,4 +1,15 @@
 export default defineNuxtConfig({
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  typescript: {
+    strict: true,
+  },
+  runtimeConfig: {
+    seed: false,
+    authentik: {
+      host: "https://authentik",
+      api_key: "",
+    },
+  },
   app: {
     head: {
       charset: "utf-8",
@@ -14,9 +25,5 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: "icon", href: "/favicon.png" }],
     },
-  },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
-  typescript: {
-    strict: true,
   },
 });

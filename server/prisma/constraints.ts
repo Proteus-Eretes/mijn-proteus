@@ -1,4 +1,4 @@
-import { prisma } from "./client";
+import { prisma } from "./";
 
 /**
  * This file adds database constrainst which are not natively supported by Prisma.
@@ -61,6 +61,33 @@ export const addConstraints = async () => {
       $valid$ LANGUAGE plpgsql;
     `),
 
+    // --- Sync
+    // Insert a sync job when a user is changed.
+    prisma.$executeRawUnsafe(`DROP TRIGGER IF EXISTS sync_member on "Member"`),
+    prisma.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION sync_member() RETURNS trigger AS $$
+      BEGIN
+        IF OLD IS NOT NULL THEN
+          INSERT INTO "Sync" (id, type) VALUES (OLD."id", 'MEMBER') ON CONFLICT DO NOTHING;
+        END IF;
+
+        IF NEW IS NOT NULL THEN
+          INSERT INTO "Sync" (id, type) VALUES (NEW."id", 'MEMBER') ON CONFLICT DO NOTHING;
+        END IF;
+
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+    `),
+    prisma.$executeRawUnsafe(`
+      CREATE CONSTRAINT TRIGGER sync_member
+      AFTER INSERT OR UPDATE OR DELETE
+      ON "Member"
+      INITIALLY DEFERRED
+      FOR EACH ROW
+      EXECUTE FUNCTION sync_member()
+    `),
+
     // --- Contact
     // Ensures that a contact has either a group or a member associated.
     prisma.$executeRawUnsafe(
@@ -91,7 +118,7 @@ export const addConstraints = async () => {
     `),
     prisma.$executeRawUnsafe(`
       CREATE CONSTRAINT TRIGGER contact_memberemail
-      AFTER INSERT OR UPDATE OR DELETE
+      AFTER INSERT OR UPDATE
       ON "Contact"
       INITIALLY DEFERRED
       FOR EACH ROW

@@ -9,9 +9,11 @@ import {
   string,
 } from "superstruct";
 import { Group } from "@prisma/client";
-import { dateString } from "../../validation";
-import { prisma } from "../../prisma/client";
+
 import groups from "./testdata/group.json" assert { type: "json" };
+
+import { dateString } from "~/server/validation";
+import { prisma } from "~/server/prisma";
 
 type GroupTree = {
   name: string;
@@ -39,8 +41,6 @@ const makeGroup = async (child: GroupTree, parent?: Group, level = 0) => {
       parentId: parent?.id,
     },
   });
-
-  console.info(`${"...".repeat(level)}Created group: ${child.name}`);
 
   if (child.children?.length) {
     for (const c of child.children) {

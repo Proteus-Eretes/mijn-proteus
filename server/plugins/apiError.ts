@@ -9,8 +9,8 @@ import {
 } from "@prisma/client/runtime/index.js";
 import { StructError } from "superstruct";
 
-import { ApiError, ErrorCode, errorStatus } from "../error";
-import { apiError } from "../utils";
+import { ApiError, ErrorCode, errorStatus } from "~/server/error";
+import { apiError } from "~/server/utils";
 
 /**
  * Nitro plugin which translates any thrown errors into an API error.

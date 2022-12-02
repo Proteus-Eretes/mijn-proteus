@@ -1,4 +1,4 @@
-import { prisma } from "../prisma/client";
+import { prisma } from "~/server/prisma";
 
 /**
  * Add new material to the database.
