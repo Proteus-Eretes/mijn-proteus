@@ -3,8 +3,7 @@ import { Membership } from "@prisma/client";
 import { member, group } from "./";
 
 import { prisma } from "~/server/prisma";
-import { apiError } from "~/server/utils";
-import { ErrorCode } from "~/server/error";
+import { apiError, ErrorCode } from "~/utils/error";
 
 /**
  * Add new membership to the database.

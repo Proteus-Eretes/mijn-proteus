@@ -1,8 +1,7 @@
 import { Contact, ContactType } from "@prisma/client";
 
 import { prisma } from "~/server/prisma";
-import { apiError } from "~/server/utils";
-import { ErrorCode } from "~/server/error";
+import { ErrorCode, apiError } from "~/utils/error";
 import { group, member } from "~/server/logic";
 
 /**

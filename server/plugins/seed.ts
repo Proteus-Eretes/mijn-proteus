@@ -1,6 +1,7 @@
 import { reset, runSync } from "~/server/sync";
 import { seed } from "~/server/prisma/seed";
 import { member } from "~/server/logic";
+import { isApiError } from "~/utils/error";
 
 /**
  * Seed the database automatically when no members are detected.
@@ -23,6 +24,11 @@ export default defineNitroPlugin(async () => {
     await runSync();
   } catch (e) {
     console.error("Failed to seed the database!");
-    console.error(e);
+
+    if (isApiError(e)) {
+      console.error(`[${e.code}] ${e.context}`);
+    } else {
+      console.error(e);
+    }
   }
 });

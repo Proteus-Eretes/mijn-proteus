@@ -1,7 +1,6 @@
 import { authentikFetch } from "./";
 
-import { ErrorCode } from "~/server/error";
-import { apiError } from "~/server/utils";
+import { apiError, ErrorCode } from "~/utils/error";
 import { member } from "~/server/logic";
 
 const PATH = "users/proteus";
@@ -155,7 +154,7 @@ export const removeAk = async (pk: number) => {
  * @param proteusId The ID of the proteus member to build the body for.
  * @returns The request body.
  */
-const buildUserBody = async (proteusId: string) => {
+const buildUserBody = async (proteusId: string): Promise<Partial<AkUser>> => {
   const mem = await member.get(proteusId);
 
   if (!mem) {
@@ -206,5 +205,5 @@ interface AkUser {
   avatar: string;
   uid: string;
   path?: string;
-  attributes?: { [key: string]: string };
+  attributes?: { [key: string]: unknown };
 }
