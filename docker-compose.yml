@@ -29,7 +29,8 @@ services:
     env_file:
       - .env
   authentik:
-    image: ghcr.io/proteus-eretes/authentik:1669585997-ca3bbee
+    image: ghcr.io/proteus-eretes/authentik:latest
+    pull_policy: always
     restart: unless-stopped
     command: server
     environment:
@@ -50,13 +51,16 @@ services:
       AUTHENTIK_EMAIL__USE_SSL: false
       AUTHENTIK_EMAIL__TIMEOUT: 10
       AUTHENTIK_EMAIL__FROM: authentik@localhost
+    volumes:
+      - ./docker/blueprints:/blueprints/develop:ro
     depends_on:
       - authentik-database
       - authentik-redis
     ports:
       - "9000:9000"
   authentik-worker:
-    image: ghcr.io/proteus-eretes/authentik:1669585997-ca3bbee
+    image: ghcr.io/proteus-eretes/authentik:latest
+    pull_policy: always
     restart: unless-stopped
     command: worker
     environment:
@@ -80,6 +84,7 @@ services:
     user: root
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./docker/blueprints:/blueprints/develop:ro
     depends_on:
       - authentik-database
       - authentik-redis

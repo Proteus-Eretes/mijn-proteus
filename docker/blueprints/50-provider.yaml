@@ -1,0 +1,41 @@
+---
+version: 1
+metadata:
+  name: Proteus Develop - Mijn PE Provider
+entries:
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Proteus - OAuth2 Provider - Scopes
+      required: true
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Proteus - Provider authorization flow (implicit consent)
+      required: true
+  - id: provider-mijnpe
+    model: authentik_providers_oauth2.oauth2provider
+    identifiers:
+      name: Mijn Proteus
+    attrs:
+      # These are development values, no leaks can be found here.
+      client_id: 9af43c14369bd3b53e6cb98508ada2abca8d0ee3 # gitleaks:allow
+      client_secret: 0978004e2bacb7ac44db477a6e2f7a16689543 # gitleaks:allow
+      include_claims_in_id_token: true
+      issuer_mode: per_provider
+      client_type: confidential
+      redirect_uris: .*
+      sub_mode: hashed_user_id
+      access_code_validity: minutes=1
+      token_validity: days=30
+      authorization_flow: !Find [authentik_flows.flow, [slug, auth-implicit]]
+      signing_key:
+        !Find [
+          authentik_crypto.certificatekeypair,
+          [name, authentik Self-signed Certificate],
+        ]
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, email]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, proteus]]

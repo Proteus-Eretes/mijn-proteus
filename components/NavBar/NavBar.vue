@@ -22,15 +22,15 @@
     <div class="flex-none">
       <NavBarMenuLarge :items="menuItems" class="hidden lg:flex" />
       <NavBarSearch />
-      <NuxtLink
-        to="/me"
-        title="Profiel"
-        class="btn btn-ghost btn-circle avatar"
+      <Button
+        v-if="status === 'unauthenticated'"
+        title="Log in bij Proteus"
+        color="primary"
+        @click="() => signIn('proteus')"
       >
-        <div class="w-10 rounded-full">
-          <img src="https://placeimg.com/80/80/people" alt="Profile picture" />
-        </div>
-      </NuxtLink>
+        Login
+      </Button>
+      <NavBarProfileDropdown v-if="status === 'authenticated'" />
     </div>
   </div>
   <span class="w-full min-h-16 mb-2 max-lg:hidden"></span>
@@ -43,6 +43,8 @@ export interface MenuItem {
   icon: string;
   children?: { name: string; target: string; icon: string }[];
 }
+
+const { status, signIn } = useSession();
 
 const menuItems: MenuItem[] = [
   {
