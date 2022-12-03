@@ -16,6 +16,7 @@ COPY layouts ./layouts
 COPY pages ./pages
 COPY public ./public
 COPY server ./server
+COPY utils ./utils
 COPY app.vue .
 COPY nuxt.config.ts .
 COPY tailwind.config.js .
