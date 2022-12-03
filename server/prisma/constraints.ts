@@ -48,6 +48,11 @@ export const addConstraints = async () => {
     prisma.$executeRawUnsafe(`
       CREATE OR REPLACE FUNCTION validate_member_contacts(member uuid) RETURNS boolean AS $valid$
       BEGIN
+        IF NOT EXISTS (SELECT 1 FROM "Member" where member = "id") THEN
+          -- The user no longer exists, so we don't care if the user no longer has contacts.
+          RETURN true;
+        END IF;
+
         IF NOT EXISTS (SELECT 1 FROM "Contact" where member = "memberId" AND "type" = 'EMAIL') THEN
           RAISE EXCEPTION 'A member needs at least an email address.';
         END IF;
@@ -118,7 +123,7 @@ export const addConstraints = async () => {
     `),
     prisma.$executeRawUnsafe(`
       CREATE CONSTRAINT TRIGGER contact_memberemail
-      AFTER INSERT OR UPDATE
+      AFTER INSERT OR UPDATE OR DELETE
       ON "Contact"
       INITIALLY DEFERRED
       FOR EACH ROW
