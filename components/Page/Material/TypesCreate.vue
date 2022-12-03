@@ -1,20 +1,20 @@
 <template>
-  <form @submit.prevent="createType">
+  <form @submit.prevent="execute">
     <Card title="Materiaaltype Toevoegen" class="my-4">
-      <Alert type="error" :content="globalError" />
+      <Alert type="error" :content="error?.global" />
       <InputText
         v-model="name"
         title="Naam Materiaaltype"
         placeholder="Helicopter"
-        :error="nameError"
-        :disabled="loading"
+        :error="error?.name"
+        :disabled="pending"
         required
         bordered
       />
       <InputSelect
         v-model="parent"
         title="Supertype"
-        :disabled="loading"
+        :disabled="pending"
         bordered
       >
         <option selected value="">-- Geen supertype --</option>
@@ -31,7 +31,7 @@
           type="submit"
           title="Maak materiaal aan"
           color="primary"
-          :loading="loading"
+          :loading="pending"
         >
           Maak Aan
         </Button>
@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import { MaterialType } from "@prisma/client";
-import { ErrorCode } from "~~/server/error";
+import { ErrorCode } from "~~/utils/error";
 
 interface Props {
   parents: MaterialType[];
@@ -56,32 +56,8 @@ const emit = defineEmits<Emits>();
 
 const name = ref<string>("");
 const parent = ref<string>("");
-const loading = ref<boolean>(false);
 
-const nameError = ref<string | undefined>(undefined);
-const globalError = ref<string | undefined>(undefined);
-
-const createType = async () => {
-  loading.value = true;
-  const { error } = await sendApiReq("/api/material/type", "post", {
-    name: name.value,
-    parentId: parent.value || undefined,
-  });
-  loading.value = false;
-
-  nameError.value = undefined;
-  globalError.value = undefined;
-
-  if (error) {
-    return errorHandler(error);
-  }
-
-  name.value = "";
-  parent.value = "";
-  emit("refreshTypes");
-};
-
-const errorHandler = apiErrorHandler([
+const errorHandler = apiErrorHandler<CreateErrors>([
   errHandler(ErrorCode.ValidationFailed, (e) => {
     // Only handles invalid names.
     if (e.context.key !== "name") {
@@ -89,13 +65,14 @@ const errorHandler = apiErrorHandler([
     }
 
     if (e.context.refinement === "size") {
-      nameError.value = "De lengte van de naam is ongeldig.";
-      return;
+      return {
+        name: "De lengte van de naam is ongeldig.",
+      };
     }
 
-    nameError.value = `Ongeldige naam (${
-      e.context.refinement || e.context.expected
-    })`;
+    return {
+      name: `Ongeldige naam (${e.context.refinement || e.context.expected})`,
+    };
   }),
   errHandler(ErrorCode.Exists, (e) => {
     // Handles the case where a type with the same name already exists.
@@ -103,11 +80,29 @@ const errorHandler = apiErrorHandler([
       return false;
     }
 
-    nameError.value = "Een type met deze naam bestaat al.";
+    return { name: "Een type met deze naam bestaat al." };
   }),
   (e) => {
     // Catch all, show generic error.
-    globalError.value = `Onverwachte fout (${e.code}).`;
+    return { global: `Onverwachte fout (${e.code}).` };
   },
 ]);
+
+const { error, pending, execute } = await useApiRequest(
+  "/api/material/type",
+  errorHandler,
+  {
+    method: "post",
+    body: {
+      name,
+      parentId: parent,
+    },
+    onSuccess: () => emit("refreshTypes"),
+  },
+);
+
+interface CreateErrors {
+  name?: string;
+  global?: string;
+}
 </script>
