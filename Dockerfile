@@ -25,6 +25,10 @@ COPY tsconfig.json .
 # Generate the Prisma client
 RUN npx prisma generate
 
+# Set the auth origin, as this needs to be done on build time.
+# This is the public URL of Mijn Proteus, NOT Authentik.
+ENV AUTH_ORIGIN "https://mijn.proteuseretes.nl"
+
 # Build the application
 RUN yarn build
 
