@@ -1,7 +1,9 @@
 import { enums, object, optional, size, string } from "superstruct";
 import { Institution, StudyLevel } from "@prisma/client";
-import { readValidatedBody } from "~/server/utils";
+
+import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { study } from "~/server/logic";
+import { uuid } from "~~/server/validation/utils";
 
 const body = object({
   name: optional(size(string(), 2, 40)),
@@ -10,7 +12,7 @@ const body = object({
 });
 
 export default defineEventHandler(async (event) => {
-  const id = await getRouterParam(event, "id");
+  const id = await getValidatedRouterParam(event, "id", uuid());
   const data = await readValidatedBody(event, body);
   return await study.updateOption(id, data);
 });

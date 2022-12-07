@@ -1,24 +1,8 @@
-import { NameTitle, Sex } from "@prisma/client";
-import { date, enums, object, size, string } from "superstruct";
 import { member } from "~/server/logic";
 import { readValidatedBody } from "~/server/utils";
-
-const body = object({
-  title: enums(Object.values(NameTitle)),
-  initials: size(string(), 1, 10),
-  firstName: size(string(), 1, 40),
-  insertion: size(string(), 1, 10),
-  lastName: size(string(), 1, 40),
-  dateOfBirth: date(),
-  sex: enums(Object.values(Sex)),
-  street: size(string(), 1, 40),
-  number: size(string(), 1, 40),
-  city: size(string(), 1, 40),
-  zipcode: size(string(), 1, 20),
-  country: size(string(), 1, 40),
-});
+import { MemberCreateValidator } from "~~/server/validation/member";
 
 export default defineEventHandler(async (event) => {
-  const data = await readValidatedBody(event, body);
+  const data = await readValidatedBody(event, MemberCreateValidator);
   return await member.create(data);
 });

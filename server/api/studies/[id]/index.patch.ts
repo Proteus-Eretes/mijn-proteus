@@ -1,6 +1,8 @@
 import { date, object, optional, size, string } from "superstruct";
-import { readValidatedBody } from "~/server/utils";
+
+import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { study } from "~/server/logic";
+import { uuid } from "~~/server/validation/utils";
 
 const body = object({
   studentNumber: optional(size(string(), 1, 40)),
@@ -9,7 +11,7 @@ const body = object({
 });
 
 export default defineEventHandler(async (event) => {
-  const id = await getRouterParam(event, "id");
+  const id = await getValidatedRouterParam(event, "id", uuid());
   const data = await readValidatedBody(event, body);
   return await study.update(id, data);
 });

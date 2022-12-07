@@ -1,55 +1,36 @@
-import { Contact, ContactType } from "@prisma/client";
-
 import { prisma } from "~/server/prisma";
 import { ErrorCode, apiError } from "~/utils/error";
 import { group, member } from "~/server/logic";
+import { ContactCreate, ContactUpdate } from "~/server/validation";
 
 /**
  * Add new contact information to the database.
- * @param data The data the new contact information.
+ * @param contact The data the new contact information.
  * @returns The created contact information.
  */
-export const create = async (data: {
-  value: string;
-  type: ContactType;
-  memberId?: string;
-  groupId?: string;
-}): Promise<Contact> => {
-  if (!data.memberId && !data.memberId) {
-    throw apiError(ErrorCode.ValidationFailed, {
-      message: "No memberId or groupId provided",
-      key: "memberId or groupId",
-      got: "undefined",
-      expected: "Either memberId or groupId to be defined",
-    });
-  }
-  if (data.memberId && !(await member.get(data.memberId))) {
+export const create = async (contact: ContactCreate) => {
+  if ("memberId" in contact && !(await member.get(contact.memberId))) {
     throw apiError(ErrorCode.NotFound, "Member not found!");
   }
-  if (data.groupId && !(await group.get(data.groupId))) {
+
+  if ("groupId" in contact && !(await group.get(contact.groupId))) {
     throw apiError(ErrorCode.NotFound, "Group not found!");
   }
 
   return await prisma.contact.create({
-    data,
+    data: contact,
   });
 };
 
 /**
  * Update contact information in the database.
- * @param id The id of the contact information to be updated.
- * @param data The data of the contact information to be updated.
+ * @param contact The contact information to update.
  * @returns The updated contact information.
  */
-export const update = async (
-  id: string,
-  data: {
-    value?: string;
-  },
-): Promise<Contact> => {
+export const update = async (contact: ContactUpdate) => {
   return await prisma.contact.update({
-    where: { id },
-    data,
+    where: { id: contact.id },
+    data: contact,
   });
 };
 
@@ -57,6 +38,6 @@ export const update = async (
  * Delete contact information from the database.
  * @returns The deleted contact information.
  */
-export const remove = async (id: string): Promise<Contact> => {
+export const remove = async (id: string) => {
   return await prisma.contact.delete({ where: { id } });
 };

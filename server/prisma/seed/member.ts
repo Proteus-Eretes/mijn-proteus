@@ -4,7 +4,7 @@ import { ContactType, NameTitle, Sex } from "@prisma/client";
 import members from "./testdata/member.json" assert { type: "json" };
 
 import { member } from "~/server/logic";
-import { dateString } from "~/server/validation";
+import { dateString } from "~/server/validation/utils";
 
 const ContactSeed = object({
   type: enums(Object.values(ContactType)),

@@ -1,29 +1,16 @@
-import type { Member, NameTitle, Sex, Prisma } from "@prisma/client";
+import type { Member, NameTitle } from "@prisma/client";
 
 import { prisma } from "~/server/prisma";
+import { MemberCreate } from "~/server/validation";
 
 /**
  * Add new member to the database.
- * @param data The data of the new member.
+ * @param member The new member to create.
  * @returns The created member.
  */
-export const create = async (data: {
-  title: NameTitle;
-  initials: string;
-  firstName: string;
-  insertion: string;
-  lastName: string;
-  dateOfBirth: Date;
-  sex: Sex;
-  street: string;
-  number: string;
-  city: string;
-  zipcode: string;
-  country: string;
-  contacts?: Prisma.ContactCreateWithoutMemberInput[];
-}): Promise<Member> => {
+export const create = async (member: MemberCreate): Promise<Member> => {
   return await prisma.member.create({
-    data: { ...data, contacts: { create: data.contacts } },
+    data: { ...member, contacts: { create: member.contacts } },
   });
 };
 
