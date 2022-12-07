@@ -9,7 +9,8 @@ import {
   string,
 } from "superstruct";
 
-import { dateString, requiredContact } from "./utils";
+import { requiredContact } from "./contact";
+import { dateString } from "./utils";
 
 export const MemberCreateValidator = object({
   title: defaulted(enums(Object.values(NameTitle)), NameTitle.NONE),

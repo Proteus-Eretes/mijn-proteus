@@ -1,5 +1,15 @@
 import { ContactType } from "@prisma/client";
-import { enums, Infer, object, omit, size, string, union } from "superstruct";
+import {
+  array,
+  enums,
+  Infer,
+  object,
+  omit,
+  refine,
+  size,
+  string,
+  union,
+} from "superstruct";
 
 import { uuid } from "./utils";
 
@@ -55,3 +65,23 @@ export const ContactUpdateImplicitValidator = union([
 export type ContactUpdateImplicit = Infer<
   typeof ContactUpdateImplicitValidator
 >;
+
+/**
+ * Makes sure that a list of contacts includes the required items.
+ * Useful when creating a new object where contacts are used.
+ */
+export const requiredContact = refine(
+  array(ContactCreateImplicitValidator),
+  "requiredContacts",
+  (contacts) => {
+    if (!contacts.find((c) => c.type === ContactType.EMAIL)) {
+      return "Contacts require an email address.";
+    }
+
+    if (!contacts.find((c) => c.type === ContactType.PHONE)) {
+      return "Contacts require an phone number.";
+    }
+
+    return true;
+  },
+);
