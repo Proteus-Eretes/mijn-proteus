@@ -57,28 +57,32 @@ const menuItems: MenuItem[] = [
       },
     ],
   },
-  { name: "Foto's", icon: "material-symbols:camera", target: "/foto" },
+  {
+    name: "Foto's",
+    icon: "material-symbols:camera",
+    target: "https://proteus-eretes.nl/fotos",
+  },
   {
     name: "Leden",
     icon: "material-symbols:person",
-    target: "/lid",
+    target: "/leden",
     children: [
       {
         name: "Groepen",
         icon: "material-symbols:group",
-        target: "/groups",
+        target: "/groepen",
       },
       {
         name: "Lebberlijst",
         icon: "ph:graph",
-        target: "/lebberlijst",
+        target: "https://proteus-eretes.nl/lebberlijst",
       },
     ],
   },
   {
     name: "Evenementen",
     icon: "material-symbols:calendar-today",
-    target: "/event",
+    target: "https://proteus-eretes.nl/eetlijst",
   },
 ];
 </script>

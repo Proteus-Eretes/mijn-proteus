@@ -31,6 +31,7 @@
     "vue/no-multiple-template-root": "off",
     "vue/component-api-style": ["error", ["script-setup"]],
     "vue/define-emits-declaration": ["error", "type-based"],
+    "vue/no-v-for-template-key": "off",
     "vue/block-lang": [
       "error",
       {
