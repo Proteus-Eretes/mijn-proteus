@@ -1,7 +1,7 @@
-import type { Member, NameTitle } from "@prisma/client";
+import type { Member } from "@prisma/client";
 
 import { prisma } from "~/server/prisma";
-import { MemberCreate } from "~/server/validation";
+import { MemberCreate, MemberUpdate } from "~/server/validation";
 
 /**
  * Add new member to the database.
@@ -22,18 +22,11 @@ export const create = async (member: MemberCreate): Promise<Member> => {
  */
 export const update = async (
   id: string,
-  data: {
-    title?: NameTitle;
-    street?: string;
-    number?: string;
-    city?: string;
-    zipcode?: string;
-    country?: string;
-  },
+  member: MemberUpdate,
 ): Promise<Member> => {
   return await prisma.member.update({
     where: { id },
-    data,
+    data: member,
   });
 };
 
