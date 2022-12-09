@@ -51,7 +51,7 @@ export type MemberCreate = Infer<typeof MemberCreateValidator>;
 
 /**
  * Member update validator.
- * Simulair to member creation, but all fields are optional and does not allow for contacts to be updated.
+ * Similar to member creation, but all fields are optional and does not allow for contacts to be updated.
  * If the fields are actually allowed to be editted is not defined here.
  */
 export const MemberUpdateValidator = partial(omit(MemberValidator, ["id"]));

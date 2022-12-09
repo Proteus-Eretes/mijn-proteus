@@ -1,6 +1,5 @@
-import { Group } from "@prisma/client";
-
 import { apiError, ErrorCode } from "~/utils/error";
+import { GroupCreate, GroupUpdate } from "~/server/validation";
 import { prisma } from "~/server/prisma";
 
 /**
@@ -8,23 +7,13 @@ import { prisma } from "~/server/prisma";
  * @param data The data of the new group.
  * @returns The created group.
  */
-export const create = async (data: {
-  name: string;
-  description: string;
-  startDate?: string;
-  stopDate?: string;
-  parentId?: string;
-}): Promise<Group> => {
-  if (data.parentId) {
-    const parent = await get(data.parentId);
-
-    if (!parent) {
-      throw apiError(ErrorCode.NotFound, "The parent group was not found!");
-    }
+export const create = async (group: GroupCreate) => {
+  if (group.parentId && !(await get(group.parentId))) {
+    throw apiError(ErrorCode.NotFound, "The parent group was not found!");
   }
 
   return await prisma.group.create({
-    data,
+    data: group,
   });
 };
 
@@ -34,20 +23,10 @@ export const create = async (data: {
  * @param data The data of the group to be updated.
  * @returns The updated group.
  */
-export const update = async (
-  id: string,
-  data: {
-    name?: string;
-    description?: string;
-    startDate?: string;
-    stopDate?: string;
-    allowMembers?: boolean;
-    allowSubgroups?: boolean;
-  },
-): Promise<Group> => {
+export const update = async (id: string, group: GroupUpdate) => {
   return await prisma.group.update({
     where: { id },
-    data,
+    data: group,
   });
 };
 
@@ -56,7 +35,7 @@ export const update = async (
  * @param id The id of the group
  * @returns The requested group if found, otherwise null.
  */
-export const get = async (id: string): Promise<Group | null> => {
+export const get = async (id: string) => {
   return await prisma.group.findUnique({
     where: { id },
     include: {
@@ -70,6 +49,6 @@ export const get = async (id: string): Promise<Group | null> => {
  * @param id The id of the group
  * @returns The deleted group.
  */
-export const remove = async (id: string): Promise<Group> => {
+export const remove = async (id: string) => {
   return await prisma.group.delete({ where: { id } });
 };
