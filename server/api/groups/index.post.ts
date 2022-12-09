@@ -1,9 +1,9 @@
 import { group } from "~/server/logic";
-import { GroupCreateValidator } from "~/server/validation";
+import { GroupCreate } from "~/server/validation";
 import { readValidatedBody } from "~/server/utils";
 
 export default defineEventHandler(async (event) => {
-  const data = await readValidatedBody(event, GroupCreateValidator);
+  const data = await readValidatedBody(event, GroupCreate);
 
   return await group.create(data);
 });

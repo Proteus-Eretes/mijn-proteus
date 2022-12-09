@@ -1,9 +1,9 @@
 import { contact } from "~/server/logic";
-import { ContactCreateValidator } from "~~/server/validation";
+import { ContactCreate } from "~~/server/validation";
 import { readValidatedBody } from "~/server/utils";
 
 export default defineEventHandler(async (event) => {
-  const body = await readValidatedBody(event, ContactCreateValidator);
+  const body = await readValidatedBody(event, ContactCreate);
 
   return await contact.create(body);
 });

@@ -6,11 +6,11 @@ import study from "./study";
 
 export const seed = async () => {
   try {
-    await group();
-    await material();
     await materialType();
-    await member();
+    await material();
+    await group();
     await study();
+    await member();
   } catch (e) {
     console.error("Seeding failed!");
     console.error(e);

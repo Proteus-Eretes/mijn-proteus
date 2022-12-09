@@ -17,7 +17,7 @@ import { uuid } from "./utils";
  * Complete contact validator.
  * This has all fields, but is probably not useful on it's own.
  */
-const ContactValidator = object({
+const Contact = object({
   id: uuid(),
   type: enums(Object.values(ContactType)),
   value: size(string(), 1, 80),
@@ -28,50 +28,50 @@ const ContactValidator = object({
 /**
  * Creation of new contacts, with the associated object being received implicitly.
  */
-export const ContactCreateImplicitValidator = omit(ContactValidator, [
+export const ContactCreateImplicit = omit(Contact, [
   "id",
   "memberId",
   "groupId",
 ]);
-export type ContactCreateImplicit = Infer<
-  typeof ContactCreateImplicitValidator
->;
+// eslint-disable-next-line no-redeclare
+export type ContactCreateImplicit = Infer<typeof ContactCreateImplicit>;
 
 /**
  * Creation of new contacts, with the ID being provided.
  */
-export const ContactCreateValidator = union([
-  omit(ContactValidator, ["id", "memberId"]),
-  omit(ContactValidator, ["id", "groupId"]),
+export const ContactCreate = union([
+  omit(Contact, ["id", "memberId"]),
+  omit(Contact, ["id", "groupId"]),
 ]);
-export type ContactCreate = Infer<typeof ContactCreateValidator>;
+// eslint-disable-next-line no-redeclare
+export type ContactCreate = Infer<typeof ContactCreate>;
 
 /**
  * Update an existing contact.
  */
-export const ContactUpdateValidator = union([
-  omit(ContactValidator, ["type", "memberId"]),
-  omit(ContactValidator, ["type", "groupId"]),
+export const ContactUpdate = union([
+  omit(Contact, ["type", "memberId"]),
+  omit(Contact, ["type", "groupId"]),
 ]);
-export type ContactUpdate = Infer<typeof ContactUpdateValidator>;
+// eslint-disable-next-line no-redeclare
+export type ContactUpdate = Infer<typeof ContactUpdate>;
 
 /**
  * Update an existing contact, with the associated object being received implicitly.
  */
-export const ContactUpdateImplicitValidator = union([
-  omit(ContactValidator, ["id", "type", "memberId"]),
-  omit(ContactValidator, ["id", "type", "groupId"]),
+export const ContactUpdateImplicit = union([
+  omit(Contact, ["id", "type", "memberId"]),
+  omit(Contact, ["id", "type", "groupId"]),
 ]);
-export type ContactUpdateImplicit = Infer<
-  typeof ContactUpdateImplicitValidator
->;
+// eslint-disable-next-line no-redeclare
+export type ContactUpdateImplicit = Infer<typeof ContactUpdateImplicit>;
 
 /**
  * Makes sure that a list of contacts includes the required items.
  * Useful when creating a new object where contacts are used.
  */
 export const requiredContact = refine(
-  array(ContactCreateImplicitValidator),
+  array(ContactCreateImplicit),
   "requiredContacts",
   (contacts) => {
     if (!contacts.find((c) => c.type === ContactType.EMAIL)) {
