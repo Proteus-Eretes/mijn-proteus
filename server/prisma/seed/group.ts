@@ -1,6 +1,6 @@
 import {
   array,
-  assert,
+  create,
   Describe,
   lazy,
   object,
@@ -10,7 +10,7 @@ import {
 } from "superstruct";
 import { Group } from "@prisma/client";
 
-import groups from "./testdata/group.json" assert { type: "json" };
+import groupsJson from "./testdata/group.json" assert { type: "json" };
 
 import { dateString } from "~/server/validation";
 import { prisma } from "~/server/prisma";
@@ -50,7 +50,7 @@ const makeGroup = async (child: GroupTree, parent?: Group, level = 0) => {
 };
 
 export default async () => {
-  assert(groups, array(GroupSeed));
+  const groups = create(groupsJson, array(GroupSeed));
 
   for (const group of groups) {
     await makeGroup(group as unknown as GroupTree);

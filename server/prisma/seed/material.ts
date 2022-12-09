@@ -1,6 +1,6 @@
-import { array, assert, object, optional, size, string } from "superstruct";
+import { array, create, object, optional, size, string } from "superstruct";
 
-import materials from "./testdata/material.json" assert { type: "json" };
+import materialsJson from "./testdata/material.json" assert { type: "json" };
 
 import { material, materialType } from "~/server/logic";
 
@@ -11,7 +11,7 @@ const MaterialSeed = object({
 });
 
 export default async () => {
-  assert(materials, array(MaterialSeed));
+  const materials = create(materialsJson, array(MaterialSeed));
 
   for (const mat of materials) {
     const type = await materialType.findByName(mat.typeName);

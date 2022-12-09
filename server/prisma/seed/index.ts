@@ -6,10 +6,15 @@ import group from "./group";
 import member from "./member";
 
 export const seed = async () => {
-  await materialType();
-  await material();
-  await quote();
-  await study();
-  await group();
-  await member();
+  try {
+    await materialType();
+    await material();
+    await quote();
+    await study();
+    await group();
+    await member();
+  } catch (e) {
+    console.error("Seeding failed!");
+    console.error(e);
+  }
 };

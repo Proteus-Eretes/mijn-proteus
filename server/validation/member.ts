@@ -1,6 +1,7 @@
 import { NameTitle, Sex } from "@prisma/client";
 import {
   assign,
+  defaulted,
   enums,
   Infer,
   object,
@@ -37,11 +38,14 @@ const MemberValidator = object({
 
 /**
  * Member creation struct.
- * It omits the ID of the member, and requires valid contacts to be added.
+ * It omits the ID of the member, requires valid contacts, and provides a default title.
  */
 export const MemberCreateValidator = assign(
-  omit(MemberValidator, ["id"]),
-  object({ contacts: requiredContact }),
+  omit(MemberValidator, ["id", "title"]),
+  object({
+    title: defaulted(enums(Object.values(NameTitle)), NameTitle.NONE),
+    contacts: requiredContact,
+  }),
 );
 export type MemberCreate = Infer<typeof MemberCreateValidator>;
 
