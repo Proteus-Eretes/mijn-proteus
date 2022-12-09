@@ -1,7 +1,7 @@
-import { h3Error } from "./apiError";
-
-import { ErrorCode, apiError } from "~/utils/error";
+import { apiError, ErrorCode } from "~/utils/error";
 import { addConstraints } from "~/server/prisma/constraints";
+
+import { h3Error } from "./apiError";
 
 /**
  * Makes sure that the constraints script has run correctly before accepting requests.

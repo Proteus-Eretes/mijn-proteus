@@ -1,4 +1,3 @@
-import { ContactType } from "@prisma/client";
 import {
   array,
   enums,
@@ -10,6 +9,7 @@ import {
   string,
   union,
 } from "superstruct";
+import { ContactType } from "@prisma/client";
 
 import { uuid } from "./utils";
 

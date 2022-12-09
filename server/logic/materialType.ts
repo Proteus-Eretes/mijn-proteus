@@ -1,5 +1,5 @@
-import { prisma } from "~/server/prisma";
 import { apiError, ErrorCode } from "~/utils/error";
+import { prisma } from "~/server/prisma";
 
 /**
  * Create a new material type.

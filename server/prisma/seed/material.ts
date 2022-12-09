@@ -1,8 +1,8 @@
 import { array, create, object, optional, size, string } from "superstruct";
 
-import materialsJson from "./testdata/material.json" assert { type: "json" };
-
 import { material, materialType } from "~/server/logic";
+
+import materialsJson from "./testdata/material.json" assert { type: "json" };
 
 const MaterialSeed = object({
   name: size(string(), 2, 40),

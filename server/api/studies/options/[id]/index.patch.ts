@@ -14,5 +14,6 @@ const body = object({
 export default defineEventHandler(async (event) => {
   const id = await getValidatedRouterParam(event, "id", uuid());
   const data = await readValidatedBody(event, body);
-  return await study.updateOption(id, data);
+
+  return await study.option.update(id, data);
 });

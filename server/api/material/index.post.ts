@@ -1,4 +1,4 @@
-import { object, string, size, optional } from "superstruct";
+import { object, optional, size, string } from "superstruct";
 
 import { material } from "~~/server/logic";
 import { readValidatedBody } from "~~/server/utils";

@@ -1,9 +1,9 @@
 import { array, create } from "superstruct";
 
-import membersJson from "./testdata/member.json" assert { type: "json" };
-
 import { member } from "~/server/logic";
 import { MemberCreateValidator } from "~/server/validation";
+
+import membersJson from "./testdata/member.json" assert { type: "json" };
 
 export default async () => {
   const members = create(membersJson, array(MemberCreateValidator));

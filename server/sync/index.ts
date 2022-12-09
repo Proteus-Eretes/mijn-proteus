@@ -1,6 +1,6 @@
-import * as authentik from "./authentik";
-
 import { sync } from "~/server/logic";
+
+import * as authentik from "./authentik";
 
 /**
  * Run a sync of all pending tasks.

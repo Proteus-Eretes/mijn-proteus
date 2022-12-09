@@ -1,5 +1,5 @@
+import { object, size, string } from "superstruct";
 import { Quote } from "@prisma/client";
-import { object, string, size } from "superstruct";
 
 import { quote } from "~~/server/logic";
 import { readValidatedBody } from "~~/server/utils";

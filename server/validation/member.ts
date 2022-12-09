@@ -1,4 +1,3 @@
-import { NameTitle, Sex } from "@prisma/client";
 import {
   assign,
   defaulted,
@@ -11,9 +10,10 @@ import {
   size,
   string,
 } from "superstruct";
+import { NameTitle, Sex } from "@prisma/client";
 
-import { requiredContact } from "./contact";
 import { dateString, uuid } from "./utils";
+import { requiredContact } from "./contact";
 
 /**
  * Complete member validator.

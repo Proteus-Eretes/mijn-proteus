@@ -1,6 +1,6 @@
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
-import { member } from "~/server/logic";
 import { MemberUpdateValidator, uuid } from "~~/server/validation";
+import { member } from "~/server/logic";
 
 export default defineEventHandler(async (event) => {
   const id = await getValidatedRouterParam(event, "id", uuid());

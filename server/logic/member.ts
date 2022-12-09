@@ -1,7 +1,7 @@
 import type { Member } from "@prisma/client";
 
-import { prisma } from "~/server/prisma";
 import { MemberCreate, MemberUpdate } from "~/server/validation";
+import { prisma } from "~/server/prisma";
 
 /**
  * Add new member to the database.

@@ -1,8 +1,7 @@
+import type { FetchError } from "ohmyfetch";
+import type { NitroFetchRequest } from "nitropack";
 import type { Ref } from "vue";
 import type { RouterMethod } from "h3";
-import type { FetchError } from "ohmyfetch";
-
-import type { NitroFetchRequest } from "nitropack";
 
 import { apiError, ErrorCode, isApiError } from "~~/utils/error";
 import type { ErrorHandler } from "~~/utils/apiErrorHandler";

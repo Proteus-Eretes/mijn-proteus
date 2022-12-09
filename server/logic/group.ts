@@ -1,7 +1,7 @@
 import { Group } from "@prisma/client";
 
-import { prisma } from "~/server/prisma";
 import { apiError, ErrorCode } from "~/utils/error";
+import { prisma } from "~/server/prisma";
 
 /**
  * Add new group to the database.

@@ -9,9 +9,9 @@ import {
   string,
 } from "superstruct";
 
-import materialTypesJson from "./testdata/materialType.json" assert { type: "json" };
-
 import { materialType } from "~/server/logic";
+
+import materialTypesJson from "./testdata/materialType.json" assert { type: "json" };
 
 type MaterialType = {
   name: string;

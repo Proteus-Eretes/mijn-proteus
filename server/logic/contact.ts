@@ -1,7 +1,7 @@
-import { prisma } from "~/server/prisma";
-import { ErrorCode, apiError } from "~/utils/error";
-import { group, member } from "~/server/logic";
+import { apiError, ErrorCode } from "~/utils/error";
 import { ContactCreate, ContactUpdate } from "~/server/validation";
+import { group, member } from "~/server/logic";
+import { prisma } from "~/server/prisma";
 
 /**
  * Add new contact information to the database.

@@ -1,8 +1,8 @@
 import { object, optional, size, string } from "superstruct";
 
+import { dateString, uuid } from "~~/server/validation";
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { group } from "~/server/logic";
-import { dateString, uuid } from "~~/server/validation";
 
 const body = object({
   name: optional(size(string(), 2, 50)),

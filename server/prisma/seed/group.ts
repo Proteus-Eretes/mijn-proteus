@@ -10,10 +10,10 @@ import {
 } from "superstruct";
 import { Group } from "@prisma/client";
 
-import groupsJson from "./testdata/group.json" assert { type: "json" };
-
 import { dateString } from "~/server/validation";
 import { prisma } from "~/server/prisma";
+
+import groupsJson from "./testdata/group.json" assert { type: "json" };
 
 type GroupTree = {
   name: string;

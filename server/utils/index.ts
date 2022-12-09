@@ -1,6 +1,6 @@
-import type { H3Event } from "h3";
-
 import { create, Struct } from "superstruct";
+
+import type { H3Event } from "h3";
 
 /**
  * Reads the body from a request, and validates it with the provided struct.

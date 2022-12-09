@@ -1,6 +1,6 @@
 import { member } from "~/server/logic";
-import { readValidatedBody } from "~/server/utils";
 import { MemberCreateValidator } from "~~/server/validation/member";
+import { readValidatedBody } from "~/server/utils";
 
 export default defineEventHandler(async (event) => {
   const data = await readValidatedBody(event, MemberCreateValidator);

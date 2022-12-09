@@ -1,5 +1,4 @@
 import { coerce, date, define, string } from "superstruct";
-
 import validator from "validator";
 
 /**

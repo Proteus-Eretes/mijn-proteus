@@ -1,5 +1,5 @@
-import { membership } from "~/server/logic";
 import { getValidatedRouterParam } from "~~/server/utils";
+import { membership } from "~/server/logic";
 import { uuid } from "~~/server/validation";
 
 export default defineEventHandler(async (event) => {
