@@ -158,16 +158,6 @@ model Study {
   @@unique([name, level, institution])
 }
 
-//
-// --=== QUOTES ===--
-//
-
-model Quote {
-  id      String @id @default(uuid())
-  content String @db.VarChar(120)
-  by      String @db.VarChar(50)
-}
-
 // --=== MATERIALS ===--
 //
 // Polymorphic relationships are sadly not supported by Prisma.
