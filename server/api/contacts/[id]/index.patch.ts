@@ -1,7 +1,6 @@
 import { contact } from "~/server/logic";
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
-import { ContactUpdateImplicitValidator } from "~~/server/validation";
-import { uuid } from "~~/server/validation/utils";
+import { ContactUpdateImplicitValidator, uuid } from "~~/server/validation";
 
 export default defineEventHandler(async (event) => {
   const id = await getValidatedRouterParam(event, "id", uuid());

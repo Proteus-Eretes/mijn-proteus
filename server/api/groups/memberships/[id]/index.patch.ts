@@ -2,7 +2,7 @@ import { boolean, date, object, optional, size, string } from "superstruct";
 
 import { membership } from "~/server/logic";
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
-import { uuid } from "~~/server/validation/utils";
+import { uuid } from "~~/server/validation";
 
 const body = object({
   function: optional(size(string(), 2, 50)),

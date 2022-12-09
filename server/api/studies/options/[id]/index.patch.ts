@@ -3,7 +3,7 @@ import { Institution, StudyLevel } from "@prisma/client";
 
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { study } from "~/server/logic";
-import { uuid } from "~~/server/validation/utils";
+import { uuid } from "~~/server/validation";
 
 const body = object({
   name: optional(size(string(), 2, 40)),

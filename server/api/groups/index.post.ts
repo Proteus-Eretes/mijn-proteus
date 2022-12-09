@@ -2,7 +2,7 @@ import { object, optional, size, string } from "superstruct";
 
 import { group } from "~/server/logic";
 import { readValidatedBody } from "~/server/utils";
-import { dateString, uuid } from "~/server/validation/utils";
+import { dateString, uuid } from "~/server/validation";
 
 const body = object({
   name: size(string(), 2, 50),
