@@ -1,14 +1,10 @@
 import { STATUS_CODES } from "http";
 
+import { H3Error } from "h3";
 import {
-  PrismaClientInitializationError,
   PrismaClientKnownRequestError,
-  PrismaClientRustPanicError,
-  PrismaClientUnknownRequestError,
-  PrismaClientValidationError,
   // eslint-disable-next-line import/no-internal-modules
 } from "@prisma/client/runtime/index.js";
-import { H3Error } from "h3";
 import { StructError } from "superstruct";
 
 import { apiError, ApiError, ErrorCode, errorStatus } from "~/utils/error";
@@ -79,16 +75,6 @@ const transformErrors = (err: unknown): ApiError<ErrorCode> => {
           `Database Error (${err.code})`,
         );
     }
-  }
-
-  // Other Prisma errors we don't really care about.
-  if (
-    err instanceof PrismaClientUnknownRequestError ||
-    err instanceof PrismaClientRustPanicError ||
-    err instanceof PrismaClientInitializationError ||
-    err instanceof PrismaClientValidationError
-  ) {
-    return apiError(ErrorCode.InternalError, "Database Error");
   }
 
   // None of the errors matched, so we return a generic internal error.
