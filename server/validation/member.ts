@@ -5,7 +5,6 @@ import {
   Infer,
   object,
   omit,
-  optional,
   partial,
   size,
   string,
@@ -25,7 +24,7 @@ const Member = object({
   title: enums(Object.values(NameTitle)),
   initials: size(string(), 1, 10),
   firstName: size(string(), 1, 40),
-  insertion: optional(size(string(), 1, 10)),
+  insertion: size(string(), 1, 10),
   lastName: size(string(), 1, 40),
   dateOfBirth: dateString(),
   sex: enums(Object.values(Sex)),
@@ -41,9 +40,10 @@ const Member = object({
  * It omits the ID of the member, requires valid contacts, and provides a default title.
  */
 export const MemberCreate = assign(
-  omit(Member, ["id", "title"]),
+  omit(Member, ["id", "title", "insertion"]),
   object({
     title: defaulted(enums(Object.values(NameTitle)), NameTitle.NONE),
+    insertion: defaulted(size(string(), 1, 10), ""),
     contacts: requiredContact,
   }),
 );
