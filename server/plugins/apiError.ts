@@ -8,6 +8,7 @@ import {
   PrismaClientValidationError,
   // eslint-disable-next-line import/no-internal-modules
 } from "@prisma/client/runtime/index.js";
+import { H3Error } from "h3";
 import { StructError } from "superstruct";
 
 import { apiError, ApiError, ErrorCode, errorStatus } from "~/utils/error";
@@ -23,6 +24,11 @@ export default defineNitroPlugin((nitroApp) => {
     try {
       return await oldHandler(e);
     } catch (err) {
+      if (err instanceof H3Error) {
+        // The error is already an H3 error, so we we just return it.
+        throw err;
+      }
+
       throw h3Error(transformErrors(err));
     }
   });
@@ -63,9 +69,15 @@ const transformErrors = (err: unknown): ApiError<ErrorCode> => {
           message: `Instance with "${targetName}" already exists with the same name.`,
           field: targetName,
         });
+      case "P2025":
+        // An operation failed because it depends on one or more records that were required but not found.
+        return apiError(ErrorCode.NotFound, "Database entry not found.");
       default:
         // Error is not covered.
-        return apiError(ErrorCode.InternalError, "Database Error");
+        return apiError(
+          ErrorCode.InternalError,
+          `Database Error (${err.code})`,
+        );
     }
   }
 

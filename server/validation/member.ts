@@ -25,7 +25,7 @@ const Member: Describe<PrismaMember> = object({
   title: enums(Object.values(NameTitle)),
   initials: size(string(), 1, 10),
   firstName: size(string(), 1, 40),
-  insertion: size(string(), 1, 10),
+  insertion: size(string(), 0, 10),
   lastName: size(string(), 1, 40),
   dateOfBirth: dateString(),
   sex: enums(Object.values(Sex)),
@@ -40,13 +40,17 @@ const Member: Describe<PrismaMember> = object({
  * Member creation struct.
  * It omits the ID of the member, requires valid contacts, and provides a default title.
  */
-export const MemberCreate = assign(
-  omit(Member, ["id", "title", "insertion"]),
-  object({
-    title: defaulted(enums(Object.values(NameTitle)), NameTitle.NONE),
-    insertion: defaulted(size(string(), 0, 10), ""),
-    contacts: requiredContact,
-  }),
+export const MemberCreate = defaulted(
+  assign(
+    omit(Member, ["id"]),
+    object({
+      contacts: requiredContact,
+    }),
+  ),
+  {
+    title: NameTitle.NONE,
+    insertion: "",
+  },
 );
 // eslint-disable-next-line no-redeclare
 export type MemberCreate = Infer<typeof MemberCreate>;

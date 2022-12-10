@@ -1,5 +1,6 @@
 import {
   array,
+  assert,
   assign,
   create,
   defaulted,
@@ -17,12 +18,11 @@ import { material } from "~/server/logic";
 import { materialsJson } from "./testdata";
 
 export default async () => {
-  const materialTypes = create(
-    materialsJson,
-    array(MaterialTypeCreateChildren),
-  );
+  assert(materialsJson, array(unknown()));
 
-  for (const materialType of materialTypes) {
+  for (const mt of materialsJson) {
+    const materialType = create(mt, MaterialTypeCreateChildren);
+
     await makeMaterialType(materialType);
   }
 };
@@ -40,25 +40,29 @@ const makeMaterialType = async (
     material.create({ ...mat, typeId: newMaterialType.id });
   }
 
-  const children = create(
-    materialType.children,
-    array(MaterialTypeCreateChildren),
-  );
+  for (const c of materialType.children) {
+    const child = create(c, MaterialTypeCreateChildren);
 
-  for (const c of children) {
-    await makeMaterialType(c, newMaterialType.id);
+    await makeMaterialType(child, newMaterialType.id);
   }
 };
 
 /**
  * Materialtype validator with children and materials.
  */
-const MaterialTypeCreateChildren = assign(
-  MaterialTypeCreate,
-  object({
-    children: defaulted(array(unknown()), []),
-    materials: defaulted(array(MaterialImplicitCreate), []),
-  }),
+const MaterialTypeCreateChildren = defaulted(
+  assign(
+    MaterialTypeCreate,
+    object({
+      children: array(unknown()),
+      materials: array(MaterialImplicitCreate),
+    }),
+  ),
+  {
+    parentId: null,
+    children: [],
+    materials: [],
+  },
 );
 // eslint-disable-next-line no-redeclare
 export type MaterialTypeCreateChildren = Infer<

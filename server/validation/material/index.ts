@@ -1,5 +1,4 @@
 import {
-  assign,
   defaulted,
   Describe,
   Infer,
@@ -21,7 +20,7 @@ export * from "./type";
 const Material: Describe<PrismaMaterial> = object({
   id: uuid(),
   name: size(string(), 2, 40),
-  comment: size(string(), 1, 200),
+  comment: size(string(), 0, 200),
   typeId: uuid(),
   lastUpdate: dateString(),
 });
@@ -30,12 +29,9 @@ const Material: Describe<PrismaMaterial> = object({
  * Material creation struct.
  * It omits the ID of the material, and adds a default comment.
  */
-export const MaterialCreate = assign(
-  omit(Material, ["id", "comment", "lastUpdate"]),
-  object({
-    comment: defaulted(size(string(), 0, 200), ""),
-  }),
-);
+export const MaterialCreate = defaulted(omit(Material, ["id", "lastUpdate"]), {
+  comment: "",
+});
 // eslint-disable-next-line no-redeclare
 export type MaterialCreate = Infer<typeof MaterialCreate>;
 
@@ -43,6 +39,11 @@ export type MaterialCreate = Infer<typeof MaterialCreate>;
  * Implicit material creation struct.
  * Same as material creation, but also omittes the type id.
  */
-export const MaterialImplicitCreate = omit(MaterialCreate, ["typeId"]);
+export const MaterialImplicitCreate = defaulted(
+  omit(Material, ["id", "typeId", "lastUpdate"]),
+  {
+    comment: "",
+  },
+);
 // eslint-disable-next-line no-redeclare
 export type MaterialImplicitCreate = Infer<typeof MaterialImplicitCreate>;

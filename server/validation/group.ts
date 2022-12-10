@@ -1,6 +1,5 @@
 import {
   array,
-  assign,
   defaulted,
   Describe,
   enums,
@@ -35,13 +34,12 @@ const Group: Describe<PrismaGroup> = object({
  * Group creation struct.
  * It omits the ID of the group, and adds default description and permissions.
  */
-export const GroupCreate = assign(
-  omit(Group, ["id", "description", "permissions"]),
-  object({
-    description: defaulted(size(string(), 0, 120), ""),
-    permissions: defaulted(array(enums(Object.values(Permission))), []),
-  }),
-);
+export const GroupCreate = defaulted(omit(Group, ["id"]), {
+  description: "",
+  stopDate: null,
+  permissions: [],
+  parentId: null,
+});
 // eslint-disable-next-line no-redeclare
 export type GroupCreate = Infer<typeof GroupCreate>;
 

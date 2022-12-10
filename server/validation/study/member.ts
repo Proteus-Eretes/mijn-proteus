@@ -1,4 +1,5 @@
 import {
+  defaulted,
   Describe,
   Infer,
   nullable,
@@ -29,7 +30,10 @@ const StudyMember: Describe<PrismaMemberStudy> = object({
  * Study member creation struct.
  * It omits the ID of the member, requires valid contacts, and provides a default title.
  */
-export const StudyMemberCreate = omit(StudyMember, ["id"]);
+export const StudyMemberCreate = defaulted(omit(StudyMember, ["id"]), {
+  studentNumber: "",
+  stopDate: null,
+});
 // eslint-disable-next-line no-redeclare
 export type StudyMemberCreate = Infer<typeof StudyMemberCreate>;
 

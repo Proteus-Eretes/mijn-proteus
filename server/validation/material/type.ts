@@ -1,4 +1,5 @@
 import {
+  defaulted,
   Describe,
   Infer,
   nullable,
@@ -25,6 +26,8 @@ const MaterialType: Describe<PrismaMaterialType> = object({
  * Materialtype creation struct.
  * It omits the ID of the materialtype, and adds a default comment.
  */
-export const MaterialTypeCreate = omit(MaterialType, ["id"]);
+export const MaterialTypeCreate = defaulted(omit(MaterialType, ["id"]), {
+  parentId: null,
+});
 // eslint-disable-next-line no-redeclare
 export type MaterialTypeCreate = Infer<typeof MaterialTypeCreate>;

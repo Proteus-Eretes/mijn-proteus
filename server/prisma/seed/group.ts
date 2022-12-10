@@ -1,5 +1,6 @@
 import {
   array,
+  assert,
   assign,
   create,
   defaulted,
@@ -14,9 +15,11 @@ import { GroupCreate } from "~/server/validation";
 import { groupsJson } from "./testdata";
 
 export default async () => {
-  const groups = create(groupsJson, array(GroupCreateChildren));
+  assert(groupsJson, array(unknown()));
 
-  for (const group of groups) {
+  for (const g of groupsJson) {
+    const group = create(g, GroupCreateChildren);
+
     await makeGroup(group);
   }
 };
@@ -29,8 +32,10 @@ const makeGroup = async (g: GroupCreateChildren, parentId?: string) => {
     parentId: parentId || null,
   });
 
-  for (const c of create(children, array(GroupCreateChildren))) {
-    await makeGroup(c, newGroup.id);
+  for (const c of children) {
+    const child = create(c, GroupCreateChildren);
+
+    await makeGroup(child, newGroup.id);
   }
 };
 
@@ -39,9 +44,15 @@ const makeGroup = async (g: GroupCreateChildren, parentId?: string) => {
  * This will be validated in the recursive call.
  * It's not possible to validate the entire thing, as typescript does not allow for recursive types.
  */
-const GroupCreateChildren = assign(
-  GroupCreate,
-  object({ children: defaulted(array(unknown()), []) }),
+const GroupCreateChildren = defaulted(
+  assign(GroupCreate, object({ children: array(unknown()) })),
+  {
+    description: "",
+    stopDate: null,
+    permissions: [],
+    parentId: null,
+    children: [],
+  },
 );
 // eslint-disable-next-line no-redeclare
 export type GroupCreateChildren = Infer<typeof GroupCreateChildren>;

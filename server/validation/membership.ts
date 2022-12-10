@@ -1,7 +1,5 @@
 import {
-  assign,
   boolean,
-  date,
   defaulted,
   Describe,
   Infer,
@@ -25,7 +23,7 @@ const Membership: Describe<PrismaMembership> = object({
   id: uuid(),
   function: size(string(), 0, 50),
   startDate: dateString(),
-  stopDate: nullable(date()),
+  stopDate: nullable(dateString()),
   isAdmin: boolean(),
   memberId: nullable(uuid()),
   groupId: uuid(),
@@ -35,14 +33,13 @@ const Membership: Describe<PrismaMembership> = object({
  * Membership creation struct.
  * It omits the ID of the membership, and adds default values.
  */
-export const MembershipCreate = assign(
-  omit(Membership, ["id", "function", "startDate", "isAdmin"]),
-  object({
-    function: defaulted(size(string(), 0, 50), ""),
-    startDate: defaulted(dateString(), new Date()),
-    isAdmin: defaulted(boolean(), false),
-  }),
-);
+export const MembershipCreate = defaulted(omit(Membership, ["id"]), {
+  function: "",
+  startDate: new Date(),
+  stopDate: null,
+  isAdmin: false,
+  memberId: null,
+});
 // eslint-disable-next-line no-redeclare
 export type MembershipCreate = Infer<typeof MembershipCreate>;
 

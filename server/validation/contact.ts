@@ -1,6 +1,7 @@
 import {
   array,
   assign,
+  defaulted,
   Describe,
   enums,
   Infer,
@@ -43,10 +44,16 @@ export type ContactCreateImplicit = Infer<typeof ContactCreateImplicit>;
 /**
  * Creation of new contacts, with the ID being provided.
  */
-export const ContactCreate = union([
-  assign(ContactCreateImplicit, object({ memberId: uuid() })),
-  assign(ContactCreateImplicit, object({ groupId: uuid() })),
-]);
+export const ContactCreate = defaulted(
+  union([
+    assign(ContactCreateImplicit, object({ memberId: uuid() })),
+    assign(ContactCreateImplicit, object({ groupId: uuid() })),
+  ]),
+  {
+    memberId: null,
+    groupId: null,
+  },
+);
 // eslint-disable-next-line no-redeclare
 export type ContactCreate = Infer<typeof ContactCreate>;
 
