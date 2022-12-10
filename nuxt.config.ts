@@ -15,7 +15,16 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", href: "/favicon.png" }],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "nuxt-meilisearch"],
+  meilisearch: {
+    instantSearch: {
+      theme: "satellite",
+    },
+    adminApiKey: "MASTER_KEY",
+    searchApiKey: "MASTER_KEY",
+    hostUrl: "http://localhost:7700",
+    serverSideUsage: true,
+  },
   typescript: {
     strict: true,
   },
