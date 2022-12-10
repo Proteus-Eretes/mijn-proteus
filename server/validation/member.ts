@@ -1,6 +1,7 @@
 import {
   assign,
   defaulted,
+  Describe,
   enums,
   Infer,
   object,
@@ -9,7 +10,7 @@ import {
   size,
   string,
 } from "superstruct";
-import { NameTitle, Sex } from "@prisma/client";
+import { NameTitle, Member as PrismaMember, Sex } from "@prisma/client";
 
 import { dateString, uuid } from "./utils";
 import { requiredContact } from "./contact";
@@ -19,7 +20,7 @@ import { requiredContact } from "./contact";
  * Validates all fields, but not the relations.
  * This validator is not intended for direct use, but other validators should build upon this.
  */
-const Member = object({
+const Member: Describe<PrismaMember> = object({
   id: uuid(),
   title: enums(Object.values(NameTitle)),
   initials: size(string(), 1, 10),

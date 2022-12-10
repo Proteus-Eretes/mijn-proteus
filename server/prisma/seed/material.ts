@@ -33,7 +33,7 @@ const makeMaterialType = async (
 ) => {
   const newMaterialType = await material.type.create({
     name: materialType.name,
-    parentId,
+    parentId: parentId || null,
   });
 
   for (const mat of materialType.materials) {

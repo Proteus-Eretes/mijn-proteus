@@ -3,14 +3,16 @@ import {
   boolean,
   date,
   defaulted,
+  Describe,
   Infer,
+  nullable,
   object,
   omit,
-  optional,
   partial,
   size,
   string,
 } from "superstruct";
+import { Membership as PrismaMembership } from "@prisma/client";
 
 import { dateString, uuid } from "./utils";
 
@@ -19,13 +21,13 @@ import { dateString, uuid } from "./utils";
  * Validates all fields, but not the relations.
  * This validator is not intended for direct use, but other validators should build upon this.
  */
-const Membership = object({
+const Membership: Describe<PrismaMembership> = object({
   id: uuid(),
   function: size(string(), 0, 50),
   startDate: dateString(),
-  stopDate: optional(date()),
+  stopDate: nullable(date()),
   isAdmin: boolean(),
-  memberId: optional(uuid()),
+  memberId: nullable(uuid()),
   groupId: uuid(),
 });
 

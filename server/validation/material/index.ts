@@ -1,14 +1,16 @@
 import {
   assign,
   defaulted,
+  Describe,
   Infer,
   object,
   omit,
   size,
   string,
 } from "superstruct";
+import { Material as PrismaMaterial } from "@prisma/client";
 
-import { uuid } from "../utils";
+import { dateString, uuid } from "../utils";
 
 export * from "./type";
 
@@ -16,11 +18,12 @@ export * from "./type";
  * Complete material validator.
  * This has all fields, but is probably not useful on it's own.
  */
-const Material = object({
+const Material: Describe<PrismaMaterial> = object({
   id: uuid(),
   name: size(string(), 2, 40),
-  typeId: uuid(),
   comment: size(string(), 1, 200),
+  typeId: uuid(),
+  lastUpdate: dateString(),
 });
 
 /**
@@ -28,7 +31,7 @@ const Material = object({
  * It omits the ID of the material, and adds a default comment.
  */
 export const MaterialCreate = assign(
-  omit(Material, ["id", "comment"]),
+  omit(Material, ["id", "comment", "lastUpdate"]),
   object({
     comment: defaulted(size(string(), 0, 200), ""),
   }),

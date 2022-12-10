@@ -6,8 +6,5 @@ export default defineEventHandler(async (event) => {
   const id = await getValidatedRouterParam(event, "id", uuid());
   const body = await readValidatedBody(event, ContactUpdateImplicit);
 
-  return await contact.update({
-    id,
-    ...body,
-  });
+  return await contact.update(id, body);
 });

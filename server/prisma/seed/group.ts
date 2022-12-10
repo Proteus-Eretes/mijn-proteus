@@ -26,7 +26,7 @@ const makeGroup = async (g: GroupCreateChildren, parentId?: string) => {
 
   const newGroup = await group.create({
     ...groupData,
-    parentId,
+    parentId: parentId || null,
   });
 
   for (const c of create(children, array(GroupCreateChildren))) {

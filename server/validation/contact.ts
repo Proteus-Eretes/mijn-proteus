@@ -1,15 +1,19 @@
 import {
   array,
+  Describe,
   enums,
   Infer,
+  intersection,
+  nullable,
   object,
   omit,
+  partial,
   refine,
   size,
   string,
   union,
 } from "superstruct";
-import { ContactType } from "@prisma/client";
+import { ContactType, Contact as PrismaContact } from "@prisma/client";
 
 import { uuid } from "./utils";
 
@@ -17,12 +21,12 @@ import { uuid } from "./utils";
  * Complete contact validator.
  * This has all fields, but is probably not useful on it's own.
  */
-const Contact = object({
+const Contact: Describe<PrismaContact> = object({
   id: uuid(),
   type: enums(Object.values(ContactType)),
   value: size(string(), 1, 80),
-  memberId: uuid(),
-  groupId: uuid(),
+  memberId: nullable(uuid()),
+  groupId: nullable(uuid()),
 });
 
 /**
@@ -40,31 +44,28 @@ export type ContactCreateImplicit = Infer<typeof ContactCreateImplicit>;
  * Creation of new contacts, with the ID being provided.
  */
 export const ContactCreate = union([
-  omit(Contact, ["id", "memberId"]),
-  omit(Contact, ["id", "groupId"]),
+  intersection([ContactCreateImplicit, object({ memberId: uuid() })]),
+  intersection([ContactCreateImplicit, object({ groupId: uuid() })]),
 ]);
 // eslint-disable-next-line no-redeclare
 export type ContactCreate = Infer<typeof ContactCreate>;
 
 /**
+ * Update an existing contact, with the associated object being received implicitly.
+ */
+export const ContactUpdateImplicit = partial(ContactCreateImplicit);
+// eslint-disable-next-line no-redeclare
+export type ContactUpdateImplicit = Infer<typeof ContactUpdateImplicit>;
+
+/**
  * Update an existing contact.
  */
 export const ContactUpdate = union([
-  omit(Contact, ["type", "memberId"]),
-  omit(Contact, ["type", "groupId"]),
+  intersection([ContactUpdateImplicit, partial(object({ memberId: uuid() }))]),
+  intersection([ContactUpdateImplicit, partial(object({ groupId: uuid() }))]),
 ]);
 // eslint-disable-next-line no-redeclare
 export type ContactUpdate = Infer<typeof ContactUpdate>;
-
-/**
- * Update an existing contact, with the associated object being received implicitly.
- */
-export const ContactUpdateImplicit = union([
-  omit(Contact, ["id", "type", "memberId"]),
-  omit(Contact, ["id", "type", "groupId"]),
-]);
-// eslint-disable-next-line no-redeclare
-export type ContactUpdateImplicit = Infer<typeof ContactUpdateImplicit>;
 
 /**
  * Makes sure that a list of contacts includes the required items.

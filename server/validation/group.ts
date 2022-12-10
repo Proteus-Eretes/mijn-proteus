@@ -2,16 +2,17 @@ import {
   array,
   assign,
   defaulted,
+  Describe,
   enums,
   Infer,
+  nullable,
   object,
   omit,
-  optional,
   partial,
   size,
   string,
 } from "superstruct";
-import { Permission } from "@prisma/client";
+import { Permission, Group as PrismaGroup } from "@prisma/client";
 
 import { dateString, uuid } from "./utils";
 
@@ -20,14 +21,14 @@ import { dateString, uuid } from "./utils";
  * Validates all fields, but not the relations.
  * This validator is not intended for direct use, but other validators should build upon this.
  */
-const Group = object({
+const Group: Describe<PrismaGroup> = object({
   id: uuid(),
   name: size(string(), 2, 50),
   description: size(string(), 0, 120),
   startDate: dateString(),
-  stopDate: optional(dateString()),
+  stopDate: nullable(dateString()),
   permissions: array(enums(Object.values(Permission))),
-  parentId: optional(uuid()),
+  parentId: nullable(uuid()),
 });
 
 /**

@@ -9,12 +9,16 @@ import { prisma } from "~/server/prisma";
  * @returns The created contact information.
  */
 export const create = async (contact: ContactCreate) => {
-  if ("memberId" in contact && !(await member.get(contact.memberId))) {
-    throw apiError(ErrorCode.NotFound, "Member not found!");
+  if ("memberId" in contact && contact.memberId) {
+    if (!(await member.get(contact.memberId))) {
+      throw apiError(ErrorCode.NotFound, "Member not found!");
+    }
   }
 
-  if ("groupId" in contact && !(await group.get(contact.groupId))) {
-    throw apiError(ErrorCode.NotFound, "Group not found!");
+  if ("groupId" in contact && contact.groupId) {
+    if (!(await group.get(contact.groupId))) {
+      throw apiError(ErrorCode.NotFound, "Group not found!");
+    }
   }
 
   return await prisma.contact.create({
@@ -24,12 +28,13 @@ export const create = async (contact: ContactCreate) => {
 
 /**
  * Update contact information in the database.
+ * @param id The ID of the contact to update.
  * @param contact The contact information to update.
  * @returns The updated contact information.
  */
-export const update = async (contact: ContactUpdate) => {
+export const update = async (id: string, contact: ContactUpdate) => {
   return await prisma.contact.update({
-    where: { id: contact.id },
+    where: { id },
     data: contact,
   });
 };

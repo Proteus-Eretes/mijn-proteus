@@ -1,4 +1,13 @@
-import { Infer, object, omit, optional, size, string } from "superstruct";
+import {
+  Describe,
+  Infer,
+  nullable,
+  object,
+  omit,
+  size,
+  string,
+} from "superstruct";
+import { MaterialType as PrismaMaterialType } from "@prisma/client";
 
 import { uuid } from "../utils";
 
@@ -6,10 +15,10 @@ import { uuid } from "../utils";
  * Complete materialtype validator.
  * This has all fields, but is probably not useful on it's own.
  */
-const MaterialType = object({
+const MaterialType: Describe<PrismaMaterialType> = object({
   id: uuid(),
   name: size(string(), 2, 40),
-  parentId: optional(uuid()),
+  parentId: nullable(uuid()),
 });
 
 /**
