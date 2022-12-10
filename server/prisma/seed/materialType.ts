@@ -9,9 +9,9 @@ import {
   string,
 } from "superstruct";
 
-import { materialType } from "../../logic";
-
 import materialTypes from "./testdata/materialType.json" assert { type: "json" };
+
+import { materialType } from "~/server/logic";
 
 type MaterialType = {
   name: string;
@@ -25,7 +25,6 @@ const MaterialTypeSeed: Describe<MaterialType> = object({
 
 const createType = async (type: MaterialType, parentId?: string) => {
   const created = await materialType.create(type.name, parentId);
-  console.info(`Created material type: ${created.name}.`);
 
   for (const child of type.children || []) {
     await createType(child, created.id);

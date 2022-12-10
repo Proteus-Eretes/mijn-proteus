@@ -1,5 +1,6 @@
 import { Institution, StudyLevel } from "@prisma/client";
-import { study } from "../../logic";
+
+import { study } from "~/server/logic";
 
 export default async () => {
   await study.createOption({
@@ -7,12 +8,10 @@ export default async () => {
     level: StudyLevel.BACHELOR_OF_SCIENCE,
     institution: Institution.UNIVERSITY_OF_TECHNOLOGY_DELFT,
   });
-  console.info("Study Created.");
 
   await study.createOption({
     name: "Computer Science & Engineering",
     level: StudyLevel.BACHELOR_OF_SCIENCE,
     institution: Institution.UNIVERSITY_OF_TECHNOLOGY_DELFT,
   });
-  console.info("Study Created.");
 };

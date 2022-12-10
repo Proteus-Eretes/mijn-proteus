@@ -1,6 +1,5 @@
-import { prisma } from "../prisma/client";
-import { ErrorCode } from "../error";
-import { apiError } from "../utils";
+import { prisma } from "~/server/prisma";
+import { apiError, ErrorCode } from "~/utils/error";
 
 /**
  * Create a new material type.

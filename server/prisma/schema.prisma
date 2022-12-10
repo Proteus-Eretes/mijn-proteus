@@ -158,16 +158,6 @@ model Study {
   @@unique([name, level, institution])
 }
 
-//
-// --=== QUOTES ===--
-//
-
-model Quote {
-  id      String @id @default(uuid())
-  content String @db.VarChar(120)
-  by      String @db.VarChar(50)
-}
-
 // --=== MATERIALS ===--
 //
 // Polymorphic relationships are sadly not supported by Prisma.
@@ -190,4 +180,20 @@ model MaterialType {
   parent    MaterialType?  @relation("MaterialTypeTree", fields: [parentId], references: [id], onDelete: Restrict)
   children  MaterialType[] @relation("MaterialTypeTree")
   materials Material[]
+}
+
+// --=== Syncing ===--
+
+// These are inserted automagically by Postgres triggers.
+// We cannot add relations here, as the relation might have been deleted when the sync happens.
+model Sync {
+  id          String    @db.Uuid
+  type        SyncType
+  nextAttempt DateTime?
+
+  @@id([id, type])
+}
+
+enum SyncType {
+  MEMBER
 }

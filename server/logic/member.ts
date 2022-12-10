@@ -1,6 +1,6 @@
 import type { NameTitle, Sex, Prisma } from "@prisma/client";
 
-import { prisma } from "../prisma/client";
+import { prisma } from "~/server/prisma";
 
 /**
  * Add new member to the database.
@@ -78,6 +78,27 @@ export const getAll = async () => {
       memberships: true,
     },
   });
+};
+
+/**
+ * Check if there exists a member with the specified ID.
+ * @param id The id of the member.
+ * @returns Whether the member with the ID exists.
+ */
+export const exists = async (id: string) => {
+  const count = await prisma.member.count({
+    where: { id },
+  });
+
+  return count > 0;
+};
+
+/**
+ * Count the amount of members in the database.
+ * @returns The member count.
+ */
+export const count = async () => {
+  return await prisma.member.count();
 };
 
 /**

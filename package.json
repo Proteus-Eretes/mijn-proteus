@@ -20,7 +20,6 @@
     "prettier": "prettier --write ."
   },
   "prisma": {
-    "seed": "ts-node --files server/prisma/seed/index.ts",
     "schema": "server/prisma/schema.prisma"
   },
   "devDependencies": {
@@ -41,11 +40,11 @@
     "postcss-custom-properties": "^13.0.0",
     "prettier": "^2.7.1",
     "prisma": "^4.6.1",
-    "ts-node": "^10.9.1",
     "typescript": "^4.8.4",
     "vue-eslint-parser": "^9.1.0"
   },
   "dependencies": {
+    "@sidebase/nuxt-auth": "^0.3.0-alpha.1",
     "daisyui": "^2.38.0",
     "superstruct": "^1.0.3",
     "validator": "^13.7.0"

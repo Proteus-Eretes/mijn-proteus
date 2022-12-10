@@ -1,8 +1,10 @@
 import { array, assert, enums, object, string } from "superstruct";
 import { ContactType, NameTitle, Sex } from "@prisma/client";
-import { member } from "../../logic";
-import { dateString } from "../../validation";
+
 import members from "./testdata/member.json" assert { type: "json" };
+
+import { member } from "~/server/logic";
+import { dateString } from "~/server/validation";
 
 const ContactSeed = object({
   type: enums(Object.values(ContactType)),
@@ -30,12 +32,9 @@ export default async () => {
 
   for (const m of members) {
     const { dateOfBirth, ...memberData } = m;
-    const newMember = await member.create({
+    await member.create({
       ...memberData,
       dateOfBirth: new Date(dateOfBirth),
     });
-    console.info(
-      `Created member: ${newMember.firstName} ${newMember.lastName}`,
-    );
   }
 };

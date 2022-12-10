@@ -1,8 +1,7 @@
 import { StudyLevel, Institution } from "@prisma/client";
 
-import { prisma } from "../prisma/client";
-import { apiError } from "../utils";
-import { ErrorCode } from "../error";
+import { prisma } from "~/server/prisma";
+import { ErrorCode, apiError } from "~/utils/error";
 
 /**
  * Add new study to the database.

@@ -15,7 +15,10 @@
             {{ materialType.parent?.name || "-" }}
           </td>
         </tr>
-        <tr v-if="!types || !('length' in types) || types.length === 0">
+        <tr v-if="pending">
+          <td colspan="2" class="text-center italic">Types laden..</td>
+        </tr>
+        <tr v-else-if="!types || types.length === 0">
           <td colspan="2" class="text-center italic">Geen types gevonden</td>
         </tr>
       </tbody>
@@ -24,7 +27,7 @@
   <Alert v-else type="error" content="Materiaal types ophalen mislukt" />
   <LazyPageMaterialTypesCreate
     :parents="types || []"
-    @refresh-types="refresh"
+    @refresh-types="() => execute()"
   />
 </template>
 
@@ -32,10 +35,11 @@
 const {
   data: types,
   error,
-  refresh,
-} = await useFetch<
+  pending,
+  execute,
+} = await useLazyApiFetch<
   Awaited<
     ReturnType<typeof import("~~/server/api/material/type/index.get").default>
   >
->("/api/material/type");
+>("/api/material/type", () => true);
 </script>

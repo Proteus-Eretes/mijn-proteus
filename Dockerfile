@@ -11,18 +11,23 @@ RUN yarn
 # Copy over the other files.
 COPY assets ./assets
 COPY components ./components
+COPY composables ./composables
 COPY layouts ./layouts
 COPY pages ./pages
 COPY public ./public
 COPY server ./server
+COPY utils ./utils
 COPY app.vue .
 COPY nuxt.config.ts .
-COPY tsconfig.json .
 COPY tailwind.config.js .
-COPY .env .
+COPY tsconfig.json .
 
 # Generate the Prisma client
 RUN npx prisma generate
+
+# Set the auth origin, as this needs to be done on build time.
+# This is the public URL of Mijn Proteus, NOT Authentik.
+ENV AUTH_ORIGIN "https://mijn.proteuseretes.nl"
 
 # Build the application
 RUN yarn build

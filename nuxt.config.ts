@@ -1,4 +1,24 @@
 export default defineNuxtConfig({
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@sidebase/nuxt-auth"],
+  typescript: {
+    strict: true,
+  },
+  runtimeConfig: {
+    seed: false,
+    authentik: {
+      host: "https://authentik",
+      apiKey: "",
+      auth: {
+        secret: "",
+        clientId: "",
+        clientSecret: "",
+        issuer: "https://authentik/application/o/mijnpe",
+      },
+    },
+  },
+  auth: {
+    origin: process.env.AUTH_ORIGIN ?? "http://localhost:3000",
+  },
   app: {
     head: {
       charset: "utf-8",
@@ -14,9 +34,5 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: "icon", href: "/favicon.png" }],
     },
-  },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
-  typescript: {
-    strict: true,
   },
 });

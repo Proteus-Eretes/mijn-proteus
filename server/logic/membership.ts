@@ -1,7 +1,7 @@
-import { prisma } from "../prisma/client";
-import { apiError } from "../utils";
-import { ErrorCode } from "../error";
-import { member, group } from "../logic";
+import { member, group } from "./";
+
+import { prisma } from "~/server/prisma";
+import { apiError, ErrorCode } from "~/utils/error";
 
 /**
  * Add new membership to the database.
