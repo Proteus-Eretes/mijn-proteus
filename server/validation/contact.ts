@@ -1,9 +1,9 @@
 import {
   array,
+  assign,
   Describe,
   enums,
   Infer,
-  intersection,
   nullable,
   object,
   omit,
@@ -44,8 +44,8 @@ export type ContactCreateImplicit = Infer<typeof ContactCreateImplicit>;
  * Creation of new contacts, with the ID being provided.
  */
 export const ContactCreate = union([
-  intersection([ContactCreateImplicit, object({ memberId: uuid() })]),
-  intersection([ContactCreateImplicit, object({ groupId: uuid() })]),
+  assign(ContactCreateImplicit, object({ memberId: uuid() })),
+  assign(ContactCreateImplicit, object({ groupId: uuid() })),
 ]);
 // eslint-disable-next-line no-redeclare
 export type ContactCreate = Infer<typeof ContactCreate>;
@@ -61,8 +61,8 @@ export type ContactUpdateImplicit = Infer<typeof ContactUpdateImplicit>;
  * Update an existing contact.
  */
 export const ContactUpdate = union([
-  intersection([ContactUpdateImplicit, partial(object({ memberId: uuid() }))]),
-  intersection([ContactUpdateImplicit, partial(object({ groupId: uuid() }))]),
+  assign(ContactUpdateImplicit, partial(object({ memberId: uuid() }))),
+  assign(ContactUpdateImplicit, partial(object({ groupId: uuid() }))),
 ]);
 // eslint-disable-next-line no-redeclare
 export type ContactUpdate = Infer<typeof ContactUpdate>;

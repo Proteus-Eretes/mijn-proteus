@@ -1,55 +1,53 @@
-import { apiError, ErrorCode } from "~/utils/error";
+import { StudyCreate, StudyUpdate } from "~~/server/validation";
 import { prisma } from "~/server/prisma";
 
-import { get as getOption } from "./option";
-
-export * as option from "./option";
+export * as member from "./member";
 
 /**
- * Add new memberStudy to the database.
- * @param data The data of the new memberStudy.
- * @returns The created memberStudy.
+ * Add new study to the database.
+ * @param study The study to create.
+ * @returns The created study.
  */
-export const create = async (data: {
-  studentNumber?: string;
-  startDate: Date;
-  stopDate?: Date;
-  memberId: string;
-  studyId: string;
-}) => {
-  if (!(await getOption(data.studyId))) {
-    throw apiError(ErrorCode.NotFound, "The study was not found!");
-  }
-
-  return await prisma.memberStudy.create({
-    data,
+export const create = async (study: StudyCreate) => {
+  return await prisma.study.create({
+    data: study,
   });
 };
 
 /**
- * Update memberStudy in the database.
- * @param id The id of the memberStudy to be updated
- * @param data The updated data for the memberStudy.
- * @returns The updated memberStudy.
+ * Update study in the database.
+ * @param id The id of the study to be updated
+ * @param data The updated data for the study.
+ * @returns The updated study.
  */
-export const update = async (
-  id: string,
-  data: {
-    studentNumber?: string;
-    startDate?: Date;
-    stopDate?: Date;
-  },
-) => {
-  return await prisma.memberStudy.update({
+export const update = async (id: string, data: StudyUpdate) => {
+  return await prisma.study.update({
     where: { id },
     data,
   });
 };
 
 /**
- * Delete memberStudy from the database.
- * @returns The deleted memberStudy.
+ * Get a study from the database.
+ * @param id The id of the study.
+ * @returns A study if found, otherwise null.
+ */
+export const get = async (id: string) => {
+  return await prisma.study.findUnique({ where: { id } });
+};
+
+/**
+ * Get all studies from the database.
+ * @returns An array of studies.
+ */
+export const getAll = async () => {
+  return await prisma.study.findMany();
+};
+
+/**
+ * Delete study from the database.
+ * @returns The deleted study.
  */
 export const remove = async (id: string) => {
-  return await prisma.memberStudy.delete({ where: { id } });
+  return await prisma.study.delete({ where: { id } });
 };
