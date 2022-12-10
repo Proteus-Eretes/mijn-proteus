@@ -2,7 +2,6 @@ import {
   defaulted,
   Describe,
   Infer,
-  nullable,
   object,
   omit,
   size,
@@ -10,7 +9,7 @@ import {
 } from "superstruct";
 import { MaterialType as PrismaMaterialType } from "@prisma/client";
 
-import { uuid } from "../utils";
+import { optionalUuid, uuid } from "../utils";
 
 /**
  * Complete materialtype validator.
@@ -19,7 +18,7 @@ import { uuid } from "../utils";
 const MaterialType: Describe<PrismaMaterialType> = object({
   id: uuid(),
   name: size(string(), 2, 40),
-  parentId: nullable(uuid()),
+  parentId: optionalUuid(),
 });
 
 /**

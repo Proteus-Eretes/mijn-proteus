@@ -1,4 +1,4 @@
-import { coerce, date, define, string } from "superstruct";
+import { coerce, date, define, nullable, string } from "superstruct";
 import validator from "validator";
 
 /**
@@ -12,6 +12,15 @@ export const uuid = (version: 3 | 4 | 5 | "all" = 4) =>
     }
 
     return validator.isUUID(val, version);
+  });
+
+export const optionalUuid = () =>
+  coerce(nullable(uuid()), string(), (v) => {
+    if (v === "") {
+      return null;
+    }
+
+    return v;
   });
 
 /**

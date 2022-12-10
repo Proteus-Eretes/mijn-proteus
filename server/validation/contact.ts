@@ -5,7 +5,6 @@ import {
   Describe,
   enums,
   Infer,
-  nullable,
   object,
   omit,
   partial,
@@ -16,7 +15,7 @@ import {
 } from "superstruct";
 import { ContactType, Contact as PrismaContact } from "@prisma/client";
 
-import { uuid } from "./utils";
+import { optionalUuid, uuid } from "./utils";
 
 /**
  * Complete contact validator.
@@ -26,8 +25,8 @@ const Contact: Describe<PrismaContact> = object({
   id: uuid(),
   type: enums(Object.values(ContactType)),
   value: size(string(), 1, 80),
-  memberId: nullable(uuid()),
-  groupId: nullable(uuid()),
+  memberId: optionalUuid(),
+  groupId: optionalUuid(),
 });
 
 /**

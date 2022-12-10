@@ -12,7 +12,7 @@ import {
 } from "superstruct";
 import { Membership as PrismaMembership } from "@prisma/client";
 
-import { dateString, uuid } from "./utils";
+import { dateString, optionalUuid, uuid } from "./utils";
 
 /**
  * Complete membership validator.
@@ -25,7 +25,7 @@ const Membership: Describe<PrismaMembership> = object({
   startDate: dateString(),
   stopDate: nullable(dateString()),
   isAdmin: boolean(),
-  memberId: nullable(uuid()),
+  memberId: optionalUuid(),
   groupId: uuid(),
 });
 

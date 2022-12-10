@@ -13,7 +13,7 @@ import {
 } from "superstruct";
 import { Permission, Group as PrismaGroup } from "@prisma/client";
 
-import { dateString, uuid } from "./utils";
+import { dateString, optionalUuid, uuid } from "./utils";
 
 /**
  * Complete group validator.
@@ -27,7 +27,7 @@ const Group: Describe<PrismaGroup> = object({
   startDate: dateString(),
   stopDate: nullable(dateString()),
   permissions: array(enums(Object.values(Permission))),
-  parentId: nullable(uuid()),
+  parentId: optionalUuid(),
 });
 
 /**
