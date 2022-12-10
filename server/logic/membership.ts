@@ -1,5 +1,3 @@
-import { Membership } from "@prisma/client";
-
 import { prisma } from "../prisma/client";
 import { apiError } from "../utils";
 import { ErrorCode } from "../error";
@@ -17,7 +15,7 @@ export const create = async (data: {
   isAdmin?: boolean;
   memberId: string;
   groupId: string;
-}): Promise<Membership> => {
+}) => {
   if (data.memberId && !(await member.get(data.memberId))) {
     throw apiError(ErrorCode.NotFound, "Member not found!");
   }
@@ -44,7 +42,7 @@ export const update = async (
     stopDate?: Date;
     isAdmin?: boolean;
   },
-): Promise<Membership> => {
+) => {
   return await prisma.membership.update({
     where: { id },
     data,
@@ -56,7 +54,7 @@ export const update = async (
  * @param id The id of the membership.
  * @returns The requested membership if found, otherwise null.
  */
-export const get = async (id: string): Promise<Membership | null> => {
+export const get = async (id: string) => {
   return await prisma.membership.findUnique({ where: { id } });
 };
 
@@ -65,6 +63,6 @@ export const get = async (id: string): Promise<Membership | null> => {
  * @param id The id of the membership.
  * @returns The deleted membership.
  */
-export const remove = async (id: string): Promise<Membership> => {
+export const remove = async (id: string) => {
   return await prisma.membership.delete({ where: { id } });
 };

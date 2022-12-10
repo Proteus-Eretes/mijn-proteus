@@ -1,4 +1,4 @@
-import { MemberStudy, Study, StudyLevel, Institution } from "@prisma/client";
+import { StudyLevel, Institution } from "@prisma/client";
 
 import { prisma } from "../prisma/client";
 import { apiError } from "../utils";
@@ -13,7 +13,7 @@ export const createOption = async (data: {
   name: string;
   level: StudyLevel;
   institution: Institution;
-}): Promise<Study> => {
+}) => {
   return await prisma.study.create({
     data,
   });
@@ -32,7 +32,7 @@ export const updateOption = async (
     level?: StudyLevel;
     institution?: Institution;
   },
-): Promise<Study> => {
+) => {
   return await prisma.study.update({
     where: { id },
     data,
@@ -44,7 +44,7 @@ export const updateOption = async (
  * @param id The id of the study.
  * @returns A study if found, otherwise null.
  */
-export const getOption = async (id: string): Promise<Study | null> => {
+export const getOption = async (id: string) => {
   return await prisma.study.findUnique({ where: { id } });
 };
 
@@ -52,7 +52,7 @@ export const getOption = async (id: string): Promise<Study | null> => {
  * Get all studies from the database.
  * @returns An array of studies.
  */
-export const getAllOptions = async (): Promise<Study[]> => {
+export const getAllOptions = async () => {
   return await prisma.study.findMany();
 };
 
@@ -60,7 +60,7 @@ export const getAllOptions = async (): Promise<Study[]> => {
  * Delete study from the database.
  * @returns The deleted study.
  */
-export const removeOption = async (id: string): Promise<Study> => {
+export const removeOption = async (id: string) => {
   return await prisma.study.delete({ where: { id } });
 };
 
@@ -75,7 +75,7 @@ export const create = async (data: {
   stopDate?: Date;
   memberId: string;
   studyId: string;
-}): Promise<MemberStudy> => {
+}) => {
   if (!(await getOption(data.studyId))) {
     throw apiError(ErrorCode.NotFound, "The study was not found!");
   }
@@ -98,7 +98,7 @@ export const update = async (
     startDate?: Date;
     stopDate?: Date;
   },
-): Promise<MemberStudy> => {
+) => {
   return await prisma.memberStudy.update({
     where: { id },
     data,
@@ -109,6 +109,6 @@ export const update = async (
  * Delete memberStudy from the database.
  * @returns The deleted memberStudy.
  */
-export const remove = async (id: string): Promise<MemberStudy> => {
+export const remove = async (id: string) => {
   return await prisma.memberStudy.delete({ where: { id } });
 };

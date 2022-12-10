@@ -1,4 +1,4 @@
-import type { Member, NameTitle, Sex, Prisma } from "@prisma/client";
+import type { NameTitle, Sex, Prisma } from "@prisma/client";
 
 import { prisma } from "../prisma/client";
 
@@ -21,7 +21,7 @@ export const create = async (data: {
   zipcode: string;
   country: string;
   contacts?: Prisma.ContactCreateWithoutMemberInput[];
-}): Promise<Member> => {
+}) => {
   return await prisma.member.create({
     data: { ...data, contacts: { create: data.contacts } },
   });
@@ -43,7 +43,7 @@ export const update = async (
     zipcode?: string;
     country?: string;
   },
-): Promise<Member> => {
+) => {
   return await prisma.member.update({
     where: { id },
     data,
@@ -55,7 +55,7 @@ export const update = async (
  * @param id The id of the member.
  * @returns The requested member if found, otherwise null.
  */
-export const get = async (id: string): Promise<Member | null> => {
+export const get = async (id: string) => {
   return await prisma.member.findUnique({
     where: { id },
     include: {
@@ -70,7 +70,7 @@ export const get = async (id: string): Promise<Member | null> => {
  * Get all members from the database.
  * @returns The requested member if found, otherwise null.
  */
-export const getAll = async (): Promise<Member[]> => {
+export const getAll = async () => {
   return await prisma.member.findMany({
     include: {
       contacts: true,
@@ -85,6 +85,6 @@ export const getAll = async (): Promise<Member[]> => {
  * @param id The id of the member.
  * @returns The deleted member.
  */
-export const remove = async (id: string): Promise<Member> => {
+export const remove = async (id: string) => {
   return await prisma.member.delete({ where: { id } });
 };

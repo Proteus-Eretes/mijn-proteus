@@ -1,5 +1,3 @@
-import { Group } from "@prisma/client";
-
 import { prisma } from "../prisma/client";
 import { apiError } from "../utils";
 import { ErrorCode } from "../error";
@@ -15,7 +13,7 @@ export const create = async (data: {
   startDate?: string;
   stopDate?: string;
   parentId?: string;
-}): Promise<Group> => {
+}) => {
   if (data.parentId) {
     const parent = await get(data.parentId);
 
@@ -45,7 +43,7 @@ export const update = async (
     allowMembers?: boolean;
     allowSubgroups?: boolean;
   },
-): Promise<Group> => {
+) => {
   return await prisma.group.update({
     where: { id },
     data,
@@ -57,7 +55,7 @@ export const update = async (
  * @param id The id of the group
  * @returns The requested group if found, otherwise null.
  */
-export const get = async (id: string): Promise<Group | null> => {
+export const get = async (id: string) => {
   return await prisma.group.findUnique({
     where: { id },
     include: {
@@ -70,7 +68,7 @@ export const get = async (id: string): Promise<Group | null> => {
  * Get all groups from the database.
  * @returns The requested group if found, otherwise null.
  */
-export const getAll = async (): Promise<Group[]> => {
+export const getAll = async () => {
   return await prisma.group.findMany({
     include: {
       contacts: true,
@@ -83,6 +81,6 @@ export const getAll = async (): Promise<Group[]> => {
  * @param id The id of the group
  * @returns The deleted group.
  */
-export const remove = async (id: string): Promise<Group> => {
+export const remove = async (id: string) => {
   return await prisma.group.delete({ where: { id } });
 };

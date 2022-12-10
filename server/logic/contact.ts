@@ -1,4 +1,4 @@
-import { Contact, ContactType } from "@prisma/client";
+import { ContactType } from "@prisma/client";
 
 import { prisma } from "../prisma/client";
 import { apiError } from "../utils";
@@ -15,7 +15,7 @@ export const create = async (data: {
   type: ContactType;
   memberId?: string;
   groupId?: string;
-}): Promise<Contact> => {
+}) => {
   if (!data.memberId && !data.memberId) {
     throw apiError(ErrorCode.ValidationFailed, {
       message: "No memberId or groupId provided",
@@ -47,7 +47,7 @@ export const update = async (
   data: {
     value?: string;
   },
-): Promise<Contact> => {
+) => {
   return await prisma.contact.update({
     where: { id },
     data,
@@ -58,6 +58,6 @@ export const update = async (
  * Delete contact information from the database.
  * @returns The deleted contact information.
  */
-export const remove = async (id: string): Promise<Contact> => {
+export const remove = async (id: string) => {
   return await prisma.contact.delete({ where: { id } });
 };
