@@ -1,5 +1,5 @@
 import { member } from "~/server/logic";
-import { MemberCreate } from "~~/server/validation/member";
+import { MemberCreate } from "~~/server/validation";
 import { readValidatedBody } from "~/server/utils";
 
 export default defineEventHandler(async (event) => {

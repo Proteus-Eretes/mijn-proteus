@@ -1,29 +1,26 @@
 import { apiError, ErrorCode } from "~/utils/error";
+import { MaterialTypeCreate } from "~~/server/validation";
 import { prisma } from "~/server/prisma";
 
 /**
  * Create a new material type.
- * @param name The name of the new material.
- * @param parentId The ID of the parent type, if it exists.
+ * @param materialType The material type to create.
  * @returns The created material type.
  */
-export const create = async (name: string, parentId?: string) => {
-  if (parentId && !(await get(parentId))) {
+export const create = async (materialType: MaterialTypeCreate) => {
+  if (materialType.parentId && !(await get(materialType.parentId))) {
     throw apiError(ErrorCode.NotFound, "The parent type was not found!");
   }
 
-  if (await findByName(name)) {
+  if (await findByName(materialType.name)) {
     throw apiError(ErrorCode.Exists, {
-      message: `Material type "${name}" already exists.`,
+      message: `Material type "${materialType.name}" already exists.`,
       field: "name",
     });
   }
 
   return await prisma.materialType.create({
-    data: {
-      name,
-      parentId,
-    },
+    data: materialType,
   });
 };
 

@@ -43,7 +43,7 @@ export const MemberCreate = assign(
   omit(Member, ["id", "title", "insertion"]),
   object({
     title: defaulted(enums(Object.values(NameTitle)), NameTitle.NONE),
-    insertion: defaulted(size(string(), 1, 10), ""),
+    insertion: defaulted(size(string(), 0, 10), ""),
     contacts: requiredContact,
   }),
 );

@@ -1,7 +1,7 @@
 import { reset, runSync } from "~/server/sync";
 import { isApiError } from "~/utils/error";
 import { member } from "~/server/logic";
-import { seed } from "~/server/prisma/seed";
+import { seed } from "~/server/prisma";
 
 /**
  * Seed the database automatically when no members are detected.

@@ -26,6 +26,24 @@
     "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
     "no-use-before-define": "off",
     "no-empty": "warn",
+    "import/no-commonjs": "warn",
+    "import/no-useless-path-segments": "warn",
+    "import/first": "warn",
+    "import/newline-after-import": "warn",
+    "import/no-internal-modules": [
+      "warn",
+      {
+        "allow": [
+          "*~/server/logic",
+          "*~/server/prisma",
+          "*~/server/sync",
+          "*~/server/validation",
+          "*~/server/utils",
+          "*~/utils/*",
+          "testdata"
+        ]
+      }
+    ],
     "@typescript-eslint/no-unused-vars": "warn",
     "vue/multi-word-component-names": "off",
     "vue/no-multiple-template-root": "off",

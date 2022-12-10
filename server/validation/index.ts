@@ -1,3 +1,4 @@
+export * from "./material";
 export * from "./member";
 export * from "./contact";
 export * from "./group";

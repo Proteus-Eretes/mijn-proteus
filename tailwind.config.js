@@ -1,3 +1,4 @@
+/* eslint-disable import/no-commonjs */
 const baseTheme = {
   "primary": "#0056aa",
   "primary-focus": "#000f75",

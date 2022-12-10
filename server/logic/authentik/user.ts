@@ -1,7 +1,7 @@
 import { apiError, ErrorCode } from "~/utils/error";
 import { member } from "~/server/logic";
 
-import { authentikFetch } from "./";
+import { authentikFetch } from ".";
 
 const PATH = "users/proteus";
 const PAGE_SIZE = 100;

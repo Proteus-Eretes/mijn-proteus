@@ -6,6 +6,7 @@ import {
   PrismaClientRustPanicError,
   PrismaClientUnknownRequestError,
   PrismaClientValidationError,
+  // eslint-disable-next-line import/no-internal-modules
 } from "@prisma/client/runtime/index.js";
 import { StructError } from "superstruct";
 

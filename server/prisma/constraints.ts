@@ -1,4 +1,4 @@
-import { prisma } from "./";
+import { prisma } from ".";
 
 /**
  * This file adds database constrainst which are not natively supported by Prisma.

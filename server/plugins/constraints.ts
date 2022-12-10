@@ -1,5 +1,5 @@
 import { apiError, ErrorCode } from "~/utils/error";
-import { addConstraints } from "~/server/prisma/constraints";
+import { addConstraints } from "~/server/prisma";
 
 import { h3Error } from "./apiError";
 

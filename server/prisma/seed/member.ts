@@ -3,7 +3,7 @@ import { array, create } from "superstruct";
 import { member } from "~/server/logic";
 import { MemberCreate } from "~/server/validation";
 
-import membersJson from "./testdata/member.json" assert { type: "json" };
+import { membersJson } from "./testdata";
 
 export default async () => {
   const members = create(membersJson, array(MemberCreate));
