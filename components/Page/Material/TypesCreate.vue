@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="execute">
+  <form @submit.prevent="send">
     <Card title="Materiaaltype Toevoegen" class="my-4">
       <Alert type="error" :content="error?.global" />
       <InputText
@@ -7,14 +7,14 @@
         title="Naam Materiaaltype"
         placeholder="Helicopter"
         :error="error?.name"
-        :disabled="pending"
+        :disabled="requesting"
         required
         bordered
       />
       <InputSelect
         v-model="parent"
         title="Supertype"
-        :disabled="pending"
+        :disabled="requesting"
         bordered
       >
         <option selected value="">-- Geen supertype --</option>
@@ -31,7 +31,7 @@
           type="submit"
           title="Maak materiaal aan"
           color="primary"
-          :loading="pending"
+          :loading="requesting"
         >
           Maak Aan
         </Button>
@@ -89,7 +89,7 @@ const errorHandler = apiErrorHandler<CreateErrors>([
   },
 ]);
 
-const { error, pending, execute } = await useApiRequest(
+const { error, requesting, send } = useRequest(
   "/api/material/type",
   errorHandler,
   {
