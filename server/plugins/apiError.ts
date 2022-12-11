@@ -1,10 +1,8 @@
 import { STATUS_CODES } from "http";
 
 import { H3Error } from "h3";
-import {
-  PrismaClientKnownRequestError,
-  // eslint-disable-next-line import/no-internal-modules
-} from "@prisma/client/runtime/index.js";
+// eslint-disable-next-line import/no-internal-modules
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/index.js";
 import { StructError } from "superstruct";
 
 import { apiError, ApiError, ErrorCode, errorStatus } from "~/utils/error";
