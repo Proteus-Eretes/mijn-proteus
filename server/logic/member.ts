@@ -1,29 +1,14 @@
-import type { Member, NameTitle, Sex, Prisma } from "@prisma/client";
-
+import { MemberCreate, MemberUpdate } from "~/server/validation";
 import { prisma } from "~/server/prisma";
 
 /**
  * Add new member to the database.
- * @param data The data of the new member.
+ * @param member The new member to create.
  * @returns The created member.
  */
-export const create = async (data: {
-  title: NameTitle;
-  initials: string;
-  firstName: string;
-  insertion: string;
-  lastName: string;
-  dateOfBirth: Date;
-  sex: Sex;
-  street: string;
-  number: string;
-  city: string;
-  zipcode: string;
-  country: string;
-  contacts?: Prisma.ContactCreateWithoutMemberInput[];
-}): Promise<Member> => {
+export const create = async (member: MemberCreate) => {
   return await prisma.member.create({
-    data: { ...data, contacts: { create: data.contacts } },
+    data: { ...member, contacts: { create: member.contacts } },
   });
 };
 
@@ -33,20 +18,10 @@ export const create = async (data: {
  * @param data The updated data of the member.
  * @returns The updated member.
  */
-export const update = async (
-  id: string,
-  data: {
-    title?: NameTitle;
-    street?: string;
-    number?: string;
-    city?: string;
-    zipcode?: string;
-    country?: string;
-  },
-): Promise<Member> => {
+export const update = async (id: string, member: MemberUpdate) => {
   return await prisma.member.update({
     where: { id },
-    data,
+    data: member,
   });
 };
 
@@ -92,6 +67,6 @@ export const count = async () => {
  * @param id The id of the member.
  * @returns The deleted member.
  */
-export const remove = async (id: string): Promise<Member> => {
+export const remove = async (id: string) => {
   return await prisma.member.delete({ where: { id } });
 };

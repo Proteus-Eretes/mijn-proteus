@@ -1,16 +1,51 @@
 [
-  { "name": "Greece Lightning", "typeName": "8+" },
-  { "name": "IJsbreker", "typeName": "1x" },
-  { "name": "L.J. Hooykaas", "typeName": "C4+" },
   {
-    "name": "Rio to Tokyo",
-    "typeName": "Rowperfects wedstro",
-    "comment": "Geen Bluetooth"
+    "name": "Boot",
+    "children": [
+      {
+        "name": "1x",
+        "materials": [
+          { "name": "IJsbreker" },
+          {
+            "name": "Tricolore",
+            "comment": "Max. 1 uur afschrijven op zondag"
+          }
+        ]
+      },
+      { "name": "2-" },
+      { "name": "2x" },
+      {
+        "name": "C4+",
+        "materials": [{ "name": "L.J. Hooykaas" }]
+      },
+      { "name": "4+" },
+      { "name": "4*" },
+      {
+        "name": "8+",
+        "materials": [{ "name": "Greece Lightning" }]
+      },
+      { "name": "4-" },
+      { "name": "C4*" },
+      { "name": "C2+" },
+      { "name": "C1x" }
+    ]
   },
-  { "name": "Ritsaert", "typeName": "RowPerfect" },
   {
-    "name": "Tricolore",
-    "typeName": "1x",
-    "comment": "Max. 1 uur afschrijven op zondag"
+    "name": "Ergometer",
+    "children": [
+      { "name": "Wedstro" },
+      {
+        "name": "Rowperfects wedstro",
+        "materials": [
+          {
+            "name": "Rio to Tokyo",
+            "comment": "Geen Bluetooth"
+          }
+        ]
+      },
+      { "name": "RowPerfect", "materials": [{ "name": "Ritsaert" }] },
+      { "name": "Ouderejaars compo" },
+      { "name": "Compo" }
+    ]
   }
 ]

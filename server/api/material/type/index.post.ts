@@ -1,16 +1,9 @@
-import { object, string, size, optional } from "superstruct";
-
-import { materialType } from "~~/server/logic";
+import { material } from "~~/server/logic";
+import { MaterialTypeCreate } from "~~/server/validation";
 import { readValidatedBody } from "~~/server/utils";
-import { uuid } from "~~/server/validation";
-
-const Body = object({
-  name: size(string(), 2, 40),
-  parentId: optional(uuid()),
-});
 
 export default defineEventHandler(async (e) => {
-  const body = await readValidatedBody(e, Body);
+  const body = await readValidatedBody(e, MaterialTypeCreate);
 
-  return await materialType.create(body.name, body.parentId);
+  return await material.type.create(body);
 });

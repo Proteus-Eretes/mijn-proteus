@@ -1,5 +1,4 @@
-import { define } from "superstruct";
-
+import { coerce, date, define, nullable, string } from "superstruct";
 import validator from "validator";
 
 /**
@@ -15,14 +14,18 @@ export const uuid = (version: 3 | 4 | 5 | "all" = 4) =>
     return validator.isUUID(val, version);
   });
 
-/**
- * Superstruct validator for a date string.
- */
-export const dateString = () =>
-  define<string>("dateString", (val) => {
-    if (typeof val !== "string") {
-      return false;
+export const optionalUuid = () =>
+  coerce(nullable(uuid()), string(), (v) => {
+    if (v === "") {
+      return null;
     }
 
-    return validator.isDate(val);
+    return v;
   });
+
+/**
+ * Superstruct validator for a date string.
+ * This converts the string into a date object.
+ */
+export const dateString = () =>
+  coerce(date(), string(), (date) => new Date(date));

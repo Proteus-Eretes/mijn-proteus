@@ -1,58 +1,58 @@
 import {
   array,
   assert,
-  Describe,
-  lazy,
+  assign,
+  create,
+  defaulted,
+  Infer,
   object,
-  optional,
-  size,
-  string,
+  unknown,
 } from "superstruct";
-import { Group } from "@prisma/client";
 
-import groups from "./testdata/group.json" assert { type: "json" };
+import { group } from "~/server/logic";
+import { GroupCreate } from "~/server/validation";
 
-import { dateString } from "~/server/validation";
-import { prisma } from "~/server/prisma";
-
-type GroupTree = {
-  name: string;
-  description: string;
-  startDate?: string;
-  stopDate?: string;
-  children?: GroupTree[];
-};
-
-const GroupSeed: Describe<GroupTree> = object({
-  name: size(string(), 2, 50),
-  description: size(string(), 2, 120),
-  startDate: optional(dateString()),
-  stopDate: optional(dateString()),
-  children: lazy(() => optional(array(GroupSeed))),
-});
-
-const makeGroup = async (child: GroupTree, parent?: Group, level = 0) => {
-  const newGroup = await prisma.group.create({
-    data: {
-      name: child.name,
-      description: child.description,
-      startDate: new Date(child.startDate ?? parent?.startDate ?? "2000-01-01"),
-      stopDate: child.stopDate ? new Date(child.stopDate) : undefined,
-      parentId: parent?.id,
-    },
-  });
-
-  if (child.children?.length) {
-    for (const c of child.children) {
-      await makeGroup(c, newGroup, level + 1);
-    }
-  }
-};
+import { groupsJson } from "./testdata";
 
 export default async () => {
-  assert(groups, array(GroupSeed));
+  assert(groupsJson, array(unknown()));
 
-  for (const group of groups) {
-    await makeGroup(group as unknown as GroupTree);
+  for (const g of groupsJson) {
+    const group = create(g, GroupCreateChildren);
+
+    await makeGroup(group);
   }
 };
+
+const makeGroup = async (g: GroupCreateChildren, parentId?: string) => {
+  const { children, ...groupData } = g;
+
+  const newGroup = await group.create({
+    ...groupData,
+    parentId: parentId || null,
+  });
+
+  for (const c of children) {
+    const child = create(c, GroupCreateChildren);
+
+    await makeGroup(child, newGroup.id);
+  }
+};
+
+/**
+ * Validator which allows children keys, assigned as unknown.
+ * This will be validated in the recursive call.
+ * It's not possible to validate the entire thing, as typescript does not allow for recursive types.
+ */
+const GroupCreateChildren = defaulted(
+  assign(GroupCreate, object({ children: array(unknown()) })),
+  {
+    description: "",
+    stopDate: null,
+    permissions: [],
+    parentId: null,
+    children: [],
+  },
+);
+// eslint-disable-next-line no-redeclare
+export type GroupCreateChildren = Infer<typeof GroupCreateChildren>;

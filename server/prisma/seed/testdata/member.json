@@ -1,9 +1,7 @@
 [
   {
-    "title": "NONE",
     "initials": "G.W.",
     "firstName": "Gerben",
-    "insertion": "",
     "lastName": "Mulder",
     "dateOfBirth": "2000-08-25",
     "sex": "MALE",
@@ -18,10 +16,8 @@
     ]
   },
   {
-    "title": "NONE",
     "initials": "D.",
     "firstName": "Dany",
-    "insertion": "",
     "lastName": "Sluijk",
     "dateOfBirth": "1998-08-06",
     "sex": "MALE",

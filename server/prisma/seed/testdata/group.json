@@ -24,36 +24,44 @@
       {
         "name": "Leden",
         "description": "Leden der DSR Proteus-Eretes",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "Leden",
-            "description": "Leden der DSR Proteus-Eretes"
+            "description": "Leden der DSR Proteus-Eretes",
+            "startDate": "1947-01-01"
           },
           {
             "name": "Ereleden",
-            "description": "Ereleden der DSR Proteus-Eretes"
+            "description": "Ereleden der DSR Proteus-Eretes",
+            "startDate": "1947-01-01"
           },
           {
             "name": "Leden van Verdienste",
-            "description": "Leden van Verdienste der DSR Proteus-Eretes"
+            "description": "Leden van Verdienste der DSR Proteus-Eretes",
+            "startDate": "1947-01-01"
           },
           {
             "name": "Nullen",
-            "description": "Aankomende leden der DSR Proteus-Eretes"
+            "description": "Aankomende leden der DSR Proteus-Eretes",
+            "startDate": "1947-01-01"
           },
           {
             "name": "Coaches",
-            "description": "Mensen die (prof) coachen en niet (meer) lid zijn"
+            "description": "Mensen die (prof) coachen en niet (meer) lid zijn",
+            "startDate": "1947-01-01"
           },
           {
             "name": "Ringvaart",
-            "description": "Mensen die op de vereniging trainen voor de ringvaart"
+            "description": "Mensen die op de vereniging trainen voor de ringvaart",
+            "startDate": "1947-01-01"
           }
         ]
       },
       {
         "name": "Jaargroepen",
         "description": "Jaargroepen der DSR Proteus-Eretes",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "Sapjes",
@@ -70,10 +78,12 @@
       {
         "name": "Commissies",
         "description": "Commissies der DSR Proteus-Eretes",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "Bestuur",
             "description": "Bestuur der DSR Proteus-Eretes",
+            "startDate": "1947-01-01",
             "children": [
               {
                 "name": "75",
@@ -98,6 +108,7 @@
       {
         "name": "Vloten",
         "description": "Vloten der DSR Proteus-Eretes",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "D.H.B.G. Delirium",
@@ -129,14 +140,17 @@
       {
         "name": "Ploegen",
         "description": "Ploegen der DSR Proteus-Eretes",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "Competitie",
             "description": "Competitie ploegen",
+            "startDate": "1947-01-01",
             "children": [
               {
                 "name": "Heerenclubacht",
                 "description": "Heerenclubacht",
+                "startDate": "1947-01-01",
                 "children": [
                   {
                     "name": "CRUCIAAL",
@@ -155,32 +169,39 @@
           {
             "name": "Wedstrijd",
             "description": "Wedstrijd ploegen",
+            "startDate": "1947-01-01",
             "children": [
               {
                 "name": "EJZ",
                 "description": "Eerstejaars Zwaar",
+                "startDate": "1947-01-01",
                 "children": [
                   {
                     "name": "2021",
-                    "description": "EJZ 2021"
+                    "description": "EJZ 2021",
+                    "startDate": "2021-09-01"
                   },
                   {
                     "name": "2022",
-                    "description": "EJZ 2022"
+                    "description": "EJZ 2022",
+                    "startDate": "2022-09-01"
                   }
                 ]
               },
               {
                 "name": "EJL",
                 "description": "Eerstejaars Licht",
+                "startDate": "1947-01-01",
                 "children": [
                   {
                     "name": "2021",
-                    "description": "EJL 2021"
+                    "description": "EJL 2021",
+                    "startDate": "2021-09-01"
                   },
                   {
                     "name": "2022",
-                    "description": "EJL 2022"
+                    "description": "EJL 2022",
+                    "startDate": "2022-09-01"
                   }
                 ]
               }
@@ -191,22 +212,27 @@
       {
         "name": "Coachkaders",
         "description": "Coachkaders",
+        "startDate": "1947-01-01",
         "children": [
           {
             "name": "EJZ Coaches",
             "description": "EJZ Coaches",
+            "startDate": "1947-01-01",
             "children": [
               {
                 "name": "2020",
-                "description": "2020 Coaches"
+                "description": "2020 Coaches",
+                "startDate": "2020-09-01"
               },
               {
                 "name": "2021",
-                "description": "2021 Coaches"
+                "description": "2021 Coaches",
+                "startDate": "2021-09-01"
               },
               {
                 "name": "2022",
-                "description": "2022 Coaches"
+                "description": "2022 Coaches",
+                "startDate": "2022-09-01"
               }
             ]
           }
