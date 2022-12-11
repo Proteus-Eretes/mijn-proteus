@@ -1,6 +1,7 @@
 <template>
   <h1 class="text-4xl text-primary font-bold mb-4">Materiaal Types</h1>
-  <div v-if="!error" class="overflow-x-auto shadow">
+  <Alert v-if="error" type="error" content="Materiaal types ophalen mislukt" />
+  <div class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>
         <tr>
@@ -24,10 +25,9 @@
       </tbody>
     </table>
   </div>
-  <Alert v-else type="error" content="Materiaal types ophalen mislukt" />
   <LazyPageMaterialTypesCreate
     :parents="types || []"
-    @refresh-types="() => execute()"
+    @refresh-types="() => refresh()"
   />
 </template>
 
@@ -36,10 +36,10 @@ const {
   data: types,
   error,
   pending,
-  execute,
-} = await useLazyApiFetch<
+  refresh,
+} = await useLazyFetch<
   Awaited<
     ReturnType<typeof import("~~/server/api/material/type/index.get").default>
   >
->("/api/material/type", () => true);
+>("/api/material/type");
 </script>
