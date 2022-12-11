@@ -39,8 +39,7 @@
           "*~/server/sync",
           "*~/server/validation",
           "*~/server/utils",
-          "*~/utils/*",
-          "testdata"
+          "*~/utils/*"
         ]
       }
     ],
