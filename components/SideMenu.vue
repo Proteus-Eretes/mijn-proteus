@@ -26,9 +26,8 @@ defineProps<{
   items: SideMenuItem[];
 }>();
 
-const classes = (route?: string) =>
-  computed(() => {
-    if (!route) return "menu-title";
-    return useRoute().path.includes(route) ? "bordered" : "";
-  });
+const classes = (route?: string): string => {
+  if (!route) return "menu-title";
+  return useRoute().path.includes(route) ? "bordered" : "";
+};
 </script>

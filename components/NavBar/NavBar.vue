@@ -67,12 +67,12 @@ const menuItems: MenuItem[] = [
   {
     name: "Leden",
     icon: "material-symbols:person",
-    target: "/leden",
+    target: "/leden/zoeken",
     children: [
       {
         name: "Groepen",
         icon: "material-symbols:group",
-        target: "/groepen",
+        target: "/groepen/zoeken",
       },
       {
         name: "Lebberlijst",

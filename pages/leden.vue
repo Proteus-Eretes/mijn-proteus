@@ -12,7 +12,7 @@ const notification = undefined; // Als je hier een nummer invult, dan krijg je e
 
 const items = [
   { title: "Zoeken", to: "/leden/zoeken" },
-  { title: "Mijn Profiel", to: "/me" },
+  { title: "Mijn Profiel", to: "/leden/mijn-profiel" },
   { title: "Administratie" },
   { title: "Persoon toevoegen", to: "/leden/admin/toevoegen" },
   { title: "Lidmaatschap toevoegen", to: "/leden/admin/lidmaatschappen" },

@@ -1,7 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">
-    {{ me.firstName }} {{ me.insertion }} {{ me.lastName }}
-  </h1>
+  <h1 class="text-4xl text-primary font-bold mb-4">Mijn Profiel</h1>
   <div class="overflow-x-auto shadow"></div>
   <table class="table w-full">
     <tbody>
@@ -58,7 +56,7 @@ const dateFormatter = useDateFormatter();
 
 const { data: me } = await useFetch<
   Awaited<
-    ReturnType<typeof import("~~/server/api/members/[id]/index.get").default>
+    ReturnType<typeof import("~/server/api/members/[id]/index.get").default>
   >
 >("/api/members/8e4d3d50-f056-46d3-9b8b-c33db0fd7248");
 </script>
