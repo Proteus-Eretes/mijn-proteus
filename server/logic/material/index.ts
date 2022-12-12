@@ -1,19 +1,16 @@
+import { MaterialCreate } from "~~/server/validation";
 import { prisma } from "~/server/prisma";
+
+export * as type from "./type";
 
 /**
  * Add new material to the database.
- * @param name The name of the new material.
- * @param type The ID of the type.
- * @param comment Additional information about this material
+ * @param material the material to create.
  * @returns The created material.
  */
-export const create = async (name: string, type: string, comment?: string) => {
+export const create = async (material: MaterialCreate) => {
   return await prisma.material.create({
-    data: {
-      typeId: type,
-      name,
-      comment,
-    },
+    data: material,
   });
 };
 
@@ -28,7 +25,7 @@ export const getAll = async () => {
 /**
  * Get a material by it's name.
  * @param name The name of the material to find.
- * @returns The material if found, or null otherwise.
+ * @returns The material if found, null otherwise.
  */
 export const findByName = async (name: string) => {
   return await prisma.material.findUnique({

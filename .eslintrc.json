@@ -26,12 +26,53 @@
     "no-console": ["warn", { "allow": ["info", "warn", "error"] }],
     "no-use-before-define": "off",
     "no-empty": "warn",
+    "import/no-commonjs": "warn",
+    "import/no-useless-path-segments": "warn",
+    "import/first": "warn",
+    "import/newline-after-import": "warn",
+    "import/no-internal-modules": [
+      "warn",
+      {
+        "allow": [
+          "*~/server/logic",
+          "*~/server/prisma",
+          "*~/server/sync",
+          "*~/server/validation",
+          "*~/server/utils",
+          "*~/utils/*"
+        ]
+      }
+    ],
     "@typescript-eslint/no-unused-vars": "warn",
     "vue/multi-word-component-names": "off",
     "vue/no-multiple-template-root": "off",
     "vue/component-api-style": ["error", ["script-setup"]],
     "vue/define-emits-declaration": ["error", "type-based"],
     "vue/no-v-for-template-key": "off",
+    "import/order": [
+      "warn",
+      {
+        "newlines-between": "always-and-inside-groups",
+        "warnOnUnassignedImports": true,
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ]
+      }
+    ],
+    "sort-imports": [
+      "warn",
+      {
+        "allowSeparatedGroups": true,
+        "ignoreCase": true,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+      }
+    ],
     "vue/block-lang": [
       "error",
       {

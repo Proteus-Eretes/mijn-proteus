@@ -1,18 +1,8 @@
-import { boolean, date, object, optional, size, string } from "superstruct";
-import { readValidatedBody } from "~/server/utils";
-import { uuid } from "~/server/validation";
 import { membership } from "~/server/logic";
-
-const body = object({
-  function: optional(size(string(), 2, 50)),
-  startDate: date(),
-  stopDate: optional(date()),
-  isAdmin: boolean(),
-  memberId: uuid(),
-  groupId: uuid(),
-});
+import { MembershipCreate } from "~/server/validation";
+import { readValidatedBody } from "~/server/utils";
 
 export default defineEventHandler(async (event) => {
-  const data = await readValidatedBody(event, body);
+  const data = await readValidatedBody(event, MembershipCreate);
   return await membership.create(data);
 });

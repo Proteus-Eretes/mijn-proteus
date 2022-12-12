@@ -1,13 +1,10 @@
-import { object, optional, size, string } from "superstruct";
+import { ContactUpdateImplicit, uuid } from "~~/server/validation";
+import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { contact } from "~/server/logic";
-import { readValidatedBody } from "~/server/utils";
-
-const body = object({
-  value: optional(size(string(), 1, 120)),
-});
 
 export default defineEventHandler(async (event) => {
-  const id = await getRouterParam(event, "id");
-  const data = await readValidatedBody(event, body);
-  return await contact.update(id, data);
+  const id = await getValidatedRouterParam(event, "id", uuid());
+  const body = await readValidatedBody(event, ContactUpdateImplicit);
+
+  return await contact.update(id, body);
 });

@@ -1,6 +1,9 @@
+import { getValidatedRouterParam } from "~~/server/utils";
 import { study } from "~/server/logic";
+import { uuid } from "~~/server/validation";
 
 export default defineEventHandler(async (event) => {
-  const id = await getRouterParam(event, "id");
-  return await study.remove(id);
+  const id = await getValidatedRouterParam(event, "id", uuid());
+
+  return await study.member.remove(id);
 });

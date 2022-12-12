@@ -1,25 +1,70 @@
-import { array, assert, object, optional, size, string } from "superstruct";
+import {
+  array,
+  assert,
+  assign,
+  create,
+  defaulted,
+  Infer,
+  object,
+  unknown,
+} from "superstruct";
 
-import materials from "./testdata/material.json" assert { type: "json" };
+import {
+  MaterialImplicitCreate,
+  MaterialTypeCreate,
+} from "~~/server/validation";
+import { material } from "~/server/logic";
 
-import { material, materialType } from "~/server/logic";
-
-const MaterialSeed = object({
-  name: size(string(), 2, 40),
-  typeName: size(string(), 2, 40),
-  comment: optional(size(string(), 1, 200)),
-});
+import { materialsJson } from "./testdata";
 
 export default async () => {
-  assert(materials, array(MaterialSeed));
+  assert(materialsJson, array(unknown()));
 
-  for (const mat of materials) {
-    const type = await materialType.findByName(mat.typeName);
+  for (const mt of materialsJson) {
+    const materialType = create(mt, MaterialTypeCreateChildren);
 
-    if (!type) {
-      throw new Error(`Cannot find material type ${mat.typeName}.`);
-    }
-
-    await material.create(mat.name, type.id, mat.comment);
+    await makeMaterialType(materialType);
   }
 };
+
+const makeMaterialType = async (
+  materialType: MaterialTypeCreateChildren,
+  parentId?: string,
+) => {
+  const newMaterialType = await material.type.create({
+    name: materialType.name,
+    parentId: parentId || null,
+  });
+
+  for (const mat of materialType.materials) {
+    material.create({ ...mat, typeId: newMaterialType.id });
+  }
+
+  for (const c of materialType.children) {
+    const child = create(c, MaterialTypeCreateChildren);
+
+    await makeMaterialType(child, newMaterialType.id);
+  }
+};
+
+/**
+ * Materialtype validator with children and materials.
+ */
+const MaterialTypeCreateChildren = defaulted(
+  assign(
+    MaterialTypeCreate,
+    object({
+      children: array(unknown()),
+      materials: array(MaterialImplicitCreate),
+    }),
+  ),
+  {
+    parentId: null,
+    children: [],
+    materials: [],
+  },
+);
+// eslint-disable-next-line no-redeclare
+export type MaterialTypeCreateChildren = Infer<
+  typeof MaterialTypeCreateChildren
+>;
