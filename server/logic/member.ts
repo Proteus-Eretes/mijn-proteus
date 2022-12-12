@@ -15,7 +15,7 @@ export const create = async (member: MemberCreate) => {
 /**
  * Update member in the database.
  * @param id The id of the member to be updated.
- * @param data The updated data of the member.
+ * @param member The updated data of the member.
  * @returns The updated member.
  */
 export const update = async (id: string, member: MemberUpdate) => {

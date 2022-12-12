@@ -8,8 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import SideMenu from "~/components/SideMenu.vue";
-
 const notification = undefined; // Als je hier een nummer invult, dan krijg je een notificatie met dat nummer
 
 const items = [

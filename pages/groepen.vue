@@ -8,8 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import SideMenu from "~/components/SideMenu.vue";
-
 const items = [
   { title: "Zoeken", to: "/groepen/zoeken" },
   { title: "Mijn Groepen", to: "/groepen/mijn-groepen" },

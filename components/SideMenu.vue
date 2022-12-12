@@ -1,16 +1,6 @@
 <template>
   <ul class="menu">
-    <li
-      v-for="item in items"
-      :key="item.title"
-      :class="
-        !item.to
-          ? 'menu-title'
-          : $route.path.includes(item.to || null)
-          ? 'bordered'
-          : ''
-      "
-    >
+    <li v-for="item in items" :key="item.title" :class="classes(item.to)">
       <span v-if="!item.to">{{ item.title }}</span>
       <NuxtLink v-else :to="item.to">
         <span>{{ item.title }}</span>
@@ -35,4 +25,10 @@ interface SideMenuItem {
 defineProps<{
   items: SideMenuItem[];
 }>();
+
+const classes = (route?: string) =>
+  computed(() => {
+    if (!route) return "menu-title";
+    return useRoute().path.includes(route) ? "bordered" : "";
+  });
 </script>
