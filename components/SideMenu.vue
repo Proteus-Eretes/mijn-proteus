@@ -3,7 +3,8 @@
     <li v-for="item in items" :key="item.title" :class="classes(item.to)">
       <span v-if="!item.to">{{ item.title }}</span>
       <NuxtLink v-else :to="item.to">
-        <span>{{ item.title }}</span>
+        <Icon :name="item.icon" size="20px" />
+        {{ item.title }}
         <span
           v-if="item.badge"
           class="indicator-item indicator-middle badge badge-secondary"
@@ -17,6 +18,7 @@
 
 <script setup lang="ts">
 interface SideMenuItem {
+  icon: string;
   title: string;
   to?: string;
   badge?: string;
@@ -27,7 +29,7 @@ defineProps<{
 }>();
 
 const classes = (route?: string): string => {
-  if (!route) return "menu-title";
-  return useRoute().path.includes(route) ? "bordered" : "";
+  if (!route) return "menu-title pt-5";
+  return useRoute().path.endsWith(route) ? "bordered" : "";
 };
 </script>

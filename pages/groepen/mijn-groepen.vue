@@ -17,7 +17,7 @@
           v-for="group in groups"
           :key="group.id"
           class="hover"
-          @click="navigateTo(`/groepen/${group.id}`)"
+          @click="navigateTo(`/groep/${group.id}/overzicht`)"
         >
           <td>{{ group.name }}</td>
           <td>{{ group.description }}</td>

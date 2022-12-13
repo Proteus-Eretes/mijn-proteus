@@ -36,12 +36,22 @@ export const update = async (id: string, group: GroupUpdate) => {
  * @returns The requested group if found, otherwise null.
  */
 export const get = async (id: string) => {
-  return await prisma.group.findUnique({
+  const group = await prisma.group.findUnique({
     where: { id },
     include: {
       contacts: true,
+      members: true,
     },
   });
+  const children = await prisma.group.findMany({
+    where: { parentId: id },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+    },
+  });
+  return { ...group, children };
 };
 
 /**

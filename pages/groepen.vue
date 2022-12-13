@@ -9,8 +9,8 @@
 
 <script lang="ts" setup>
 const items = [
-  { title: "Zoeken", to: "/groepen/zoeken" },
-  { title: "Mijn Groepen", to: "/groepen/mijn-groepen" },
-  { title: "Groep Maken", to: "/groepen/admin/aanmaken" },
+  { icon: "ic:search", title: "Zoeken", to: "/groepen/zoeken" },
+  { icon: "ic:group", title: "Mijn Groepen", to: "/groepen/mijn-groepen" },
+  { icon: "ic:add", title: "Groep Maken", to: "/groepen/nieuw" },
 ];
 </script>
