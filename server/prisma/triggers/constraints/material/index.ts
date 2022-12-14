@@ -2,8 +2,8 @@ import { prisma } from "../../..";
 
 import { materialType } from "./type";
 
-export const material = [
-  ...materialType,
+export const material = () => [
+  ...materialType(),
 
   // Make sure that materials are only added to leaf types.
   // This uses the same check as on material type, but needs to be added separately to check on both table updates.

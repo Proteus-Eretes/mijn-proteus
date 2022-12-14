@@ -1,6 +1,6 @@
 import { prisma } from "..";
 
-export const functions = [
+export const functions = () => [
   prisma.$executeRawUnsafe(`
     CREATE OR REPLACE FUNCTION validate_group_members(type uuid) RETURNS boolean AS $valid$
     BEGIN

@@ -1,6 +1,6 @@
 import { prisma } from "../..";
 
-export const group = [
+export const group = () => [
   // Start date is before end date, if the end date exists.
   prisma.$executeRawUnsafe(
     `ALTER TABLE "Group" DROP CONSTRAINT IF EXISTS group_start_before_end`,

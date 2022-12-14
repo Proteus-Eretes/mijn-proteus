@@ -1,6 +1,6 @@
 import { prisma } from "../..";
 
-export const member = [
+export const member = () => [
   // A member should at least have an email and phone number associated.
   prisma.$executeRawUnsafe(
     `DROP TRIGGER IF EXISTS member_emailcontact on "Member"`,

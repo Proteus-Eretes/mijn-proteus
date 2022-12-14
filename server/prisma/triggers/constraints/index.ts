@@ -5,11 +5,11 @@ import { member } from "./member";
 import { membership } from "./membership";
 import { memberStudy } from "./memberStudy";
 
-export const constraints = [
-  ...contact,
-  ...group,
-  ...memberStudy,
-  ...membership,
-  ...member,
-  ...material,
+export const constraints = () => [
+  ...contact(),
+  ...group(),
+  ...memberStudy(),
+  ...membership(),
+  ...member(),
+  ...material(),
 ];

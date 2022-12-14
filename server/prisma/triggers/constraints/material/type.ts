@@ -1,6 +1,6 @@
 import { prisma } from "../../..";
 
-export const materialType = [
+export const materialType = () => [
   // Make sure that materials are only added to leaf types.
   // This uses the same check as on material, but needs to be added separately to check on both table updates.
   prisma.$executeRawUnsafe(

@@ -1,6 +1,6 @@
 import { prisma } from "../..";
 
-export const contact = [
+export const contact = () => [
   // Ensures that a contact has either a group or a member associated.
   prisma.$executeRawUnsafe(
     `ALTER TABLE "Contact" DROP CONSTRAINT IF EXISTS contact_exclusive_connection`,

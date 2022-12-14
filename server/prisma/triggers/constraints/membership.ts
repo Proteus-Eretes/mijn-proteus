@@ -1,6 +1,6 @@
 import { prisma } from "../..";
 
-export const membership = [
+export const membership = () => [
   // Start date is before end date, if the end date exists.
   prisma.$executeRawUnsafe(
     `ALTER TABLE "Membership" DROP CONSTRAINT IF EXISTS membership_start_before_end`,

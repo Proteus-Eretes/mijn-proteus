@@ -7,9 +7,9 @@ import { sync } from "./sync";
 
 export const addTriggers = async () => {
   return await prisma.$transaction([
-    ...extensions,
-    ...functions,
-    ...constraints,
-    ...sync,
+    ...extensions(),
+    ...functions(),
+    ...constraints(),
+    ...sync(),
   ]);
 };

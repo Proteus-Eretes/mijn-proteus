@@ -1,6 +1,6 @@
 import { prisma } from "../..";
 
-export const member = [
+export const member = () => [
   prisma.$executeRawUnsafe(`DROP TRIGGER IF EXISTS sync_member on "Member"`),
   prisma.$executeRawUnsafe(`
     CREATE OR REPLACE FUNCTION sync_member() RETURNS trigger AS $$
