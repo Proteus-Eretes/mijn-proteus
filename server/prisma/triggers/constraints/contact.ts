@@ -36,4 +36,16 @@ export const contact = () => [
     FOR EACH ROW
     EXECUTE FUNCTION contact_memberemail()
   `),
+
+  // Require email addresses to be unique.
+  prisma.$executeRawUnsafe(
+    `ALTER TABLE "Contact" DROP CONSTRAINT IF EXISTS contact_uniquemail`,
+  ),
+  prisma.$executeRawUnsafe(
+    `ALTER TABLE "Contact" ADD CONSTRAINT contact_uniquemail EXCLUDE (
+      "value" WITH =
+    ) WHERE (
+      "type" = 'EMAIL'
+    )`,
+  ),
 ];
