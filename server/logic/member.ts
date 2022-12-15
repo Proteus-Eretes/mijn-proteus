@@ -77,6 +77,24 @@ export const count = async () => {
 };
 
 /**
+ * Get all memberships of the member.
+ * @returns The member's memberships.
+ */
+export const getMemberships = async (id: string) => {
+  return await prisma.membership.findMany({
+    where: { memberId: id },
+    include: {
+      group: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+};
+
+/**
  * Delete member from the database.
  * @param id The id of the member.
  * @returns The deleted member.

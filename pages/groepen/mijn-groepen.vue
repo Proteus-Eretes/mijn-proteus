@@ -1,27 +1,32 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Groepen</h1>
+  <h1 class="text-4xl text-primary font-bold mb-4">Mijn Groepen</h1>
   <div class="overflow-x-auto shadow">
-    <div class="p-2 text-center border-2 border-red-300">
-      ---=== Nieuwe endpoint voor mijn-groepen moet nog gemaakt worden ===---
-    </div>
+    <input
+      type="search"
+      placeholder="Search…"
+      class="input input-bordered w-full"
+      @input="filter = $event.target.value.toLowerCase()"
+    />
     <table class="table w-full">
       <thead>
         <tr>
-          <th>Naam</th>
-          <th>Beschrijving</th>
+          <th>Groep</th>
+          <th>Functie</th>
           <th>Sinds</th>
+          <th>Tot</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="group in groups"
-          :key="group.id"
+          v-for="membership in filteredMemberships"
+          :key="membership.id"
           class="hover"
-          @click="navigateTo(`/groep/${group.id}/overzicht`)"
+          @click="navigateTo(`/groep/${membership.group.id}/overzicht`)"
         >
-          <td>{{ group.name }}</td>
-          <td>{{ group.description }}</td>
-          <td>{{ dateFormatter(group.startDate) }}</td>
+          <td>{{ membership.group.name }}</td>
+          <td>{{ membership.function }}</td>
+          <td>{{ dateFormatter(membership.startDate) }}</td>
+          <td>{{ dateFormatter(membership.stopDate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,8 +35,21 @@
 
 <script setup lang="ts">
 const dateFormatter = useDateFormatter();
+const { data } = useSession();
 
-const { data: groups } = await useFetch<
-  Awaited<ReturnType<typeof import("~~/server/api/groups/index.get").default>>
->("/api/groups");
+const filter = ref("");
+const filteredMemberships = computed(() => {
+  if (!memberships.value) return [];
+  return memberships.value.filter((m) =>
+    m.group.name.toLowerCase().includes(filter.value),
+  );
+});
+
+const { data: memberships } = await useFetch<
+  Awaited<
+    ReturnType<
+      typeof import("~~/server/api/members/[id]/memberships.get").default
+    >
+  >
+>(`/api/members/${data.value?.user?.proteusId}/memberships`);
 </script>
