@@ -66,7 +66,7 @@
         >
           <td>{{ member.id }}</td>
           <td>{{ member.function }}</td>
-          <td>{{ member.startDate }}</td>
+          <td>{{ dateFormatter(member.startDate) }}</td>
           <td>{{ member.isAdmin ? "Beheerder" : "Lid" }}</td>
         </tr>
       </tbody>
