@@ -1,5 +1,7 @@
 export const useDateFormatter = () => {
-  return function toDateString(dateTimeString?: string | Date): string {
+  return function toDateString(
+    dateTimeString: string | Date | undefined | null,
+  ): string {
     if (!dateTimeString) return "-";
     const date =
       typeof dateTimeString === "string"

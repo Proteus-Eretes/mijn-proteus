@@ -20,7 +20,7 @@
           v-for="member in filteredMembers"
           :key="member.id"
           class="hover"
-          @click="navigateTo(`/leden/${member.id}`)"
+          @click="navigateTo(`/leden/${member.id}/profiel`)"
         >
           <td>
             {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}

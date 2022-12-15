@@ -19,7 +19,7 @@ const items = [
   {
     icon: "ic:baseline-account-circle",
     title: "Mijn Profiel",
-    to: "/leden/" + data.value?.user?.proteusId,
+    to: `/leden/${data.value?.user?.proteusId}/profiel`,
   },
   {
     title: "Administratie",
