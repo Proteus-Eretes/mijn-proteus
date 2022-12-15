@@ -3,7 +3,7 @@
   <div class="overflow-x-auto shadow">
     <input
       type="search"
-      placeholder="Search…"
+      placeholder="Zoeken…"
       class="input input-bordered w-full"
       @input="filter = $event.target.value.toLowerCase()"
     />
@@ -20,7 +20,7 @@
           v-for="group in filteredGroups"
           :key="group.id"
           class="hover"
-          @click="navigateTo(`/groep/${group.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${group.id}/overzicht`)"
         >
           <td>{{ group.name }}</td>
           <td>{{ group.description }}</td>
@@ -37,8 +37,10 @@ const dateFormatter = useDateFormatter();
 const filter = ref("");
 const filteredGroups = computed(() => {
   if (!groups.value) return [];
-  return groups.value.filter((g) =>
-    g.name.toLowerCase().includes(filter.value),
+  return groups.value.filter(
+    (g) =>
+      g.name.toLowerCase().includes(filter.value) ||
+      g.description.toLowerCase().includes(filter.value),
   );
 });
 
