@@ -1,5 +1,9 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Leden Beheren</h1>
+  <h1 class="text-4xl text-primary font-bold mb-4">
+    {{ group.name }}
+    <Icon name="ic:chevron-right" />
+    Leden Beheren
+  </h1>
   <div class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>

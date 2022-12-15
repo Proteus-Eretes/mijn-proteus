@@ -1,5 +1,9 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Groep Instellingen</h1>
+  <h1 class="text-4xl text-primary font-bold mb-4">
+    {{ group.name }}
+    <Icon name="ic:chevron-right" />
+    Instellingen
+  </h1>
   <div class="overflow-x-auto shadow">
     groep dingen hiero<br />
     <button class="btn btn-error btn-outline" @click="deleteGroup">

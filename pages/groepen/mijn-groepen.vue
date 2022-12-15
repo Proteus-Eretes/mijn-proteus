@@ -3,7 +3,7 @@
   <div class="overflow-x-auto shadow">
     <input
       type="search"
-      placeholder="Search…"
+      placeholder="Zoeken…"
       class="input input-bordered w-full"
       @input="filter = $event.target.value.toLowerCase()"
     />
@@ -21,7 +21,7 @@
           v-for="membership in filteredMemberships"
           :key="membership.id"
           class="hover"
-          @click="navigateTo(`/groep/${membership.group.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${membership.group.id}/overzicht`)"
         >
           <td>{{ membership.group.name }}</td>
           <td>{{ membership.function }}</td>

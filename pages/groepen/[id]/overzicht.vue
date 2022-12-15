@@ -1,5 +1,7 @@
 <template>
-  <h1 v-if="group" class="text-4xl text-primary font-bold mb-4">Overzicht</h1>
+  <h1 v-if="group" class="text-4xl text-primary font-bold mb-4">
+    {{ group.name }}
+  </h1>
   <div v-if="group" class="overflow-x-auto shadow">
     <table class="table w-full">
       <tbody>
@@ -26,7 +28,7 @@
         <tr
           v-if="group.parentId"
           class="hover cursor-pointer"
-          @click="navigateTo(`/groep/${group.parentId}/overzicht`)"
+          @click="navigateTo(`/groepen/${group.parentId}/overzicht`)"
         >
           <td>Onderdeel van</td>
           <td>{{ group.parentId }}</td>
@@ -94,7 +96,7 @@
           v-for="child in group.children"
           :key="child.id"
           class="hover cursor-pointer"
-          @click="navigateTo(`/groep/${child.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${child.id}/overzicht`)"
         >
           <td>{{ child.name }}</td>
           <td>{{ child.description }}</td>

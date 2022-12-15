@@ -78,7 +78,7 @@ const { error, requesting, send, data } = useRequest<
     stopDate: ref(stopDate.value || undefined),
   },
   async onSuccess() {
-    await navigateTo(`/groep/${data.value?.id}/overzicht`);
+    await navigateTo(`/groepen/${data.value?.id}/overzicht`);
   },
 });
 
