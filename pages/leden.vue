@@ -8,6 +8,8 @@
 </template>
 
 <script lang="ts" setup>
+const { data } = useSession();
+
 const items = [
   {
     icon: "ic:search",
@@ -17,7 +19,7 @@ const items = [
   {
     icon: "ic:baseline-account-circle",
     title: "Mijn Profiel",
-    to: "/leden/mijn-profiel",
+    to: "/leden/" + data.value?.user?.proteusId,
   },
 ];
 </script>

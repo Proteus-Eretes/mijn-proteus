@@ -44,5 +44,23 @@ const items = [
     title: "Groep Instellingen",
     to: `/groep/${route.params.id}/instellingen`,
   },
+  {
+    title: "Groepen",
+  },
+  {
+    icon: "ic:search",
+    title: "Zoeken",
+    to: "/groepen/zoeken",
+  },
+  {
+    icon: "ic:group",
+    title: "Mijn Groepen",
+    to: "/groepen/mijn-groepen",
+  },
+  {
+    icon: "ic:add",
+    title: "Groep Maken",
+    to: "/groepen/nieuw",
+  },
 ];
 </script>

@@ -1,17 +1,12 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Groepen</h1>
+  <h1 class="text-4xl text-primary font-bold mb-4">Zoeken</h1>
   <div class="overflow-x-auto shadow">
-    <div class="input-group p-2">
-      <input
-        type="search"
-        placeholder="Search…"
-        class="input input-bordered"
-        @input="filter = $event.target.value.toLowerCase()"
-      />
-      <button class="btn btn-square">
-        <Icon name="ic:search" size="20px" />
-      </button>
-    </div>
+    <input
+      type="search"
+      placeholder="Search…"
+      class="input input-bordered w-full"
+      @input="filter = $event.target.value.toLowerCase()"
+    />
     <table class="table w-full">
       <thead>
         <tr>
@@ -22,9 +17,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="group in groups.filter((g) =>
-            g.name.toLowerCase().includes(filter),
-          )"
+          v-for="group in filteredGroups"
           :key="group.id"
           class="hover"
           @click="navigateTo(`/groep/${group.id}/overzicht`)"
@@ -42,6 +35,12 @@
 const dateFormatter = useDateFormatter();
 
 const filter = ref("");
+const filteredGroups = computed(() => {
+  if (!groups.value) return [];
+  return groups.value.filter((g) =>
+    g.name.toLowerCase().includes(filter.value),
+  );
+});
 
 const { data: groups } = await useFetch<
   Awaited<ReturnType<typeof import("~~/server/api/groups/index.get").default>>

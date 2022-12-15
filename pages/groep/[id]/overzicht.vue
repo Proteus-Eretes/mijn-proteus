@@ -1,6 +1,6 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Overzicht</h1>
-  <div class="overflow-x-auto shadow">
+  <h1 v-if="group" class="text-4xl text-primary font-bold mb-4">Overzicht</h1>
+  <div v-if="group" class="overflow-x-auto shadow">
     <table class="table w-full">
       <tbody>
         <tr>
@@ -44,12 +44,12 @@
   </div>
 
   <h2
-    v-if="group.members.length"
+    v-if="group?.members.length"
     class="my-4 text-3xl text-primary font-bold mb-4"
   >
     Leden
   </h2>
-  <div v-if="group.members.length" class="overflow-x-auto shadow">
+  <div v-if="group?.members.length" class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>
         <tr>
@@ -74,12 +74,12 @@
   </div>
 
   <h2
-    v-if="group.children.length"
+    v-if="group?.children.length"
     class="my-4 text-3xl text-primary font-bold mb-4"
   >
     Subgroepen
   </h2>
-  <div v-if="group.children.length" class="overflow-x-auto shadow">
+  <div v-if="group?.children.length" class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>
         <tr>
@@ -110,6 +110,6 @@
 const dateFormatter = useDateFormatter();
 
 defineProps<{
-  group: unknown;
+  group?: unknown;
 }>();
 </script>
