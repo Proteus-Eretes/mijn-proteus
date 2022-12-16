@@ -17,15 +17,15 @@
 </template>
 
 <script setup lang="ts">
-interface SideMenuItem {
-  icon: string;
+export interface MenuItem {
+  icon?: string;
   title: string;
   to?: string;
   badge?: string;
 }
 
 defineProps<{
-  items: SideMenuItem[];
+  items: MenuItem[];
 }>();
 
 const classes = (route?: string): string => {
