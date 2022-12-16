@@ -8,9 +8,13 @@
 </template>
 
 <script setup lang="ts">
-import { Member } from ".prisma/client";
+import { Contact, Member, Membership, MemberStudy } from ".prisma/client";
 
 defineProps<{
-  member: Member;
+  member: Member & {
+    contacts: Contact[];
+    studies: MemberStudy[];
+    memberships: Membership[];
+  };
 }>();
 </script>
