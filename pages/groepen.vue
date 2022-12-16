@@ -24,12 +24,12 @@ const standard = [
 
 const selected = computed(() => [
   {
-    icon: "ic:outline-info",
-    title: "Overzicht",
-    to: `/groepen/${route.params.id}/overzicht`,
+    title: "Groep",
   },
   {
-    title: "Administratie",
+    icon: "ic:baseline-groups",
+    title: "Overzicht",
+    to: `/groepen/${route.params.id}/overzicht`,
   },
   {
     icon: "ic:baseline-person-add-alt-1",
@@ -49,7 +49,7 @@ const selected = computed(() => [
   },
   {
     icon: "ic:baseline-settings",
-    title: "Groep Instellingen",
+    title: "Instellingen",
     to: `/groepen/${route.params.id}/instellingen`,
   },
 ]);

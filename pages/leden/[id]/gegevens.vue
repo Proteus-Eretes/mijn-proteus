@@ -1,8 +1,8 @@
 <template>
   <h1 class="text-4xl text-primary font-bold mb-4">
-    Leden
+    {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}
     <Icon name="ic:chevron-right" />
-    Toevoegen
+    Gegevens Bewerken
   </h1>
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
@@ -54,7 +54,6 @@
         :disabled="requesting"
         bordered
       >
-        <option selected disabled value="">-- Selecteer --</option>
         <option value="MALE">Man</option>
         <option value="FEMALE">Vrouw</option>
       </InputSelect>
@@ -106,33 +105,44 @@
       />
       <Button
         type="submit"
-        title="Voeg persoon toe"
+        title="Gegevens Opslaan"
         color="primary"
         :loading="requesting"
       >
-        Toevoegen
+        Opslaan
       </Button>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-const initials = ref<string>("");
-const firstName = ref<string>("");
-const insertion = ref<string>("");
-const lastName = ref<string>("");
-const dateOfBirth = ref<string>("");
-const sex = ref<"MALE" | "FEMALE" | "">("");
-const street = ref<string>("");
-const number = ref<string>("");
-const city = ref<string>("");
-const zipcode = ref<string>("");
-const country = ref<string>("");
+import { Member } from "@prisma/client";
+
+const props = defineProps<{
+  member: Member;
+}>();
+
+const initials = ref<string>(props.member.initials);
+const firstName = ref<string>(props.member.firstName);
+const insertion = ref<string>(props.member.insertion);
+const lastName = ref<string>(props.member.lastName);
+const dateOfBirth = ref<string>(
+  // According to prisma dateOfBirth is a Date, but in reality it is an ISO string
+  (props.member.dateOfBirth as unknown as string).slice(0, 10),
+);
+const sex = ref<"MALE" | "FEMALE" | "">(props.member.sex);
+const street = ref<string>(props.member.street);
+const number = ref<string>(props.member.number);
+const city = ref<string>(props.member.city);
+const zipcode = ref<string>(props.member.zipcode);
+const country = ref<string>(props.member.country);
 
 const { error, requesting, send, data } = useRequest<
-  Awaited<ReturnType<typeof import("~~/server/api/members/index.post").default>>
->("/api/members", apiErrorHandler([]), {
-  method: "post",
+  Awaited<
+    ReturnType<typeof import("~~/server/api/members/[id]/index.patch").default>
+  >
+>(`/api/members/${useRoute().params.id}`, apiErrorHandler([]), {
+  method: "patch",
   body: {
     initials,
     firstName,

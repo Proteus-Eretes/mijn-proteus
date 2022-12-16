@@ -1,5 +1,5 @@
 <template>
-  <div class="form-control mb-4">
+  <div class="form-control">
     <label v-if="title" class="label">
       <span class="label-text text-base font-bold">{{ title }}</span>
       <span v-if="required" class="label-text-alt text-error text-lg">*</span>
@@ -9,9 +9,7 @@
       :class="classes"
       :disabled="disabled"
       :value="modelValue"
-      @input="
-        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
-      "
+      @input="$emit('update:modelValue', $event.target.value)"
     >
       <slot />
     </select>

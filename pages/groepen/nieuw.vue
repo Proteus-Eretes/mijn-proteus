@@ -37,6 +37,7 @@
         title="Onderdeel van"
         :disabled="requesting"
         bordered
+        class="mb-4"
       >
         <option selected value="">-- Losstaande groep --</option>
         <option
