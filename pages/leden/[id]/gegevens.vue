@@ -116,10 +116,14 @@
 </template>
 
 <script setup lang="ts">
-import { Member } from "@prisma/client";
+import { Contact, Member, Membership, MemberStudy } from ".prisma/client";
 
 const props = defineProps<{
-  member: Member;
+  member: Member & {
+    contacts: Contact[];
+    studies: MemberStudy[];
+    memberships: Membership[];
+  };
 }>();
 
 const initials = ref<string>(props.member.initials);

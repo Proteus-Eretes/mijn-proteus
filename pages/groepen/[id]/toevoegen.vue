@@ -8,7 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import { Group } from ".prisma/client";
+
 defineProps<{
-  group: unknown;
+  group: Group & { children: Group[] };
 }>();
 </script>

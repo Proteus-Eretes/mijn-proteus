@@ -8,6 +8,8 @@
 </template>
 
 <script lang="ts" setup>
+import { MenuItem } from "~~/components/SideMenu.vue";
+
 const numberOfUitschrijvingen = undefined;
 const route = useRoute();
 
@@ -16,13 +18,13 @@ const menuItems = computed(() => {
   return [...standard, ...selected.value];
 });
 
-const standard = [
+const standard: MenuItem[] = [
   { icon: "ic:search", title: "Zoeken", to: "/groepen/zoeken" },
   { icon: "ic:group", title: "Mijn Groepen", to: "/groepen/mijn-groepen" },
   { icon: "ic:add", title: "Groep Maken", to: "/groepen/nieuw" },
 ];
 
-const selected = computed(() => [
+const selected = computed<MenuItem[]>(() => [
   {
     title: "Groep",
   },

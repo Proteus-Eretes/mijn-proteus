@@ -109,9 +109,15 @@
 </template>
 
 <script setup lang="ts">
+import { Contact, Group, Membership } from ".prisma/client";
+
 const dateFormatter = useDateFormatter();
 
 defineProps<{
-  group?: unknown;
+  group: Group & {
+    contacts: Contact[];
+    children: Group[];
+    members: Membership[];
+  };
 }>();
 </script>

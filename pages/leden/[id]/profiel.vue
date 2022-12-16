@@ -53,9 +53,15 @@
 </template>
 
 <script setup lang="ts">
+import { Contact, Member, Membership, MemberStudy } from ".prisma/client";
+
 const dateFormatter = useDateFormatter();
 
 defineProps<{
-  member: unknown;
+  member: Member & {
+    contacts: Contact[];
+    studies: MemberStudy[];
+    memberships: Membership[];
+  };
 }>();
 </script>

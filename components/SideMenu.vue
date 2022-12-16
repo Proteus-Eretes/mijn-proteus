@@ -3,7 +3,7 @@
     <li v-for="item in items" :key="item.title" :class="classes(item.to)">
       <span v-if="!item.to">{{ item.title }}</span>
       <NuxtLink v-else :to="item.to">
-        <Icon :name="item.icon" size="20px" />
+        <Icon :name="item.icon || 'ic:baseline-question-mark'" size="20px" />
         {{ item.title }}
         <span
           v-if="item.badge"

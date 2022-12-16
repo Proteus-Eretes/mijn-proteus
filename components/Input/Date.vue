@@ -12,7 +12,9 @@
       :disabled="disabled"
       :required="required"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="
+        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
+      "
     />
     <label v-if="error" class="label">
       <span class="label-text-alt text-error font-bold">{{ error }}</span>

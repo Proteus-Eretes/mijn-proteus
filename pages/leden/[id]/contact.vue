@@ -8,7 +8,9 @@
 </template>
 
 <script setup lang="ts">
+import { Member } from ".prisma/client";
+
 defineProps<{
-  member: unknown;
+  member: Member;
 }>();
 </script>

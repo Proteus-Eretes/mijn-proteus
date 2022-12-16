@@ -13,8 +13,14 @@
 </template>
 
 <script setup lang="ts">
+import { Contact, Group, Membership } from ".prisma/client";
+
 defineProps<{
-  group: unknown;
+  group: Group & {
+    contacts: Contact[];
+    children: Group[];
+    members: Membership[];
+  };
 }>();
 
 const deleteGroup = async () => {

@@ -5,7 +5,9 @@
       type="search"
       placeholder="Zoeken…"
       class="input input-bordered w-full"
-      @input="filter = $event.target.value.toLowerCase()"
+      @input="
+        filter = ($event.target as HTMLTextAreaElement).value.toLowerCase()
+      "
     />
     <table class="table w-full">
       <thead>

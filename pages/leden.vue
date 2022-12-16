@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from "~/components/SideMenu.vue";
+import { MenuItem } from "~~/components/SideMenu.vue";
 
 const { data } = useSession();
 const route = useRoute();
