@@ -29,3 +29,10 @@ export const optionalUuid = () =>
  */
 export const dateString = () =>
   coerce(date(), string(), (date) => new Date(date));
+
+/**
+ * Superstruct validator for an email string.
+ * Validates whether a string contains a valid email-address.
+ */
+export const emailString = () =>
+  coerce(string(), string(), (email) => validator.isEmail(email));
