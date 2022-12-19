@@ -26,7 +26,7 @@
         >
           <td>{{ group.name }}</td>
           <td>{{ group.description }}</td>
-          <td>{{ dateFormatter(group.startDate) }}</td>
+          <td>{{ ISOToString(group.startDate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-const dateFormatter = useDateFormatter();
+const { ISOToString } = useDateFormatter();
 
 const filter = ref("");
 const filteredGroups = computed(() => {

@@ -36,7 +36,7 @@ const Group: Describe<PrismaGroup> = object({
  */
 export const GroupCreate = defaulted(omit(Group, ["id"]), {
   description: "",
-  startDate: new Date().toISOString(),
+  startDate: new Date(),
   stopDate: null,
   permissions: [],
   parentId: null,

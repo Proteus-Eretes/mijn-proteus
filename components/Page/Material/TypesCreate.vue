@@ -4,6 +4,7 @@
       <Alert type="error" :content="error?.global" />
       <InputText
         v-model="name"
+        type="text"
         title="Naam Materiaaltype"
         placeholder="Helicopter"
         :error="error?.name"

@@ -45,6 +45,13 @@ export const get = async (id: string) => {
   });
   const children = await prisma.group.findMany({
     where: { parentId: id },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      startDate: true,
+      stopDate: true,
+    },
   });
   return { ...group, children };
 };

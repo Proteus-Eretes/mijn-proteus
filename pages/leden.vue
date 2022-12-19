@@ -1,17 +1,20 @@
 <template>
-  <TwoColumn title="Leden">
-    <template #content>
-      <SideMenu :items="menuItems" />
-    </template>
-    <NuxtPage />
+  <TwoColumn title="Leden" :items="menuItems">
+    <NuxtPage :member="member" />
   </TwoColumn>
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from "~~/components/SideMenu.vue";
+import { MenuItem } from "~/components/TwoColumn.vue";
 
 const { data } = useSession();
 const route = useRoute();
+
+const { data: member } = await useFetch<
+  Awaited<
+    ReturnType<typeof import("~/server/api/members/[id]/index.get").default>
+  >
+>("/api/members/" + route.params.id);
 
 const menuItems = computed<MenuItem[]>(() => {
   let items = standard.value;

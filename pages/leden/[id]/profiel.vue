@@ -1,7 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">
-    {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}
-  </h1>
+  <Breadcrumbs :crumbs="crumbs" />
   <div class="overflow-x-auto shadow">
     <table class="table w-full">
       <tbody>
@@ -21,7 +19,7 @@
         </tr>
         <tr>
           <td>Geboortedatum</td>
-          <td>{{ dateFormatter(member.dateOfBirth) }}</td>
+          <td>{{ member.dateOfBirth }}</td>
         </tr>
         <tr>
           <td>Geslacht</td>
@@ -64,4 +62,15 @@ defineProps<{
     memberships: Membership[];
   };
 }>();
+
+const crumbs = computed(() => [
+  {
+    name: "Leden",
+    link: "/leden/zoeken",
+  },
+  {
+    name: `${props.member.firstName} ${props.member.insertion} ${props.member.lastName}`,
+    link: `/leden/${props.member.id}/profiel`,
+  },
+]);
 </script>

@@ -27,8 +27,8 @@
         >
           <td>{{ membership.group.name }}</td>
           <td>{{ membership.function }}</td>
-          <td>{{ dateFormatter(membership.startDate) }}</td>
-          <td>{{ dateFormatter(membership.stopDate) }}</td>
+          <td>{{ ISOToString(membership.startDate) }}</td>
+          <td>{{ ISOToString(membership.stopDate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-const dateFormatter = useDateFormatter();
+const { ISOToString } = useDateFormatter();
 const { data } = useSession();
 
 const filter = ref("");

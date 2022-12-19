@@ -19,11 +19,11 @@
         </tr>
         <tr>
           <td>Sinds</td>
-          <td>{{ dateFormatter(group.startDate) }}</td>
+          <td>{{ ISOToString(group.startDate) }}</td>
         </tr>
         <tr>
           <td>Tot</td>
-          <td>{{ dateFormatter(group.stopDate) }}</td>
+          <td>{{ ISOToString(group.stopDate) }}</td>
         </tr>
         <tr
           v-if="group.parentId"
@@ -45,13 +45,10 @@
     </table>
   </div>
 
-  <h2
-    v-if="group?.members.length"
-    class="my-4 text-3xl text-primary font-bold mb-4"
-  >
+  <h2 v-if="group?.members" class="my-4 text-3xl text-primary font-bold mb-4">
     Leden
   </h2>
-  <div v-if="group?.members.length" class="overflow-x-auto shadow">
+  <div v-if="group?.members" class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>
         <tr>
@@ -68,20 +65,17 @@
         >
           <td>{{ member.id }}</td>
           <td>{{ member.function }}</td>
-          <td>{{ dateFormatter(member.startDate) }}</td>
+          <td>{{ ISOToString(member.startDate) }}</td>
           <td>{{ member.isAdmin ? "Beheerder" : "Lid" }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <h2
-    v-if="group?.children.length"
-    class="my-4 text-3xl text-primary font-bold mb-4"
-  >
+  <h2 v-if="group?.children" class="my-4 text-3xl text-primary font-bold mb-4">
     Subgroepen
   </h2>
-  <div v-if="group?.children.length" class="overflow-x-auto shadow">
+  <div v-if="group?.children" class="overflow-x-auto shadow">
     <table class="table w-full">
       <thead>
         <tr>
@@ -100,8 +94,8 @@
         >
           <td>{{ child.name }}</td>
           <td>{{ child.description }}</td>
-          <td>{{ dateFormatter(child.startDate) }}</td>
-          <td>{{ dateFormatter(child.stopDate) }}</td>
+          <td>{{ ISOToString(child.startDate) }}</td>
+          <td>{{ ISOToString(child.stopDate) }}</td>
         </tr>
       </tbody>
     </table>
@@ -111,7 +105,7 @@
 <script setup lang="ts">
 import { Contact, Group, Membership } from ".prisma/client";
 
-const dateFormatter = useDateFormatter();
+const { ISOToString } = useDateFormatter();
 
 defineProps<{
   group: Group & {

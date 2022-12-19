@@ -9,6 +9,7 @@
       <Alert type="error" :content="error?.global" />
       <InputText
         v-model="initials"
+        type="text"
         title="Initialen"
         placeholder="A.B.C."
         :error="error?.name"
@@ -18,6 +19,7 @@
       />
       <InputText
         v-model="firstName"
+        type="text"
         title="Voornaam"
         placeholder="Jan"
         :error="error?.name"
@@ -27,6 +29,7 @@
       />
       <InputText
         v-model="insertion"
+        type="text"
         title="Tussenvoegsel"
         placeholder="van"
         :error="error?.name"
@@ -35,6 +38,7 @@
       />
       <InputText
         v-model="lastName"
+        type="text"
         title="Achternaam"
         placeholder="Jansen"
         :error="error?.name"
@@ -42,8 +46,9 @@
         required
         bordered
       />
-      <InputDate
+      <InputText
         v-model="dateOfBirth"
+        type="date"
         title="Geboortedatum"
         :disabled="requesting"
         bordered
@@ -60,6 +65,7 @@
       </InputSelect>
       <InputText
         v-model="street"
+        type="text"
         title="Straat"
         placeholder="Rotterdamseweg"
         :error="error?.name"
@@ -69,6 +75,7 @@
       />
       <InputText
         v-model="number"
+        type="text"
         title="Huisnummer"
         placeholder="362a"
         :error="error?.name"
@@ -78,6 +85,7 @@
       />
       <InputText
         v-model="zipcode"
+        type="text"
         title="Postcode"
         placeholder="2628AT"
         :error="error?.name"
@@ -87,6 +95,7 @@
       />
       <InputText
         v-model="city"
+        type="text"
         title="Plaats"
         placeholder="Delft"
         :error="error?.name"
@@ -96,6 +105,7 @@
       />
       <InputText
         v-model="country"
+        type="text"
         title="Land"
         placeholder="Nederland"
         :error="error?.name"

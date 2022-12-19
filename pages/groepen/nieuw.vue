@@ -5,6 +5,7 @@
       <Alert type="error" :content="error?.global" />
       <InputText
         v-model="name"
+        type="text"
         title="Naam"
         placeholder="Boeing AH-64 Apache"
         :error="error?.name"
@@ -14,20 +15,23 @@
       />
       <InputText
         v-model="description"
+        type="text"
         title="Beschrijving"
         placeholder="An American twin-turboshaft attack helicopter with a tailwheel-type landing gear"
         :error="error?.description"
         :disabled="requesting"
         bordered
       />
-      <InputDate
+      <InputText
         v-model="startDate"
+        type="date"
         title="Sinds"
         :disabled="requesting"
         bordered
       />
-      <InputDate
+      <InputText
         v-model="stopDate"
+        type="date"
         title="Tot"
         :disabled="requesting"
         bordered

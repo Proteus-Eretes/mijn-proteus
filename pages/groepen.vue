@@ -1,21 +1,17 @@
 <template>
-  <TwoColumn title="Groepen">
-    <template #content>
-      <SideMenu :items="menuItems" />
-    </template>
+  <TwoColumn title="Groepen" :items="menuItems">
     <NuxtPage />
   </TwoColumn>
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from "~~/components/SideMenu.vue";
+import { MenuItem } from "~/components/TwoColumn.vue";
 
 const numberOfUitschrijvingen = undefined;
 const route = useRoute();
 
 const menuItems = computed(() => {
-  if (!route.params.id) return standard;
-  return [...standard, ...selected.value];
+  return [...standard, ...(route.params.id ? selected.value : [])];
 });
 
 const standard: MenuItem[] = [

@@ -1,6 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": ["dist/**", ".output/**", ".nuxt/**", "dockerdata/**"],
+  "ignorePatterns": [
+    "dist/**",
+    ".output/**",
+    ".nuxt/**",
+    "dockerdata/**",
+    "node_modules/**"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:json/recommended",
@@ -9,7 +15,11 @@
     "@nuxtjs/eslint-config-typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["json", "nuxt", "@typescript-eslint"],
+  "plugins": [
+    "json",
+    "nuxt",
+    "@typescript-eslint"
+  ],
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -37,6 +47,7 @@
           "*~/server/logic",
           "*~/server/prisma",
           "*~/server/sync",
+          "*~/server/types",
           "*~/server/validation",
           "*~/server/utils",
           "*~/utils/*"
@@ -48,7 +59,6 @@
     "vue/no-multiple-template-root": "off",
     "vue/component-api-style": ["error", ["script-setup"]],
     "vue/define-emits-declaration": ["error", "type-based"],
-    "vue/no-v-for-template-key": "off",
     "import/order": [
       "warn",
       {

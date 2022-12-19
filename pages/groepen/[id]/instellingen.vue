@@ -1,12 +1,12 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">
-    {{ group.name }}
-    <Icon name="ic:chevron-right" />
-    Instellingen
-  </h1>
+  <Breadcrumbs :crumbs="crumbs" />
   <div class="overflow-x-auto shadow">
     groep dingen hiero<br />
-    <button class="btn btn-error btn-outline" @click="deleteGroup">
+    <button
+      class="btn btn-error btn-outline"
+      :disabled="requesting"
+      @click="send"
+    >
       Groep Verwijderen
     </button>
   </div>
@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { Contact, Group, Membership } from ".prisma/client";
 
-defineProps<{
+const props = defineProps<{
   group: Group & {
     contacts: Contact[];
     children: Group[];
@@ -23,10 +23,29 @@ defineProps<{
   };
 }>();
 
-const deleteGroup = async () => {
-  await $fetch("/api/groups/" + useRoute().params.id, {
-    method: "DELETE",
-  });
-  await navigateTo("/groepen/zoeken");
-};
+const { error, requesting, send, data } = useRequest<
+  Awaited<
+    ReturnType<typeof import("~/server/api/groups/[id]/index.delete").default>
+  >
+>("/api/groups/" + useRoute().params.id, apiErrorHandler([]), {
+  method: "delete",
+  async onSuccess() {
+    await navigateTo("/groepen/zoeken");
+  },
+});
+
+const crumbs = computed(() => [
+  {
+    name: "Groepen",
+    link: "/groepen/zoeken",
+  },
+  {
+    name: props.group.name,
+    link: `/groepen/${props.group.id}/overzicht`,
+  },
+  {
+    name: "Instellingen",
+    link: `/groepen/${props.group.id}/instellingen`,
+  },
+]);
 </script>

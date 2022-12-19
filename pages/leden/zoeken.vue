@@ -27,7 +27,7 @@
           <td>
             {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}
           </td>
-          <td>{{ dateFormatter(member.dateOfBirth) }}</td>
+          <td>{{ ISOToString(member.dateOfBirth) }}</td>
           <td>{{ member.street }} {{ member.number }} {{ member.city }}</td>
         </tr>
       </tbody>
@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-const dateFormatter = useDateFormatter();
+const { ISOToString } = useDateFormatter();
 
 const filter = ref("");
 const filteredMembers = computed(() => {
