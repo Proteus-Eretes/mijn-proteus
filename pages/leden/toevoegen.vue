@@ -145,7 +145,7 @@ const { requesting, send, data } = useRequest<
     country,
   },
   async onSuccess() {
-    await navigateTo(`/members/${data.value?.id}/profiel`);
+    await navigateTo(`/members/${data.value?.id}`);
   },
 });
 </script>

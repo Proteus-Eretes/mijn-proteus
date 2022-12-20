@@ -25,7 +25,7 @@
         <tr
           v-if="group.parentId"
           class="hover cursor-pointer"
-          @click="navigateTo(`/groepen/${group.parentId}/overzicht`)"
+          @click="navigateTo(`/groepen/${group.parentId}`)"
         >
           <td>Onderdeel van</td>
           <td>{{ group.parentId }}</td>
@@ -87,7 +87,7 @@
           v-for="child in group.children"
           :key="child.id"
           class="hover cursor-pointer"
-          @click="navigateTo(`/groepen/${child.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${child.id}`)"
         >
           <td>{{ child.name }}</td>
           <td>{{ child.description }}</td>

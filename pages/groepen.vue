@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-const numberOfUitschrijvingen = undefined;
 const route = useRoute();
 
 const menuItems = computed(() => {
@@ -36,7 +35,6 @@ const selected = computed(() => [
     icon: "ic:baseline-person-remove",
     title: "Uitschrijvingen",
     to: `/groepen/${route.params.id}/uitschrijvingen`,
-    badge: numberOfUitschrijvingen,
   },
   {
     icon: "ic:baseline-manage-accounts",

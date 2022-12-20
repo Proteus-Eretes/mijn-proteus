@@ -23,7 +23,7 @@
           v-for="membership in filteredMemberships"
           :key="membership.id"
           class="hover"
-          @click="navigateTo(`/groepen/${membership.group.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${membership.group.id}`)"
         >
           <td>{{ membership.group.name }}</td>
           <td>{{ membership.function }}</td>
