@@ -8,5 +8,8 @@ export default defineEventHandler(async (event) => {
   const data = await readValidatedBody(event, GroupUpdate);
   const response = await group.update(id, data);
 
-  return response ?? apiError(ErrorCode.NotFound, "Group not found");
+  if (!response) {
+    throw apiError(ErrorCode.NotFound, "Group not found");
+  }
+  return response;
 });

@@ -8,5 +8,8 @@ export default defineEventHandler(async (event) => {
   const data = await readValidatedBody(event, StudyMemberUpdate);
   const response = await study.member.update(id, data);
 
-  return response ?? apiError(ErrorCode.NotFound, "MemberStudy not found");
+  if (!response) {
+    throw apiError(ErrorCode.NotFound, "MemberStudy not found");
+  }
+  return response;
 });

@@ -7,5 +7,8 @@ export default defineEventHandler(async (event) => {
   const id = await getValidatedRouterParam(event, "id", uuid());
   const response = await member.get(id);
 
-  return response ?? apiError(ErrorCode.NotFound, "Member not found");
+  if (!response) {
+    throw apiError(ErrorCode.NotFound, "Member not found");
+  }
+  return response;
 });

@@ -1,3 +1,4 @@
+import { apiError, ErrorCode } from "~/utils/error";
 import { getValidatedRouterParam, readValidatedBody } from "~/server/utils";
 import { StudyUpdate, uuid } from "~~/server/validation";
 import { study } from "~/server/logic";
@@ -7,5 +8,8 @@ export default defineEventHandler(async (event) => {
   const data = await readValidatedBody(event, StudyUpdate);
   const response = await study.update(id, data);
 
-  return response ?? apiError(ErrorCode.NotFound, "Study not found");
+  if (!response) {
+    throw apiError(ErrorCode.NotFound, "Study not found");
+  }
+  return response;
 });
