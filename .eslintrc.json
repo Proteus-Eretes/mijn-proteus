@@ -15,11 +15,7 @@
     "@nuxtjs/eslint-config-typescript",
     "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "json",
-    "nuxt",
-    "@typescript-eslint"
-  ],
+  "plugins": ["json", "nuxt", "@typescript-eslint"],
   "parser": "vue-eslint-parser",
   "parserOptions": {
     "ecmaVersion": "latest",
