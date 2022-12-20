@@ -2,13 +2,11 @@
   <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
-      <Alert type="error" :content="error?.global" />
       <InputText
         v-model="name"
         type="text"
         title="Naam"
         placeholder="Boeing AH-64 Apache"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -18,7 +16,6 @@
         type="text"
         title="Beschrijving"
         placeholder="An American twin-turboshaft attack helicopter with a tailwheel-type landing gear"
-        :error="error?.description"
         :disabled="requesting"
         bordered
       />
@@ -75,7 +72,7 @@ const parentId = ref<string>("");
 const startDate = ref<string>("");
 const stopDate = ref<string>("");
 
-const { error, requesting, send, data } = useRequest<
+const { requesting, send, data } = useRequest<
   Awaited<ReturnType<typeof import("~~/server/api/groups/index.post").default>>
 >("/api/groups", apiErrorHandler([]), {
   method: "post",

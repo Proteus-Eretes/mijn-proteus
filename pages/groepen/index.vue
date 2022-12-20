@@ -26,7 +26,7 @@
         >
           <td>{{ group.name }}</td>
           <td>{{ group.description }}</td>
-          <td>{{ ISOToString(group.startDate) }}</td>
+          <td>{{ group.startDate }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,7 +36,6 @@
 <script setup lang="ts">
 import { Groups } from "~/server/types";
 
-const { ISOToString } = useDateFormatter();
 const { breadCrumbs } = useBreadcrumbs();
 
 const filter = ref("");

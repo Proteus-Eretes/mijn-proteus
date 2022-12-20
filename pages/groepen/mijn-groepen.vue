@@ -27,8 +27,8 @@
         >
           <td>{{ membership.group.name }}</td>
           <td>{{ membership.function }}</td>
-          <td>{{ ISOToString(membership.startDate) }}</td>
-          <td>{{ ISOToString(membership.stopDate) }}</td>
+          <td>{{ membership.startDate }}</td>
+          <td>{{ membership.stopDate }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,9 +36,7 @@
 </template>
 
 <script setup lang="ts">
-const { ISOToString } = useDateFormatter();
 const { breadCrumbs } = useBreadcrumbs();
-const { data } = useSession();
 
 const filter = ref("");
 const filteredMemberships = computed(() => {
@@ -48,11 +46,12 @@ const filteredMemberships = computed(() => {
   );
 });
 
-const { data: memberships } = await useFetch<
+// TODO: Fetch logged in member's memberships
+const memberships = ref<
   Awaited<
     ReturnType<
       typeof import("~~/server/api/members/[id]/memberships.get").default
     >
   >
->(`/api/members/${data.value?.user?.proteusId}/memberships`);
+>([]);
 </script>

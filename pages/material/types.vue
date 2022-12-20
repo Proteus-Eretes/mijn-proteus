@@ -1,5 +1,5 @@
 <template>
-  <Breadcrumbs :crumbs="breadCrumbs.value" />
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <Alert v-if="error" type="error" content="Materiaal types ophalen mislukt" />
   <div class="overflow-x-auto shadow">
     <table class="table w-full">

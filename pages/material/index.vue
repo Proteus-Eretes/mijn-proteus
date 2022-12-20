@@ -1,5 +1,5 @@
 <template>
-  <Breadcrumbs :crumbs="breadCrumbs.value" />
+  <Breadcrumbs :crumbs="breadCrumbs" />
 </template>
 
 <script lang="ts" setup>

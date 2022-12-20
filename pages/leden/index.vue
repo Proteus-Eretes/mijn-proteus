@@ -27,7 +27,7 @@
           <td>
             {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}
           </td>
-          <td>{{ ISOToString(member.dateOfBirth) }}</td>
+          <td>{{ member.dateOfBirth }}</td>
           <td>{{ member.street }} {{ member.number }} {{ member.city }}</td>
         </tr>
       </tbody>
@@ -38,7 +38,6 @@
 <script setup lang="ts">
 import { Members } from "~/server/types";
 
-const { ISOToString } = useDateFormatter();
 const { breadCrumbs } = useBreadcrumbs();
 
 const filter = ref("");

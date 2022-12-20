@@ -5,8 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from "~/components/TwoColumn.vue";
-
 const numberOfUitschrijvingen = undefined;
 const route = useRoute();
 
@@ -14,13 +12,13 @@ const menuItems = computed(() => {
   return [...standard, ...(route.params.id ? selected.value : [])];
 });
 
-const standard: MenuItem[] = [
+const standard = [
   { icon: "ic:search", title: "Zoeken", to: "/groepen" },
   { icon: "ic:group", title: "Mijn Groepen", to: "/groepen/mijn-groepen" },
   { icon: "ic:add", title: "Groep Maken", to: "/groepen/nieuw" },
 ];
 
-const selected = computed<MenuItem[]>(() => [
+const selected = computed(() => [
   {
     title: "Groep",
   },

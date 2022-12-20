@@ -36,14 +36,22 @@ export const update = async (id: string, group: GroupUpdate) => {
  * @returns The requested group if found, otherwise null.
  */
 export const get = async (id: string) => {
-  const group = await prisma.group.findUnique({
+  return await prisma.group.findUnique({
     where: { id },
     include: {
       contacts: true,
       members: true,
     },
   });
-  const children = await prisma.group.findMany({
+};
+
+/**
+ * Get all children from a group from the database.
+ * @param id The id of the group
+ * @returns All groups where the parentId equals the id.
+ */
+export const getChildren = async (id: string) => {
+  return await prisma.group.findMany({
     where: { parentId: id },
     select: {
       id: true,
@@ -53,7 +61,6 @@ export const get = async (id: string) => {
       stopDate: true,
     },
   });
-  return { ...group, children };
 };
 
 /**

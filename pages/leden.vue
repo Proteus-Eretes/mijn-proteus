@@ -5,19 +5,15 @@
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from "~/components/TwoColumn.vue";
-
-const { data } = useSession();
 const route = useRoute();
 
-const menuItems = computed<MenuItem[]>(() => {
-  let items = standard.value;
-  if (route.params.id) items = [...items, ...selected.value];
-  // if (data.value?.user?.isAdmin) items = [...items, ...admin.value];
-  return items;
-});
+const menuItems = computed(() => [
+  ...standard.value,
+  ...(route.params.id ? selected.value : []),
+  ...admin.value, // TODO: Add admin check
+]);
 
-const standard = computed<MenuItem[]>(() => [
+const standard = computed(() => [
   {
     icon: "ic:search",
     title: "Zoeken",
@@ -26,11 +22,11 @@ const standard = computed<MenuItem[]>(() => [
   {
     icon: "ic:baseline-account-circle",
     title: "Mijn Profiel",
-    to: `/leden/${data.value?.user?.proteusId}`,
+    to: `/leden`, // TODO: Route to logged in member
   },
 ]);
 
-const selected = computed<MenuItem[]>(() => [
+const selected = computed(() => [
   {
     title: "Lid",
   },
@@ -66,7 +62,7 @@ const selected = computed<MenuItem[]>(() => [
   },
 ]);
 
-const admin = computed<MenuItem[]>(() => [
+const admin = computed(() => [
   {
     title: "Tools",
   },

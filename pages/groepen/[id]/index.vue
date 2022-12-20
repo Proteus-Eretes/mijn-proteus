@@ -16,11 +16,11 @@
         </tr>
         <tr>
           <td>Sinds</td>
-          <td>{{ ISOToString(group.startDate) }}</td>
+          <td>{{ group.startDate }}</td>
         </tr>
         <tr>
           <td>Tot</td>
-          <td>{{ ISOToString(group.stopDate) }}</td>
+          <td>{{ group.stopDate }}</td>
         </tr>
         <tr
           v-if="group.parentId"
@@ -62,7 +62,7 @@
         >
           <td>{{ member.id }}</td>
           <td>{{ member.function }}</td>
-          <td>{{ ISOToString(member.startDate) }}</td>
+          <td>{{ member.startDate }}</td>
           <td>{{ member.isAdmin ? "Beheerder" : "Lid" }}</td>
         </tr>
       </tbody>
@@ -91,8 +91,8 @@
         >
           <td>{{ child.name }}</td>
           <td>{{ child.description }}</td>
-          <td>{{ ISOToString(child.startDate) }}</td>
-          <td>{{ ISOToString(child.stopDate) }}</td>
+          <td>{{ child.startDate }}</td>
+          <td>{{ child.stopDate }}</td>
         </tr>
       </tbody>
     </table>
@@ -101,8 +101,6 @@
 
 <script setup lang="ts">
 import { Group } from "~/server/types";
-
-const { ISOToString } = useDateFormatter();
 
 defineProps<{
   group: Group;

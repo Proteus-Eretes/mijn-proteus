@@ -1,13 +1,11 @@
 <template>
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
-      <Alert type="error" :content="error?.global" />
       <InputText
         v-model="initials"
         type="text"
         title="Initialen"
         placeholder="A.B.C."
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -17,7 +15,6 @@
         type="text"
         title="Voornaam"
         placeholder="Jan"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -27,7 +24,6 @@
         type="text"
         title="Tussenvoegsel"
         placeholder="van"
-        :error="error?.name"
         :disabled="requesting"
         bordered
       />
@@ -36,7 +32,6 @@
         type="text"
         title="Achternaam"
         placeholder="Jansen"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -62,7 +57,6 @@
         type="text"
         title="Straat"
         placeholder="Rotterdamseweg"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -72,7 +66,6 @@
         type="text"
         title="Huisnummer"
         placeholder="362a"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -82,7 +75,6 @@
         type="text"
         title="Postcode"
         placeholder="2628AT"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -92,7 +84,6 @@
         type="text"
         title="Plaats"
         placeholder="Delft"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -102,7 +93,6 @@
         type="text"
         title="Land"
         placeholder="Nederland"
-        :error="error?.name"
         :disabled="requesting"
         required
         bordered
@@ -142,7 +132,7 @@ const city = ref<string>(props.member.city);
 const zipcode = ref<string>(props.member.zipcode);
 const country = ref<string>(props.member.country);
 
-const { error, requesting, send, data } = useRequest<
+const { requesting, send, data } = useRequest<
   Awaited<
     ReturnType<typeof import("~~/server/api/members/[id]/index.patch").default>
   >
