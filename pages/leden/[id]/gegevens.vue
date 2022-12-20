@@ -1,5 +1,4 @@
 <template>
-  <Breadcrumbs :crumbs="crumbs" />
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
       <Alert type="error" :content="error?.global" />
@@ -122,14 +121,10 @@
 </template>
 
 <script setup lang="ts">
-import { Contact, Member, Membership, MemberStudy } from ".prisma/client";
+import { Member } from "~/server/types";
 
 const props = defineProps<{
-  member: Member & {
-    contacts: Contact[];
-    studies: MemberStudy[];
-    memberships: Membership[];
-  };
+  member: Member;
 }>();
 
 const initials = ref<string>(props.member.initials);
@@ -167,22 +162,7 @@ const { error, requesting, send, data } = useRequest<
     country,
   },
   async onSuccess() {
-    await navigateTo(`/members/${data.value?.id}/profiel`);
+    await navigateTo(`/members/${data.value?.id}`);
   },
 });
-
-const crumbs = computed(() => [
-  {
-    name: "Leden",
-    link: "/leden/zoeken",
-  },
-  {
-    name: `${props.member.firstName} ${props.member.insertion} ${props.member.lastName}`,
-    link: `/leden/${props.member.id}/profiel`,
-  },
-  {
-    name: "Gegevens",
-    link: `/leden/${props.member.id}/gegevens`,
-  },
-]);
 </script>

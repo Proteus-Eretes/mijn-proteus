@@ -1,5 +1,4 @@
 <template>
-  <Breadcrumbs :crumbs="crumbs" />
   <div class="overflow-x-auto shadow">
     <table class="table w-full">
       <tbody>
@@ -51,26 +50,9 @@
 </template>
 
 <script setup lang="ts">
-import { Contact, Member, Membership, MemberStudy } from ".prisma/client";
-
-const dateFormatter = useDateFormatter();
+import { Member } from "~/server/types";
 
 defineProps<{
-  member: Member & {
-    contacts: Contact[];
-    studies: MemberStudy[];
-    memberships: Membership[];
-  };
+  member: Member;
 }>();
-
-const crumbs = computed(() => [
-  {
-    name: "Leden",
-    link: "/leden/zoeken",
-  },
-  {
-    name: `${props.member.firstName} ${props.member.insertion} ${props.member.lastName}`,
-    link: `/leden/${props.member.id}/profiel`,
-  },
-]);
 </script>

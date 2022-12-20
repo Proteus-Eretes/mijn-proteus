@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Mijn Groepen</h1>
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow">
     <input
       type="search"
@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 const { ISOToString } = useDateFormatter();
+const { breadCrumbs } = useBreadcrumbs();
 const { data } = useSession();
 
 const filter = ref("");

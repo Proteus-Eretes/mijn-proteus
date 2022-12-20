@@ -14,9 +14,7 @@
       class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
     >
       <li>
-        <NuxtLink
-          :to="`/leden/${data?.user?.proteusId}/profiel`"
-          title="Mijn Profiel"
+        <NuxtLink :to="`/leden/${data?.user?.proteusId}`" title="Mijn Profiel"
           >Profiel
         </NuxtLink>
       </li>

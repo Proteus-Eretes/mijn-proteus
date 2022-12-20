@@ -1,7 +1,4 @@
 <template>
-  <h1 v-if="group" class="text-4xl text-primary font-bold mb-4">
-    {{ group.name }}
-  </h1>
   <div v-if="group" class="overflow-x-auto shadow">
     <table class="table w-full">
       <tbody>
@@ -103,15 +100,11 @@
 </template>
 
 <script setup lang="ts">
-import { Contact, Group, Membership } from ".prisma/client";
+import { Group } from "~/server/types";
 
 const { ISOToString } = useDateFormatter();
 
 defineProps<{
-  group: Group & {
-    contacts: Contact[];
-    children: Group[];
-    members: Membership[];
-  };
+  group: Group;
 }>();
 </script>

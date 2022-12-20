@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Zoeken</h1>
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow">
     <input
       type="search"
@@ -22,7 +22,7 @@
           v-for="group in filteredGroups"
           :key="group.id"
           class="hover"
-          @click="navigateTo(`/groepen/${group.id}/overzicht`)"
+          @click="navigateTo(`/groepen/${group.id}`)"
         >
           <td>{{ group.name }}</td>
           <td>{{ group.description }}</td>
@@ -34,7 +34,10 @@
 </template>
 
 <script setup lang="ts">
+import { Groups } from "~/server/types";
+
 const { ISOToString } = useDateFormatter();
+const { breadCrumbs } = useBreadcrumbs();
 
 const filter = ref("");
 const filteredGroups = computed(() => {
@@ -46,7 +49,5 @@ const filteredGroups = computed(() => {
   );
 });
 
-const { data: groups } = await useFetch<
-  Awaited<ReturnType<typeof import("~~/server/api/groups/index.get").default>>
->("/api/groups");
+const { data: groups } = await useFetch<Groups>("/api/groups");
 </script>

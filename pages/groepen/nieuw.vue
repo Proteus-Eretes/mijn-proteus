@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Nieuwe Groep Maken</h1>
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
       <Alert type="error" :content="error?.global" />
@@ -65,6 +65,10 @@
 </template>
 
 <script lang="ts" setup>
+import { Groups } from "~/server/types";
+
+const { breadCrumbs } = useBreadcrumbs();
+
 const name = ref<string>("");
 const description = ref<string>("");
 const parentId = ref<string>("");
@@ -83,11 +87,9 @@ const { error, requesting, send, data } = useRequest<
     stopDate: ref(stopDate.value || undefined),
   },
   async onSuccess() {
-    await navigateTo(`/groepen/${data.value?.id}/overzicht`);
+    await navigateTo(`/groepen/${data.value?.id}`);
   },
 });
 
-const { data: parents } = await useFetch<
-  Awaited<ReturnType<typeof import("~~/server/api/groups/index.get").default>>
->("/api/groups");
+const { data: parents } = await useFetch<Groups>("/api/groups");
 </script>

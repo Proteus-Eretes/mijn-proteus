@@ -1,6 +1,6 @@
 <template>
   <TwoColumn title="Leden" :items="menuItems">
-    <NuxtPage :member="member" />
+    <NuxtPage />
   </TwoColumn>
 </template>
 
@@ -9,12 +9,6 @@ import { MenuItem } from "~/components/TwoColumn.vue";
 
 const { data } = useSession();
 const route = useRoute();
-
-const { data: member } = await useFetch<
-  Awaited<
-    ReturnType<typeof import("~/server/api/members/[id]/index.get").default>
-  >
->("/api/members/" + route.params.id);
 
 const menuItems = computed<MenuItem[]>(() => {
   let items = standard.value;
@@ -27,12 +21,12 @@ const standard = computed<MenuItem[]>(() => [
   {
     icon: "ic:search",
     title: "Zoeken",
-    to: "/leden/zoeken",
+    to: "/leden",
   },
   {
     icon: "ic:baseline-account-circle",
     title: "Mijn Profiel",
-    to: `/leden/${data.value?.user?.proteusId}/profiel`,
+    to: `/leden/${data.value?.user?.proteusId}`,
   },
 ]);
 
@@ -43,7 +37,7 @@ const selected = computed<MenuItem[]>(() => [
   {
     icon: "ic:baseline-account-circle",
     title: "Profiel",
-    to: `/leden/${route.params.id}/profiel`,
+    to: `/leden/${route.params.id}`,
   },
   {
     icon: "ic:group",

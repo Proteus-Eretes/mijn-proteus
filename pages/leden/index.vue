@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Leden Zoeken</h1>
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow">
     <input
       type="search"
@@ -22,7 +22,7 @@
           v-for="member in filteredMembers"
           :key="member.id"
           class="hover"
-          @click="navigateTo(`/leden/${member.id}/profiel`)"
+          @click="navigateTo(`/leden/${member.id}`)"
         >
           <td>
             {{ member.firstName }} {{ member.insertion }} {{ member.lastName }}
@@ -36,7 +36,10 @@
 </template>
 
 <script setup lang="ts">
+import { Members } from "~/server/types";
+
 const { ISOToString } = useDateFormatter();
+const { breadCrumbs } = useBreadcrumbs();
 
 const filter = ref("");
 const filteredMembers = computed(() => {
@@ -49,7 +52,5 @@ const filteredMembers = computed(() => {
   );
 });
 
-const { data: members } = await useFetch<
-  Awaited<ReturnType<typeof import("~~/server/api/members/index.get").default>>
->("/api/members");
+const { data: members } = await useFetch<Members>("/api/members");
 </script>

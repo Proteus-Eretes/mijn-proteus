@@ -1,9 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">
-    Leden
-    <Icon name="ic:chevron-right" />
-    Toevoegen
-  </h1>
+  <Breadcrumbs :crumbs="breadCrumbs" />
   <div class="overflow-x-auto shadow p-5">
     <form @submit.prevent="send">
       <Alert type="error" :content="error?.global" />
@@ -127,6 +123,8 @@
 </template>
 
 <script setup lang="ts">
+const { breadCrumbs } = useBreadcrumbs();
+
 const initials = ref<string>("");
 const firstName = ref<string>("");
 const insertion = ref<string>("");

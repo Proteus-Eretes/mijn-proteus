@@ -15,7 +15,7 @@ const menuItems = computed(() => {
 });
 
 const standard: MenuItem[] = [
-  { icon: "ic:search", title: "Zoeken", to: "/groepen/zoeken" },
+  { icon: "ic:search", title: "Zoeken", to: "/groepen" },
   { icon: "ic:group", title: "Mijn Groepen", to: "/groepen/mijn-groepen" },
   { icon: "ic:add", title: "Groep Maken", to: "/groepen/nieuw" },
 ];
@@ -27,7 +27,7 @@ const selected = computed<MenuItem[]>(() => [
   {
     icon: "ic:baseline-groups",
     title: "Overzicht",
-    to: `/groepen/${route.params.id}/overzicht`,
+    to: `/groepen/${route.params.id}`,
   },
   {
     icon: "ic:baseline-person-add-alt-1",

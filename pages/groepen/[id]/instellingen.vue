@@ -1,5 +1,4 @@
 <template>
-  <Breadcrumbs :crumbs="crumbs" />
   <div class="overflow-x-auto shadow">
     groep dingen hiero<br />
     <button
@@ -13,39 +12,20 @@
 </template>
 
 <script setup lang="ts">
-import { Contact, Group, Membership } from ".prisma/client";
+import { Group } from "~/server/types";
 
-const props = defineProps<{
-  group: Group & {
-    contacts: Contact[];
-    children: Group[];
-    members: Membership[];
-  };
+defineProps<{
+  group: Group;
 }>();
 
-const { error, requesting, send, data } = useRequest<
+const { requesting, send } = useRequest<
   Awaited<
     ReturnType<typeof import("~/server/api/groups/[id]/index.delete").default>
   >
 >("/api/groups/" + useRoute().params.id, apiErrorHandler([]), {
   method: "delete",
   async onSuccess() {
-    await navigateTo("/groepen/zoeken");
+    await navigateTo("/groepen");
   },
 });
-
-const crumbs = computed(() => [
-  {
-    name: "Groepen",
-    link: "/groepen/zoeken",
-  },
-  {
-    name: props.group.name,
-    link: `/groepen/${props.group.id}/overzicht`,
-  },
-  {
-    name: "Instellingen",
-    link: `/groepen/${props.group.id}/instellingen`,
-  },
-]);
 </script>

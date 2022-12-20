@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-4xl text-primary font-bold mb-4">Materiaal Types</h1>
+  <Breadcrumbs :crumbs="breadCrumbs.value" />
   <Alert v-if="error" type="error" content="Materiaal types ophalen mislukt" />
   <div class="overflow-x-auto shadow">
     <table class="table w-full">
@@ -42,4 +42,6 @@ const {
     ReturnType<typeof import("~~/server/api/material/type/index.get").default>
   >
 >("/api/material/type");
+
+const { breadCrumbs } = useBreadcrumbs();
 </script>
