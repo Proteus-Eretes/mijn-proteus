@@ -15,7 +15,7 @@ export const create = async (member: MemberCreate) => {
 /**
  * Update member in the database.
  * @param id The id of the member to be updated.
- * @param data The updated data of the member.
+ * @param member The updated data of the member.
  * @returns The updated member.
  */
 export const update = async (id: string, member: MemberUpdate) => {
@@ -33,6 +33,20 @@ export const update = async (id: string, member: MemberUpdate) => {
 export const get = async (id: string) => {
   return await prisma.member.findUnique({
     where: { id },
+    include: {
+      contacts: true,
+      studies: true,
+      memberships: true,
+    },
+  });
+};
+
+/**
+ * Get all members from the database.
+ * @returns The requested member if found, otherwise null.
+ */
+export const getAll = async () => {
+  return await prisma.member.findMany({
     include: {
       contacts: true,
       studies: true,
@@ -60,6 +74,24 @@ export const exists = async (id: string) => {
  */
 export const count = async () => {
   return await prisma.member.count();
+};
+
+/**
+ * Get all memberships of the member.
+ * @returns The member's memberships.
+ */
+export const getMemberships = async (id: string) => {
+  return await prisma.membership.findMany({
+    where: { memberId: id },
+    include: {
+      group: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
 };
 
 /**

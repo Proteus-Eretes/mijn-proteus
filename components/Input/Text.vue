@@ -5,7 +5,7 @@
       <span v-if="required" class="label-text-alt text-error text-lg">*</span>
     </label>
     <input
-      type="text"
+      :type="type"
       class="input"
       :class="classes"
       :title="title"
@@ -26,9 +26,10 @@
 <script lang="ts" setup>
 interface Props {
   modelValue?: string;
+  type: "text" | "search" | "date";
   title?: string;
   error?: string;
-  placeholder: string;
+  placeholder?: string;
   size?: "xs" | "sm" | "md" | "lg";
   color?:
     | "primary"

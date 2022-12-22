@@ -14,7 +14,18 @@
       class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
     >
       <li>
-        <NuxtLink to="/me" title="Mijn Profiel">Profiel</NuxtLink>
+        <!-- TODO: change link to logged in member's profile -->
+        <NuxtLink to="/leden" title="Mijn Profiel">Profiel</NuxtLink>
+      </li>
+      <li>
+        <!-- TODO: change link to logged in member's memberships -->
+        <NuxtLink to="/groepen" title="Lidmaatschappen"
+          >Lidmaatschappen
+        </NuxtLink>
+      </li>
+      <li>
+        <!-- TODO: change link to logged in member's settings -->
+        <NuxtLink to="/leden" title="Instellingen">Instellingen</NuxtLink>
       </li>
       <li><a @click.prevent="() => signOut()">Log uit</a></li>
     </ul>

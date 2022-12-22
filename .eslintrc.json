@@ -1,6 +1,12 @@
 {
   "root": true,
-  "ignorePatterns": ["dist/**", ".output/**", ".nuxt/**", "dockerdata/**"],
+  "ignorePatterns": [
+    "dist/**",
+    ".output/**",
+    ".nuxt/**",
+    "dockerdata/**",
+    "node_modules/**"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:json/recommended",
@@ -37,6 +43,7 @@
           "*~/server/logic",
           "*~/server/prisma",
           "*~/server/sync",
+          "*~/server/types",
           "*~/server/validation",
           "*~/server/utils",
           "*~/utils/*"

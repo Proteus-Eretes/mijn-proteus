@@ -4,7 +4,7 @@ import { prisma } from "~/server/prisma";
 
 /**
  * Add new group to the database.
- * @param data The data of the new group.
+ * @param group The data of the new group.
  * @returns The created group.
  */
 export const create = async (group: GroupCreate) => {
@@ -20,7 +20,7 @@ export const create = async (group: GroupCreate) => {
 /**
  * Update group in the database.
  * @param id The id of the group to be updated.
- * @param data The data of the group to be updated.
+ * @param group The data of the group to be updated.
  * @returns The updated group.
  */
 export const update = async (id: string, group: GroupUpdate) => {
@@ -38,6 +38,37 @@ export const update = async (id: string, group: GroupUpdate) => {
 export const get = async (id: string) => {
   return await prisma.group.findUnique({
     where: { id },
+    include: {
+      contacts: true,
+      members: true,
+    },
+  });
+};
+
+/**
+ * Get all children from a group from the database.
+ * @param id The id of the group
+ * @returns All groups where the parentId equals the id.
+ */
+export const getChildren = async (id: string) => {
+  return await prisma.group.findMany({
+    where: { parentId: id },
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      startDate: true,
+      stopDate: true,
+    },
+  });
+};
+
+/**
+ * Get all groups from the database.
+ * @returns The requested groups if found, otherwise null.
+ */
+export const getAll = async () => {
+  return await prisma.group.findMany({
     include: {
       contacts: true,
     },
