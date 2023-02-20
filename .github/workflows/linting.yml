@@ -70,7 +70,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
           persist-credentials: false
-      - uses: creyD/prettier_action@v4.2
+      - uses: creyD/prettier_action@v4.3
         with:
           dry: True
           prettier_options: "--check ."
