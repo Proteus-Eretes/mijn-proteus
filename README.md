@@ -1,5 +1,8 @@
 # Mijn Proteus
 
+## Getting Started
+[Linkje naar de wiki pagina](https://www.github.com/proteus-eretes/mijn-proteus/wiki/getting-started)
+
 ## Development
 
 ### Dependencies
