@@ -44,7 +44,7 @@
     "vue-eslint-parser": "^9.1.0"
   },
   "dependencies": {
-    "@sidebase/nuxt-auth": "^0.3.0-alpha.1",
+    "@sidebase/nuxt-auth": "^0.4.3",
     "daisyui": "^2.38.0",
     "superstruct": "^1.0.3",
     "validator": "^13.7.0"
